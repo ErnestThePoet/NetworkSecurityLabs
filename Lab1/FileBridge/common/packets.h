@@ -87,6 +87,6 @@ char *MakeServerUploadSuccessfulPacket(size_t *packet_size_ret);
 char *MakeServerUploadFailedPacket(const char *reason,
                                    size_t *packet_size_ret);
 
-void ReleasePacket(const char *packet);
+void ReleasePacket(char *packet);
 
 #endif

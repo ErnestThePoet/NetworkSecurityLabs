@@ -163,7 +163,7 @@ char *MakeServerUploadFailedPacket(const char *reason,
     return (char *)packet;
 }
 
-void ReleasePacket(const char *packet)
+void ReleasePacket(char *packet)
 {
     free(packet);
 }

@@ -125,7 +125,7 @@ OperationResult RequestFileDownload(
     if (response_packet_data_size != 8)
     {
         sprintf(result.error_info,
-                "Unexpected download request response data size: %d",
+                "Unexpected download request response data size: %zd",
                 response_packet_data_size);
         return result;
     }

@@ -17,33 +17,38 @@ int main(int argc, char *argv[])
     }
 
     int server_socket = 0;
-    operation_result = ConnectToServer(client_arg.server_ip4_address,
-                                       client_arg.server_port,
-                                       &server_socket);
-    if (!operation_result.is_successful)
-    {
-        printf("Connecting Error: %s\n", operation_result.error_info);
-        return FAILURE;
-    }
-
     FILE *local_file = NULL;
-    if(client_arg.operation_mode==OPERATION_MODE_UPLOAD){
-        operation_result = PrepareFileUpload(client_arg.local_file_path, &local_file);
-        if (!operation_result.is_successful)
-        {
-            printf("Upload File Prepartion Error: %s\n", operation_result.error_info);
-            return FAILURE;
-        }
+    if (client_arg.operation_mode == OPERATION_MODE_UPLOAD)
+    {
+        size_t file_size = 0;
+        operation_result = PrepareFileUpload(
+            client_arg.local_file_path, &local_file, &file_size);
+        CHECK_FAILURE_C_F("Upload File Preparation Error: %s\n");
 
+        operation_result = ConnectToServer(client_arg.server_ip4_address,
+                                           client_arg.server_port,
+                                           &server_socket);
+        CHECK_FAILURE_C_F("Connecting Error: %s\n");
 
+        operation_result = RequestFileUpload(
+            file_size, client_arg.server_file_path, server_socket);
+        CHECK_FAILURE_C_F("File Upload Request Error: %s\n");
     }
-    else{
-        operation_result = PrepareFileDownload(client_arg.local_file_path, &local_file);
-        if (!operation_result.is_successful)
-        {
-            printf("I/O Error: %s\n", operation_result.error_info);
-            return FAILURE;
-        }
+    else
+    {
+        operation_result = PrepareFileDownload(
+            client_arg.local_file_path, &local_file);
+        CHECK_FAILURE_C_F("Download File Preparation Error: %s\n");
+
+        operation_result = ConnectToServer(client_arg.server_ip4_address,
+                                           client_arg.server_port,
+                                           &server_socket);
+        CHECK_FAILURE_C_F("Connecting Error: %s\n");
+
+        size_t file_size = 0;
+        operation_result = RequestFileDownload(
+            client_arg.server_file_path, server_socket, &file_size);
+        CHECK_FAILURE_C_F("File Download Request Error: %s\n");
     }
 
     return SUCCESS;
