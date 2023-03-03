@@ -1,28 +1,13 @@
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <pthread.h>
-#include <unistd.h>
-#include <sys/socket.h>
-#include <arpa/inet.h>
+#ifndef CLIENT_H_
+#define CLIENT_H_
 
-#include "../common/sha256.h"
-#include "ParseArgs.h"
+#include "parse_args.h"
+#include "prepare_file.h"
+#include "connection.h"
+#include "request_trans.h"
+#include "perform_trans.h"
 
 #define SUCCESS 0
 #define FAILURE 1
 
-typedef struct sockaddr_in sockaddr_in;
-
-OperationResult PrepareFileUpload(const char *local_file_path, FILE **file_ret);
-OperationResult PrepareFileDownload(const char *local_file_path, FILE **file_ret);
-OperationResult ConnectToServer(const char *ip4_address, int port, int *server_socket_ret);
-OperationResult RequestFileUpload(
-    const char *server_file_path, int server_socket);
-OperationResult RequestFileDownload(
-    const char *server_file_path, int server_socket);
-OperationResult UploadFile(
-    FILE *local_file, int server_socket);
-OperationResult DownloadFile(
-    FILE *local_file, int server_socket);
-void CloseConnection(int server_socket);
+#endif

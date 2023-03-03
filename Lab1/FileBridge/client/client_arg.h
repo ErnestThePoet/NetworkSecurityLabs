@@ -1,3 +1,6 @@
+#ifndef CLIENT_ARG_H_
+#define CLIENT_ARG_H_
+
 #define OPERATION_MODE_UPLOAD 0
 #define OPERATION_MODE_DOWNLOAD 1
 
@@ -9,3 +12,5 @@ typedef struct
     int server_port;
     const char *server_path;
 } ClientArg;
+
+#endif
