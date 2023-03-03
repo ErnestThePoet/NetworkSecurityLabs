@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "stdbool.h": "c",
+        "arg_parse_result.h": "c"
+    }
+}
