@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.22)
+project(FileBridge)
+aux_source_directory(./client SRCS_CLIENT)
+# aux_source_directory(./server SRCS_SERVER)
+add_executable(client ${SRCS_CLIENT})
+# add_executable(server ${SRCS_SERVER})
+set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-O2")
