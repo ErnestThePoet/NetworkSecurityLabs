@@ -6,8 +6,8 @@
 #include "../common/operation_result.h"
 
 OperationResult RequestFileUpload(
-    const char *server_file_path, int server_socket);
+    const char *server_file_path, const int server_socket);
 OperationResult RequestFileDownload(
-    const char *server_file_path, int server_socket);
+    const char *server_file_path, const int server_socket);
 
 #endif

@@ -1,6 +1,7 @@
 #include "parse_args.h"
 
-OperationResult ParseArgs(int argc, char *argv[], ClientArg *client_arg_ret)
+OperationResult ParseArgs(
+    const int argc, char *argv[], ClientArg *client_arg_ret)
 {
     OperationResult result = {false};
 
@@ -24,7 +25,7 @@ OperationResult ParseArgs(int argc, char *argv[], ClientArg *client_arg_ret)
         return result;
     }
 
-    client_arg_ret->client_path =
+    client_arg_ret->local_file_path =
         client_arg_ret->operation_mode == OPERATION_MODE_UPLOAD ? argv[2] : argv[3];
 
     char *server_arg =
@@ -61,7 +62,7 @@ OperationResult ParseArgs(int argc, char *argv[], ClientArg *client_arg_ret)
         return result;
     }
 
-    client_arg_ret->server_path = server_arg_part;
+    client_arg_ret->server_file_path = server_arg_part;
 
     result.is_successful = true;
     return result;

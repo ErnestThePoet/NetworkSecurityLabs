@@ -7,6 +7,7 @@
 #include "../common/operation_result.h"
 #include "client_arg.h"
 
-OperationResult ParseArgs(int argc, char *argv[], ClientArg *client_arg_ret);
+OperationResult ParseArgs(
+    const int argc, char *argv[], ClientArg *client_arg_ret);
 
 #endif

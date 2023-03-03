@@ -1,13 +1,15 @@
 #include "prepare_file.h"
 
-static OperationResult PrepareFile(const char *local_file_path, const char *mode, FILE **file_ret)
+static OperationResult PrepareFile(
+    const char *local_file_path, const char *mode, FILE **file_ret)
 {
     OperationResult result = {false};
 
     FILE *file = fopen(local_file_path, mode);
     if (file == NULL)
     {
-        strcpy(result.error_info, "Failed to open local file");
+        strcpy(result.error_info, "Failed to open local file: ");
+        strcat(result.error_info, local_file_path);
         return result;
     }
 

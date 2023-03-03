@@ -1,10 +1,11 @@
 #include "connection.h"
 
-OperationResult ConnectToServer(const char *ip4_address, int port, int *server_socket_ret)
+OperationResult ConnectToServer(
+    const char *ip4_address, const int port, int *server_socket_ret)
 {
     OperationResult result = {false};
 
-    int server_socket = socket(AF_INET, SOCK_STREAM, 0);
+    const int server_socket = socket(AF_INET, SOCK_STREAM, 0);
     if (server_socket == -1)
     {
         strcpy(result.error_info, "Failed to create socket");
@@ -12,11 +13,12 @@ OperationResult ConnectToServer(const char *ip4_address, int port, int *server_s
     }
 
     sockaddr_in server_sockaddr;
-    in_addr_t server_addr = inet_addr(ip4_address);
+    const in_addr_t server_addr = inet_addr(ip4_address);
     if (server_addr == (in_addr_t)-1)
     {
         close(server_socket);
-        strcpy(result.error_info, "Failed to convert server IPv4 address");
+        strcpy(result.error_info, "Failed to convert server IPv4 address: ");
+        strcat(result.error_info, ip4_address);
         return result;
     }
 
@@ -29,7 +31,8 @@ OperationResult ConnectToServer(const char *ip4_address, int port, int *server_s
                 sizeof(sockaddr_in)) == -1)
     {
         close(server_socket);
-        strcpy(result.error_info, "Failed to connect to server");
+        sprintf(
+            result.error_info, "Failed to connect to server %s:%d", ip4_address, port);
         return result;
     }
 
@@ -39,6 +42,7 @@ OperationResult ConnectToServer(const char *ip4_address, int port, int *server_s
     return result;
 }
 
-void CloseConnection(int server_socket){
+void CloseConnection(const int server_socket)
+{
     close(server_socket);
 }

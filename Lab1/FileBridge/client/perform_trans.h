@@ -5,8 +5,8 @@
 #include "../common/operation_result.h"
 
 OperationResult UploadFile(
-    FILE *local_file, int server_socket);
+    FILE *local_file, const int server_socket);
 OperationResult DownloadFile(
-    FILE *local_file, int server_socket);
+    FILE *local_file, const int server_socket);
 
 #endif
