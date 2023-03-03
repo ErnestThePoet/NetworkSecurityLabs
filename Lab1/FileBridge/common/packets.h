@@ -20,10 +20,9 @@
  * Client Upload Request
  * TYPE=1
  * DATA Field:
- * 4B         Server file path length in bytes
- * variable   Server file path string, without terminator '\0'
+ * 4B         Server file path length in bytes including '\0'
+ * variable   Server file path string, with terminator '\0'
  * 8B         File Size in bytes
- * 32B        File SHA256
  *
  * Client Download Request
  * TYPE=2
@@ -35,45 +34,59 @@
  * TYPE=100
  * DATA Field:
  * 4B         Reason length in bytes
- * 32B        Reason string
+ * variable   Reason string
  *
- * Server Upload Acknowledgement
+ * Server Upload Permitted
  * TYPE=101
  * DATA Field is empty
  *
- * Server Download Acknowledgement
+ * Server Download Permitted
  * TYPE=102
  * DATA Field:
  * 8B         File Size in bytes
- * 32B        File SHA256
+ *
+ * Server Upload Successful
+ * TYPE=103
+ * DATA Field is empty
+ *
+ * Server Upload Failed
+ * TYPE=104
+ * DATA Field:
+ * 4B         Reason length in bytes
+ * variable   Reason string
  *
  * *********************************************/
 
-#define PACKET_HEADER_SIZE                  9
+#define PACKET_HEADER_SIZE 9
 
-#define PACKET_TYPE_CLIENT_UPLOAD_REQUEST   1
+#define PACKET_TYPE_CLIENT_UPLOAD_REQUEST 1
 #define PACKET_TYPE_CLIENT_DOWNLOAD_REQUEST 2
-#define PACKET_TYPE_SERVER_DENIAL           100
-#define PACKET_TYPE_SERVER_UPLOAD_ACK       101
-#define PACKET_TYPE_SERVER_DOWNLOAD_ACK     102
+#define PACKET_TYPE_SERVER_DENIAL 100
+#define PACKET_TYPE_SERVER_UPLOAD_PERMITTED 101
+#define PACKET_TYPE_SERVER_DOWNLOAD_PERMITTED 102
+#define PACKET_TYPE_SERVER_UPLOAD_SUCCESSFUL 103
+#define PACKET_TYPE_SERVER_UPLOAD_FAILED 104
 
-uint8_t *MakeClientUploadRequestPacket(const char *server_file_path,
-                                       const uint64_t file_size,
-                                       const uint8_t *sha256,
-                                       uint64_t *packet_size_ret);
+char *MakeClientUploadRequestPacket(const char *server_file_path,
+                                    const size_t file_size,
+                                    size_t *packet_size_ret);
 
-uint8_t *MakeClientDownloadRequestPacket(const char *server_file_path,
-                                         uint64_t *packet_size_ret);
+char *MakeClientDownloadRequestPacket(const char *server_file_path,
+                                      size_t *packet_size_ret);
 
-uint8_t *MakeServerDenialPacket(const char *reason,
-                                uint64_t *packet_size_ret);
+char *MakeServerDenialPacket(const char *reason,
+                             size_t *packet_size_ret);
 
-uint8_t *MakeServerUploadAckPacket(uint64_t *packet_size_ret);
+char *MakeServerUploadPermittedPacket(size_t *packet_size_ret);
 
-uint8_t *MakeServerDownloadAckPacket(const uint64_t file_size,
-                                     const uint8_t *sha256,
-                                     uint64_t *packet_size_ret);
+char *MakeServerDownloadPermittedPacket(const size_t file_size,
+                                        size_t *packet_size_ret);
 
-void ReleasePacket(uint8_t *packet);
+char *MakeServerUploadSuccessfulPacket(size_t *packet_size_ret);
+
+char *MakeServerUploadFailedPacket(const char *reason,
+                                   size_t *packet_size_ret);
+
+void ReleasePacket(const char *packet);
 
 #endif

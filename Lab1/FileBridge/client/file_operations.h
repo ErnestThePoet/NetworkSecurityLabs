@@ -6,7 +6,8 @@
 
 #include "../common/operation_result.h"
 
-OperationResult PrepareFileUpload(const char *local_file_path, FILE **file_ret);
+OperationResult PrepareFileUpload(
+    const char *local_file_path, FILE **file_ret, size_t *file_size_ret);
 OperationResult PrepareFileDownload(const char *local_file_path, FILE **file_ret);
 
 #endif

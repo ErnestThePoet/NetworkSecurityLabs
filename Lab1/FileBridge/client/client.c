@@ -29,17 +29,22 @@ int main(int argc, char *argv[])
     FILE *local_file = NULL;
     if(client_arg.operation_mode==OPERATION_MODE_UPLOAD){
         operation_result = PrepareFileUpload(client_arg.local_file_path, &local_file);
+        if (!operation_result.is_successful)
+        {
+            printf("Upload File Prepartion Error: %s\n", operation_result.error_info);
+            return FAILURE;
+        }
+
+
     }
     else{
         operation_result = PrepareFileDownload(client_arg.local_file_path, &local_file);
+        if (!operation_result.is_successful)
+        {
+            printf("I/O Error: %s\n", operation_result.error_info);
+            return FAILURE;
+        }
     }
-    if (!operation_result.is_successful)
-    {
-        printf("I/O Error: %s\n", operation_result.error_info);
-        return FAILURE;
-    }
-
-
 
     return SUCCESS;
 }

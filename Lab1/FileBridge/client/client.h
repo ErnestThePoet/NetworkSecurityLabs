@@ -2,7 +2,7 @@
 #define CLIENT_H_
 
 #include "parse_args.h"
-#include "prepare_file.h"
+#include "file_operations.h"
 #include "connection.h"
 #include "request_trans.h"
 #include "perform_trans.h"

@@ -1,13 +1,12 @@
 #include "packets.h"
 
-uint8_t *MakeClientUploadRequestPacket(const char *server_file_path,
-                                       const uint64_t file_size,
-                                       const uint8_t *sha256,
-                                       uint64_t *packet_size_ret)
+char *MakeClientUploadRequestPacket(const char *server_file_path,
+                                    const size_t file_size,
+                                    size_t *packet_size_ret)
 {
-    const size_t server_file_path_length = strlen(server_file_path);
+    const size_t server_file_path_length = strlen(server_file_path) + 1;
 
-    const size_t packet_size = PACKET_HEADER_SIZE + 4 + 8 + 32 + server_file_path_length;
+    const size_t packet_size = PACKET_HEADER_SIZE + 4 + 8 + server_file_path_length;
 
     uint8_t *packet = (uint8_t *)malloc(packet_size);
     if (packet == NULL)
@@ -25,17 +24,14 @@ uint8_t *MakeClientUploadRequestPacket(const char *server_file_path,
            server_file_path,
            server_file_path_length);
     *((uint64_t *)(packet + PACKET_HEADER_SIZE + 4 + server_file_path_length)) = file_size;
-    memcpy(packet + PACKET_HEADER_SIZE + 4 + server_file_path_length + 8,
-           sha256,
-           32);
 
-    return packet;
+    return (char *)packet;
 }
 
-uint8_t *MakeClientDownloadRequestPacket(const char *server_file_path,
-                                         uint64_t *packet_size_ret)
+char *MakeClientDownloadRequestPacket(const char *server_file_path,
+                                      size_t *packet_size_ret)
 {
-    const size_t server_file_path_length = strlen(server_file_path);
+    const size_t server_file_path_length = strlen(server_file_path) + 1;
 
     const size_t packet_size = PACKET_HEADER_SIZE + 4 + server_file_path_length;
 
@@ -55,13 +51,13 @@ uint8_t *MakeClientDownloadRequestPacket(const char *server_file_path,
            server_file_path,
            server_file_path_length);
 
-    return packet;
+    return (char *)packet;
 }
 
-uint8_t *MakeServerDenialPacket(const char *reason,
-                                uint64_t *packet_size_ret)
+char *MakeServerDenialPacket(const char *reason,
+                             size_t *packet_size_ret)
 {
-    const size_t reason_length = strlen(reason);
+    const size_t reason_length = strlen(reason) + 1;
 
     const size_t packet_size = PACKET_HEADER_SIZE + 4 + reason_length;
 
@@ -81,10 +77,10 @@ uint8_t *MakeServerDenialPacket(const char *reason,
            reason,
            reason_length);
 
-    return packet;
+    return (char *)packet;
 }
 
-uint8_t *MakeServerUploadAckPacket(uint64_t *packet_size_ret)
+char *MakeServerUploadPermittedPacket(size_t *packet_size_ret)
 {
     const size_t packet_size = PACKET_HEADER_SIZE;
 
@@ -96,17 +92,16 @@ uint8_t *MakeServerUploadAckPacket(uint64_t *packet_size_ret)
 
     *packet_size_ret = packet_size;
 
-    packet[0] = PACKET_TYPE_SERVER_UPLOAD_ACK;
+    packet[0] = PACKET_TYPE_SERVER_UPLOAD_PERMITTED;
     *((uint64_t *)(packet + 1)) = packet_size;
 
-    return packet;
+    return (char *)packet;
 }
 
-uint8_t *MakeServerDownloadAckPacket(const uint64_t file_size,
-                                     const uint8_t *sha256,
-                                     uint64_t *packet_size_ret)
+char *MakeServerDownloadPermittedPacket(const size_t file_size,
+                                        size_t *packet_size_ret)
 {
-    const size_t packet_size = PACKET_HEADER_SIZE + 8 + 32;
+    const size_t packet_size = PACKET_HEADER_SIZE + 8;
 
     uint8_t *packet = (uint8_t *)malloc(packet_size);
     if (packet == NULL)
@@ -116,17 +111,59 @@ uint8_t *MakeServerDownloadAckPacket(const uint64_t file_size,
 
     *packet_size_ret = packet_size;
 
-    packet[0] = PACKET_TYPE_SERVER_DOWNLOAD_ACK;
+    packet[0] = PACKET_TYPE_SERVER_DOWNLOAD_PERMITTED;
     *((uint64_t *)(packet + 1)) = packet_size;
 
     *((uint64_t *)(packet + PACKET_HEADER_SIZE)) = file_size;
-    memcpy(packet + PACKET_HEADER_SIZE + 8,
-           sha256,
-           32);
 
-    return packet;
+    return (char *)packet;
 }
 
-void ReleasePacket(uint8_t *packet){
+char *MakeServerUploadSuccessfulPacket(size_t *packet_size_ret)
+{
+    const size_t packet_size = PACKET_HEADER_SIZE;
+
+    uint8_t *packet = (uint8_t *)malloc(packet_size);
+    if (packet == NULL)
+    {
+        return NULL;
+    }
+
+    *packet_size_ret = packet_size;
+
+    packet[0] = PACKET_TYPE_SERVER_UPLOAD_SUCCESSFUL;
+    *((uint64_t *)(packet + 1)) = packet_size;
+
+    return (char *)packet;
+}
+
+char *MakeServerUploadFailedPacket(const char *reason,
+                                   size_t *packet_size_ret)
+{
+    const size_t reason_length = strlen(reason) + 1;
+
+    const size_t packet_size = PACKET_HEADER_SIZE + 4 + reason_length;
+
+    uint8_t *packet = (uint8_t *)malloc(packet_size);
+    if (packet == NULL)
+    {
+        return NULL;
+    }
+
+    *packet_size_ret = packet_size;
+
+    packet[0] = PACKET_TYPE_SERVER_UPLOAD_FAILED;
+    *((uint64_t *)(packet + 1)) = packet_size;
+
+    *((uint32_t *)(packet + PACKET_HEADER_SIZE)) = reason_length;
+    memcpy(packet + PACKET_HEADER_SIZE + 4,
+           reason,
+           reason_length);
+
+    return (char *)packet;
+}
+
+void ReleasePacket(const char *packet)
+{
     free(packet);
 }
