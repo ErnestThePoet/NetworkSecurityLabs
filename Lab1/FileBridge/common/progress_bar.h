@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-#define PROGRESS_BAR_LENGTH 30
+#define PROGRESS_BAR_LENGTH 50
 #define PROGRESS_BAR_FINISHED_CHAR '='
 #define PROGRESS_BAR_UNFINISHED_CHAR '-'
 
