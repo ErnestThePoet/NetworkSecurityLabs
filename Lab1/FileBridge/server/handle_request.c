@@ -17,6 +17,7 @@ void *HandleRequest(void *client_socket_ptr)
 
     switch(packet_type){
         case PACKET_TYPE_CLIENT_UPLOAD_REQUEST:
+            char* request_packet_data=malloc
 
         case PACKET_TYPE_CLIENT_DOWNLOAD_REQUEST:
 

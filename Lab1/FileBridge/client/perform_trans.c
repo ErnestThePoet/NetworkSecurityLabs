@@ -162,7 +162,7 @@ OperationResult DownloadFile(
         return result;
     }
 
-    if (!memcmp(sha256, received_sha256, SHA256_BLOCK_SIZE))
+    if (memcmp(sha256, received_sha256, SHA256_BLOCK_SIZE))
     {
         puts("Download file SHA256 check failed, the file might have been corrupted");
     }
