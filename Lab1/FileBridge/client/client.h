@@ -8,6 +8,7 @@
 #include "perform_trans.h"
 
 #include "../common/file_bridge.h"
+#include "../common/fs_helpers.h"
 
 #define CHECK_FAILURE(TEMPLATE)                            \
     do                                                     \
@@ -39,7 +40,7 @@
             CloseConnection(server_socket);                \
             if (local_file != NULL)                        \
             {                                              \
-                fclose(local_file);                        \
+                CloseFile(local_file);                     \
             }                                              \
             return FAILURE;                                \
         }                                                  \
