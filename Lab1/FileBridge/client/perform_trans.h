@@ -10,6 +10,8 @@
 #include "../common/sha256.h"
 #include "../common/operation_result.h"
 #include "../common/packets.h"
+#include "../common/read_socket.h"
+#include "../common/progress_bar.h"
 
 #define UPLOAD_BUFFER_SIZE (1024 * 1024)
 #define DOWNLOAD_BUFFER_SIZE (1024 * 1024)

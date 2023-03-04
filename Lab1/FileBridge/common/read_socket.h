@@ -5,6 +5,6 @@
 #include <stdbool.h>
 #include <sys/socket.h>
 
-bool ReadSocket(const int socket, const size_t target_read_size, char *buffer);
+bool ReadSocket(const int socket, char *buffer, const size_t target_read_size);
 
 #endif

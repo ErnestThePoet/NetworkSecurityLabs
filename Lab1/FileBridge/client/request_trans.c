@@ -13,7 +13,7 @@ static OperationResult ReadServerDenial(
         return result;
     }
 
-    if (!ReadSocket(server_socket, response_packet_data_size, response_packet_data))
+    if (!ReadSocket(server_socket, response_packet_data, response_packet_data_size))
     {
         strcpy(result.error_info,
                "Failed to receive server denial packet data");
@@ -53,7 +53,7 @@ OperationResult RequestFileUpload(
 
     uint8_t response_packet_header[PACKET_HEADER_SIZE];
 
-    if (!ReadSocket(server_socket, PACKET_HEADER_SIZE, response_packet_header))
+    if (!ReadSocket(server_socket, response_packet_header, PACKET_HEADER_SIZE))
     {
         strcpy(result.error_info,
                "Failed to receive header of upload request response header");
@@ -70,7 +70,7 @@ OperationResult RequestFileUpload(
     }
     else if (packet_type != PACKET_TYPE_SERVER_UPLOAD_PERMITTED)
     {
-        
+
         sprintf(result.error_info,
                 "Invalid upload request response received with TYPE %d",
                 packet_type);
@@ -102,7 +102,7 @@ OperationResult RequestFileDownload(
 
     uint8_t response_packet_header[PACKET_HEADER_SIZE];
 
-    if (!ReadSocket(server_socket, PACKET_HEADER_SIZE, response_packet_header))
+    if (!ReadSocket(server_socket, response_packet_header, PACKET_HEADER_SIZE))
     {
         strcpy(result.error_info,
                "Failed to receive header of download request response header");
@@ -134,7 +134,7 @@ OperationResult RequestFileDownload(
     }
 
     char file_size_data[8];
-    if (!ReadSocket(server_socket, 8, file_size_data))
+    if (!ReadSocket(server_socket, file_size_data, 8))
     {
         strcpy(result.error_info,
                "Failed to receive download request response data");
