@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "file_bridge.h"
+
 /***********************************************
  *     PACKET FORMAT SPECS
  *
@@ -36,20 +38,20 @@
  * 4B         Reason length in bytes
  * variable   Reason string
  *
- * Server Upload Permitted
+ * Server Upload Permission
  * TYPE=101
  * DATA Field is empty
  *
- * Server Download Permitted
+ * Server Download Permission
  * TYPE=102
  * DATA Field:
  * 8B         File Size in bytes
  *
- * Server Upload Successful
+ * Server Upload Success
  * TYPE=103
  * DATA Field is empty
  *
- * Server Upload Failed
+ * Server Upload Failure
  * TYPE=104
  * DATA Field:
  * 4B         Reason length in bytes
@@ -62,10 +64,10 @@
 #define PACKET_TYPE_CLIENT_UPLOAD_REQUEST 1
 #define PACKET_TYPE_CLIENT_DOWNLOAD_REQUEST 2
 #define PACKET_TYPE_SERVER_DENIAL 100
-#define PACKET_TYPE_SERVER_UPLOAD_PERMITTED 101
-#define PACKET_TYPE_SERVER_DOWNLOAD_PERMITTED 102
-#define PACKET_TYPE_SERVER_UPLOAD_SUCCESSFUL 103
-#define PACKET_TYPE_SERVER_UPLOAD_FAILED 104
+#define PACKET_TYPE_SERVER_UPLOAD_PERMISSION 101
+#define PACKET_TYPE_SERVER_DOWNLOAD_PERMISSION 102
+#define PACKET_TYPE_SERVER_UPLOAD_SUCCESS 103
+#define PACKET_TYPE_SERVER_UPLOAD_FAILURE 104
 
 char *MakeClientUploadRequestPacket(const char *server_file_path,
                                     const size_t file_size,
@@ -77,14 +79,14 @@ char *MakeClientDownloadRequestPacket(const char *server_file_path,
 char *MakeServerDenialPacket(const char *reason,
                              size_t *packet_size_ret);
 
-char *MakeServerUploadPermittedPacket(size_t *packet_size_ret);
+char *MakeServerUploadPermissionPacket(size_t *packet_size_ret);
 
-char *MakeServerDownloadPermittedPacket(const size_t file_size,
+char *MakeServerDownloadPermissionPacket(const size_t file_size,
                                         size_t *packet_size_ret);
 
-char *MakeServerUploadSuccessfulPacket(size_t *packet_size_ret);
+char *MakeServerUploadSuccessPacket(size_t *packet_size_ret);
 
-char *MakeServerUploadFailedPacket(const char *reason,
+char *MakeServerUploadFailurePacket(const char *reason,
                                    size_t *packet_size_ret);
 
 uint8_t ExtractPacketHeader(const char *header,

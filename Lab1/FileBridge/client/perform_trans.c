@@ -11,8 +11,7 @@ OperationResult UploadFile(
     char *file_buffer = (char *)malloc(UPLOAD_BUFFER_SIZE);
     if (file_buffer == NULL)
     {
-        strcpy(result.error_info, "Failed to allocate file upload buffer");
-        return result;
+        EXIT_FAILURE;
     }
 
     const int chunk_count = file_size == 0 ? 0 : (file_size - 1) / UPLOAD_BUFFER_SIZE + 1;
@@ -70,16 +69,14 @@ OperationResult UploadFile(
 
     switch (packet_type)
     {
-    case PACKET_TYPE_SERVER_UPLOAD_SUCCESSFUL:
+    case PACKET_TYPE_SERVER_UPLOAD_SUCCESS:
         result.is_successful = true;
         return result;
-    case PACKET_TYPE_SERVER_UPLOAD_FAILED:
+    case PACKET_TYPE_SERVER_UPLOAD_FAILURE:
         char *response_packet_data = (char *)malloc(response_packet_data_size);
         if (response_packet_data == NULL)
         {
-            strcpy(result.error_info,
-                   "Failed to allocate memory for server upload failed feedback packet data");
-            return result;
+            EXIT_FAILURE;
         }
 
         if (!ReadSocket(server_socket, response_packet_data, response_packet_data_size))
@@ -114,8 +111,7 @@ OperationResult DownloadFile(
     char *file_buffer = (char *)malloc(DOWNLOAD_BUFFER_SIZE);
     if (file_buffer == NULL)
     {
-        strcpy(result.error_info, "Failed to allocate file download buffer");
-        return result;
+        EXIT_FAILURE;
     }
 
     const int chunk_count = file_size == 0 ? 0 : (file_size - 1) / DOWNLOAD_BUFFER_SIZE + 1;

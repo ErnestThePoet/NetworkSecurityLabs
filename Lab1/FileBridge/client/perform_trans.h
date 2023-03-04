@@ -7,6 +7,7 @@
 #include <string.h>
 #include <sys/socket.h>
 
+#include "../common/file_bridge.h"
 #include "../common/sha256.h"
 #include "../common/operation_result.h"
 #include "../common/packets.h"

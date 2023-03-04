@@ -8,9 +8,7 @@ static OperationResult ReadServerDenial(
     char *response_packet_data = (char *)malloc(response_packet_data_size);
     if (response_packet_data == NULL)
     {
-        strcpy(result.error_info,
-               "Failed to allocate memory for server denial packet data");
-        return result;
+        EXIT_FAILURE;
     }
 
     if (!ReadSocket(server_socket, response_packet_data, response_packet_data_size))
@@ -38,11 +36,6 @@ OperationResult RequestFileUpload(
     size_t packet_size = 0;
     char *packet = MakeClientUploadRequestPacket(
         server_file_path, file_size, &packet_size);
-    if (packet == NULL)
-    {
-        strcpy(result.error_info, "Failed to allocate memory for upload request packet");
-        return result;
-    }
 
     size_t sent_size = send(server_socket, packet, packet_size, 0);
 
@@ -71,7 +64,7 @@ OperationResult RequestFileUpload(
     {
     case PACKET_TYPE_SERVER_DENIAL:
         return ReadServerDenial(response_packet_data_size, server_socket);
-    case PACKET_TYPE_SERVER_UPLOAD_PERMITTED:
+    case PACKET_TYPE_SERVER_UPLOAD_PERMISSION:
         result.is_successful = true;
         return result;
     default:
@@ -89,11 +82,6 @@ OperationResult RequestFileDownload(
 
     size_t packet_size = 0;
     char *packet = MakeClientDownloadRequestPacket(server_file_path, &packet_size);
-    if (packet == NULL)
-    {
-        strcpy(result.error_info, "Failed to allocate memory for download request packet");
-        return result;
-    }
 
     size_t sent_size = send(server_socket, packet, packet_size, 0);
 
@@ -122,7 +110,7 @@ OperationResult RequestFileDownload(
     {
     case PACKET_TYPE_SERVER_DENIAL:
         return ReadServerDenial(response_packet_data_size, server_socket);
-    case PACKET_TYPE_SERVER_DOWNLOAD_PERMITTED:
+    case PACKET_TYPE_SERVER_DOWNLOAD_PERMISSION:
         break;
     default:
         sprintf(result.error_info,

@@ -6,6 +6,7 @@
 #include <string.h>
 #include <sys/socket.h>
 
+#include "../common/file_bridge.h"
 #include "../common/operation_result.h"
 #include "../common/packets.h"
 #include "../common/read_socket.h"

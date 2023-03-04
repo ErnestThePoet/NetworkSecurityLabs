@@ -28,6 +28,19 @@
         return NULL;                              \
     } while (false)
 
+#define FAILURE_RETURN_S_F_FREE(M, P)             \
+    do                                            \
+    {                                             \
+        printf(HANDLE_REQUEST_ERROR_TEMPLATE, M); \
+        free(P);                                  \
+        close(client_socket);                     \
+        if (server_file != NULL)                  \
+        {                                         \
+            CloseFile(server_file);               \
+        }                                         \
+        return NULL;                              \
+    } while (false)
+
 #define FAILURE_DENY_RETURN_S(M)                  \
     do                                            \
     {                                             \
