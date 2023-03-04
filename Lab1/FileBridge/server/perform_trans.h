@@ -12,7 +12,6 @@
 #include "../common/packets.h"
 #include "../common/read_socket.h"
 #include "../common/progress_bar.h"
-#include "trans.h"
 
 #define UPLOAD_BUFFER_SIZE (1024 * 1024)
 #define DOWNLOAD_BUFFER_SIZE (1024 * 1024)

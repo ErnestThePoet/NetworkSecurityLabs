@@ -24,7 +24,7 @@ void UpdateProgressBar(double percentage)
                     ? PROGRESS_BAR_FINISHED_CHAR
                     : PROGRESS_BAR_UNFINISHED_CHAR);
     }
-    printf("] %d%%", 100 * percentage);
+    printf("] %d%%", (int)(100 * percentage));
 }
 
 void EndProgressBar(){

@@ -2,6 +2,7 @@
     "files.associations": {
         "socket.h": "c",
         "cstdlib": "c",
-        "trans_request.h": "c"
+        "trans_request.h": "c",
+        "pthread.h": "c"
     }
 }

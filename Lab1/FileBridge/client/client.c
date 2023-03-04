@@ -23,37 +23,37 @@ int main(int argc, char *argv[])
     {
         operation_result = PrepareFileUpload(
             client_arg.local_file_path, &local_file, &file_size);
-        CHECK_FAILURE_C_F("Upload File Preparation Error: %s\n");
+        CHECK_FAILURE_S_F("Upload File Preparation Error: %s\n");
 
         operation_result = ConnectToServer(client_arg.server_ip4_address,
                                            client_arg.server_port,
                                            &server_socket);
-        CHECK_FAILURE_C_F("Connecting Error: %s\n");
+        CHECK_FAILURE_S_F("Connecting Error: %s\n");
 
         operation_result = RequestFileUpload(
             file_size, client_arg.server_file_path, server_socket);
-        CHECK_FAILURE_C_F("File Upload Request Error: %s\n");
+        CHECK_FAILURE_S_F("File Upload Request Error: %s\n");
 
         operation_result = UploadFile(local_file, file_size, server_socket);
-        CHECK_FAILURE_C_F("File Upload Error: %s\n");
+        CHECK_FAILURE_S_F("File Upload Error: %s\n");
     }
     else
     {
         operation_result = PrepareFileDownload(
             client_arg.local_file_path, &local_file);
-        CHECK_FAILURE_C_F("Download File Preparation Error: %s\n");
+        CHECK_FAILURE_S_F("Download File Preparation Error: %s\n");
 
         operation_result = ConnectToServer(client_arg.server_ip4_address,
                                            client_arg.server_port,
                                            &server_socket);
-        CHECK_FAILURE_C_F("Connecting Error: %s\n");
+        CHECK_FAILURE_S_F("Connecting Error: %s\n");
 
         operation_result = RequestFileDownload(
             client_arg.server_file_path, server_socket, &file_size);
-        CHECK_FAILURE_C_F("File Download Request Error: %s\n");
+        CHECK_FAILURE_S_F("File Download Request Error: %s\n");
 
         operation_result = DownloadFile(local_file, file_size, server_socket);
-        CHECK_FAILURE_C_F("File Download Error: %s\n");
+        CHECK_FAILURE_S_F("File Download Error: %s\n");
     }
 
     CloseFile(local_file);

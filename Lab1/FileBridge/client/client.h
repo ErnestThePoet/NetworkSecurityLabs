@@ -19,7 +19,7 @@
         }                                                  \
     } while (false)
 
-#define CHECK_FAILURE_C(TEMPLATE)                          \
+#define CHECK_FAILURE_S(TEMPLATE)                          \
     do                                                     \
     {                                                      \
         if (!operation_result.is_successful)               \
@@ -30,7 +30,7 @@
         }                                                  \
     } while (false)
 
-#define CHECK_FAILURE_C_F(TEMPLATE)                        \
+#define CHECK_FAILURE_S_F(TEMPLATE)                        \
     do                                                     \
     {                                                      \
         if (!operation_result.is_successful)               \
