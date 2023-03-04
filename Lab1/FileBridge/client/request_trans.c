@@ -67,21 +67,19 @@ OperationResult RequestFileUpload(
     uint8_t packet_type = ExtractPacketHeader(
         response_packet_header, NULL, &response_packet_data_size);
 
-    if (packet_type == PACKET_TYPE_SERVER_DENIAL)
+    switch (packet_type)
     {
+    case PACKET_TYPE_SERVER_DENIAL:
         return ReadServerDenial(response_packet_data_size, server_socket);
-    }
-    else if (packet_type != PACKET_TYPE_SERVER_UPLOAD_PERMITTED)
-    {
-
+    case PACKET_TYPE_SERVER_UPLOAD_PERMITTED:
+        result.is_successful = true;
+        return result;
+    default:
         sprintf(result.error_info,
                 "Invalid upload request response received with TYPE %d",
                 packet_type);
         return result;
     }
-
-    result.is_successful = true;
-    return result;
 }
 
 OperationResult RequestFileDownload(
@@ -120,12 +118,13 @@ OperationResult RequestFileDownload(
     uint8_t packet_type = ExtractPacketHeader(
         response_packet_header, NULL, &response_packet_data_size);
 
-    if (packet_type == PACKET_TYPE_SERVER_DENIAL)
+    switch (packet_type)
     {
+    case PACKET_TYPE_SERVER_DENIAL:
         return ReadServerDenial(response_packet_data_size, server_socket);
-    }
-    else if (packet_type != PACKET_TYPE_SERVER_DOWNLOAD_PERMITTED)
-    {
+    case PACKET_TYPE_SERVER_DOWNLOAD_PERMITTED:
+        break;
+    default:
         sprintf(result.error_info,
                 "Invalid download request response received with TYPE %d",
                 packet_type);

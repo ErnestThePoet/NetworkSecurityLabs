@@ -68,13 +68,12 @@ OperationResult UploadFile(
     uint8_t packet_type = ExtractPacketHeader(
         response_packet_header, NULL, &response_packet_data_size);
 
-    if (packet_type == PACKET_TYPE_SERVER_UPLOAD_SUCCESSFUL)
+    switch (packet_type)
     {
+    case PACKET_TYPE_SERVER_UPLOAD_SUCCESSFUL:
         result.is_successful = true;
         return result;
-    }
-    else if (packet_type == PACKET_TYPE_SERVER_UPLOAD_FAILED)
-    {
+    case PACKET_TYPE_SERVER_UPLOAD_FAILED:
         char *response_packet_data = (char *)malloc(response_packet_data_size);
         if (response_packet_data == NULL)
         {
@@ -96,9 +95,7 @@ OperationResult UploadFile(
         free(response_packet_data);
 
         return result;
-    }
-    else
-    {
+    default:
         sprintf(result.error_info,
                 "Invalid upload request response received with TYPE %d",
                 packet_type);

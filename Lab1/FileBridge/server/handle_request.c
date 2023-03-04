@@ -15,13 +15,12 @@ void *HandleRequest(void *client_socket_ptr)
     uint8_t packet_type = ExtractPacketHeader(
         request_packet_header, NULL, &request_packet_data_size);
 
-    if(packet_type==PACKET_TYPE_CLIENT_UPLOAD_REQUEST){
+    switch(packet_type){
+        case PACKET_TYPE_CLIENT_UPLOAD_REQUEST:
 
-    }
-    else if(packet_type==PACKET_TYPE_CLIENT_DOWNLOAD_REQUEST){
+        case PACKET_TYPE_CLIENT_DOWNLOAD_REQUEST:
 
-    }
-    else{
-        
+        default:
+
     }
 }
