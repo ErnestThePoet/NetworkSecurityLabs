@@ -1,4 +1,4 @@
-#include "request_trans.h"
+#include "trans_request.h"
 
 static OperationResult ReadServerDenial(
     const size_t response_packet_data_size, const int server_socket)
@@ -15,9 +15,8 @@ static OperationResult ReadServerDenial(
 
     if (!ReadSocket(server_socket, response_packet_data, response_packet_data_size))
     {
-        strcpy(result.error_info,
-               "Failed to receive server denial packet data");
-        return result;
+        FAILURE_RETURN_FREE(response_packet_data,
+                            "Failed to receive server denial packet data");
     }
 
     sprintf(result.error_info,
@@ -45,7 +44,11 @@ OperationResult RequestFileUpload(
         return result;
     }
 
-    if (send(server_socket, packet, packet_size, 0) != packet_size)
+    size_t sent_size = send(server_socket, packet, packet_size, 0);
+
+    ReleasePacket(packet);
+
+    if (sent_size != packet_size)
     {
         strcpy(result.error_info, "Failed to send upload request packet");
         return result;
@@ -94,7 +97,11 @@ OperationResult RequestFileDownload(
         return result;
     }
 
-    if (send(server_socket, packet, packet_size, 0) != packet_size)
+    size_t sent_size = send(server_socket, packet, packet_size, 0);
+
+    ReleasePacket(packet);
+
+    if (sent_size != packet_size)
     {
         strcpy(result.error_info, "Failed to send download request packet");
         return result;

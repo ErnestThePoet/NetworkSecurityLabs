@@ -1,4 +1,4 @@
-#include "perform_trans.h"
+#include "trans_perform.h"
 
 OperationResult UploadFile(
     FILE *local_file, const size_t file_size, const int server_socket)
@@ -28,14 +28,12 @@ OperationResult UploadFile(
                 : (file_size - read_file_size);
         if (fread(file_buffer, 1, current_read_size, local_file) != current_read_size)
         {
-            strcpy(result.error_info, "Failed to read local file");
-            return result;
+            FAILURE_RETURN_FREE(file_buffer, "Failed to read local file");
         }
 
         if (send(server_socket, file_buffer, current_read_size, 0) != current_read_size)
         {
-            strcpy(result.error_info, "Failed to send local file");
-            return result;
+            FAILURE_RETURN_FREE(file_buffer, "Failed to send local file");
         }
 
         sha256_update(&sha256_ctx, file_buffer, current_read_size);
@@ -87,9 +85,8 @@ OperationResult UploadFile(
 
         if (!ReadSocket(server_socket, response_packet_data, response_packet_data_size))
         {
-            strcpy(result.error_info,
-                   "Failed to receive server upload failed feedback packet data");
-            return result;
+            FAILURE_RETURN_FREE(response_packet_data,
+                                "Failed to receive server upload failed feedback packet data");
         }
 
         sprintf(result.error_info,
@@ -138,14 +135,12 @@ OperationResult DownloadFile(
 
         if (!ReadSocket(server_socket, file_buffer, current_receive_size))
         {
-            strcpy(result.error_info, "Failed to receive server file");
-            return result;
+            FAILURE_RETURN_FREE(file_buffer, "Failed to receive server file");
         }
 
         if (fwrite(file_buffer, 1, current_receive_size, local_file) != current_receive_size)
         {
-            strcpy(result.error_info, "Failed to write local file");
-            return result;
+            FAILURE_RETURN_FREE(file_buffer, "Failed to write local file");
         }
 
         sha256_update(&sha256_ctx, file_buffer, current_receive_size);

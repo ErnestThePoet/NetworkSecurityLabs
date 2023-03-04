@@ -4,8 +4,8 @@
 #include "parse_args.h"
 #include "file_operations.h"
 #include "connection.h"
-#include "request_trans.h"
-#include "perform_trans.h"
+#include "trans_request.h"
+#include "trans_perform.h"
 
 #define SUCCESS 0
 #define FAILURE 1

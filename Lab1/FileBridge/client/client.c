@@ -56,5 +56,8 @@ int main(int argc, char *argv[])
         CHECK_FAILURE_C_F("File Download Error: %s\n");
     }
 
+    CloseFile(local_file);
+    CloseConnection(server_socket);
+
     return SUCCESS;
 }

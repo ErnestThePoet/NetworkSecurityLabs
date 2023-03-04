@@ -1,5 +1,5 @@
-#ifndef REQUEST_TRANS_H_
-#define REQUEST_TRANS_H_
+#ifndef TRANS_REQUEST_H_
+#define TRANS_REQUEST_H_
 
 #include <stdint.h>
 #include <stdio.h>
@@ -9,6 +9,7 @@
 #include "../common/operation_result.h"
 #include "../common/packets.h"
 #include "../common/read_socket.h"
+#include "trans.h"
 
 OperationResult RequestFileUpload(
     const size_t file_size,

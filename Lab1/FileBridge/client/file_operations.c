@@ -49,3 +49,7 @@ OperationResult PrepareFileDownload(const char *local_file_path, FILE **file_ret
 {
     return PrepareFile(local_file_path, "wb", file_ret);
 }
+
+void CloseFile(FILE *file){
+    fclose(file);
+}
