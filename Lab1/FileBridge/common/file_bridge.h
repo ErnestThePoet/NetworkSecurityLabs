@@ -6,7 +6,7 @@
 #define SUCCESS 0
 #define FAILURE 1
 
-#define EXIT_FAILURE exit(FAILURE)
+#define FAILURE_EXIT exit(FAILURE)
 
 typedef struct sockaddr_in sockaddr_in;
 

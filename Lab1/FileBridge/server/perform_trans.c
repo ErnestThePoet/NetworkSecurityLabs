@@ -11,7 +11,7 @@ OperationResult ReceiveFile(
     char *file_buffer = (char *)malloc(RECEIVE_BUFFER_SIZE);
     if (file_buffer == NULL)
     {
-        EXIT_FAILURE;
+        FAILURE_EXIT;
     }
 
     const int chunk_count = file_size == 0 ? 0 : (file_size - 1) / RECEIVE_BUFFER_SIZE + 1;
@@ -72,7 +72,7 @@ OperationResult SendFile(
     char *file_buffer = (char *)malloc(SEND_BUFFER_SIZE);
     if (file_buffer == NULL)
     {
-        EXIT_FAILURE;
+        FAILURE_EXIT;
     }
 
     const int chunk_count = file_size == 0 ? 0 : (file_size - 1) / SEND_BUFFER_SIZE + 1;

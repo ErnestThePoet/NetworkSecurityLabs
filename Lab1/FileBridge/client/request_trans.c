@@ -8,7 +8,7 @@ static OperationResult ReadServerDenial(
     char *response_packet_data = (char *)malloc(response_packet_data_size);
     if (response_packet_data == NULL)
     {
-        EXIT_FAILURE;
+        FAILURE_EXIT;
     }
 
     if (!ReadSocket(server_socket, response_packet_data, response_packet_data_size))

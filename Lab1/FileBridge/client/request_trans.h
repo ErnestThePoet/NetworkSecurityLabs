@@ -10,7 +10,7 @@
 #include "../common/operation_result.h"
 #include "../common/packets.h"
 #include "../common/read_socket.h"
-#include "trans.h"
+#include "../common/trans.h"
 
 OperationResult RequestFileUpload(
     const size_t file_size,

@@ -11,7 +11,7 @@ char *MakeClientUploadRequestPacket(const char *server_file_path,
     uint8_t *packet = (uint8_t *)malloc(packet_size);
     if (packet == NULL)
     {
-        EXIT_FAILURE;
+        FAILURE_EXIT;
     }
 
     *packet_size_ret = packet_size;
@@ -38,7 +38,7 @@ char *MakeClientDownloadRequestPacket(const char *server_file_path,
     uint8_t *packet = (uint8_t *)malloc(packet_size);
     if (packet == NULL)
     {
-        EXIT_FAILURE;
+        FAILURE_EXIT;
     }
 
     *packet_size_ret = packet_size;
@@ -64,7 +64,7 @@ char *MakeServerDenialPacket(const char *reason,
     uint8_t *packet = (uint8_t *)malloc(packet_size);
     if (packet == NULL)
     {
-        EXIT_FAILURE;
+        FAILURE_EXIT;
     }
 
     *packet_size_ret = packet_size;
@@ -87,7 +87,7 @@ char *MakeServerUploadPermissionPacket(size_t *packet_size_ret)
     uint8_t *packet = (uint8_t *)malloc(packet_size);
     if (packet == NULL)
     {
-        EXIT_FAILURE;
+        FAILURE_EXIT;
     }
 
     *packet_size_ret = packet_size;
@@ -106,7 +106,7 @@ char *MakeServerDownloadPermissionPacket(const size_t file_size,
     uint8_t *packet = (uint8_t *)malloc(packet_size);
     if (packet == NULL)
     {
-        EXIT_FAILURE;
+        FAILURE_EXIT;
     }
 
     *packet_size_ret = packet_size;
@@ -126,7 +126,7 @@ char *MakeServerUploadSuccessPacket(size_t *packet_size_ret)
     uint8_t *packet = (uint8_t *)malloc(packet_size);
     if (packet == NULL)
     {
-        EXIT_FAILURE;
+        FAILURE_EXIT;
     }
 
     *packet_size_ret = packet_size;
@@ -147,7 +147,7 @@ char *MakeServerUploadFailurePacket(const char *reason,
     uint8_t *packet = (uint8_t *)malloc(packet_size);
     if (packet == NULL)
     {
-        EXIT_FAILURE;
+        FAILURE_EXIT;
     }
 
     *packet_size_ret = packet_size;

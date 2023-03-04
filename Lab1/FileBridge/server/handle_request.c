@@ -93,19 +93,22 @@ void *HandleRequest(void *client_socket_ptr)
     }
 
     size_t request_packet_data_size = 0;
+    char *request_packet_data = NULL;
     uint8_t packet_type = ExtractPacketHeader(
         request_packet_header, NULL, &request_packet_data_size);
 
     size_t file_size = 0;
     FILE *server_file = NULL;
 
+    OperationResult result = {false};
+
     switch (packet_type)
     {
     case PACKET_TYPE_CLIENT_UPLOAD_REQUEST:
-        char *request_packet_data = (char *)malloc(request_packet_data_size);
+        request_packet_data = (char *)malloc(request_packet_data_size);
         if (request_packet_data == NULL)
         {
-            EXIT_FAILURE;
+            FAILURE_EXIT;
         }
 
         if (!ReadSocket(client_socket, request_packet_data, request_packet_data_size))
@@ -119,7 +122,7 @@ void *HandleRequest(void *client_socket_ptr)
 
         printf("[FILE UPLOAD REQUEST] %s\n", request_packet_data + 4);
 
-        OperationResult result = PrepareFileUpload(request_packet_data + 4, &server_file);
+        result = PrepareFileUpload(request_packet_data + 4, &server_file);
         free(request_packet_data);
         CHECK_FAILURE_DENY_RETURN_S_F;
 
@@ -151,10 +154,10 @@ void *HandleRequest(void *client_socket_ptr)
         return NULL;
 
     case PACKET_TYPE_CLIENT_DOWNLOAD_REQUEST:
-        char *request_packet_data = (char *)malloc(request_packet_data_size);
+        request_packet_data = (char *)malloc(request_packet_data_size);
         if (request_packet_data == NULL)
         {
-            EXIT_FAILURE;
+            FAILURE_EXIT;
         }
 
         if (!ReadSocket(client_socket, request_packet_data, request_packet_data_size))
@@ -165,7 +168,7 @@ void *HandleRequest(void *client_socket_ptr)
 
         printf("[FILE DOWNLOAD REQUEST] %s\n", request_packet_data + 4);
 
-        OperationResult result = PrepareFileDownload(request_packet_data + 4, &server_file, &file_size);
+        result = PrepareFileDownload(request_packet_data + 4, &server_file, &file_size);
         free(request_packet_data);
         CHECK_FAILURE_DENY_RETURN_S_F;
 
@@ -183,7 +186,7 @@ void *HandleRequest(void *client_socket_ptr)
         return NULL;
 
     default:
-        char *message[50];
+        char message[50];
         sprintf(message, "Invalid packet received with TYPE %d", packet_type);
         FAILURE_RETURN_S(message);
     }

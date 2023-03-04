@@ -11,7 +11,7 @@ OperationResult UploadFile(
     char *file_buffer = (char *)malloc(UPLOAD_BUFFER_SIZE);
     if (file_buffer == NULL)
     {
-        EXIT_FAILURE;
+        FAILURE_EXIT;
     }
 
     const int chunk_count = file_size == 0 ? 0 : (file_size - 1) / UPLOAD_BUFFER_SIZE + 1;
@@ -76,7 +76,7 @@ OperationResult UploadFile(
         char *response_packet_data = (char *)malloc(response_packet_data_size);
         if (response_packet_data == NULL)
         {
-            EXIT_FAILURE;
+            FAILURE_EXIT;
         }
 
         if (!ReadSocket(server_socket, response_packet_data, response_packet_data_size))
@@ -111,7 +111,7 @@ OperationResult DownloadFile(
     char *file_buffer = (char *)malloc(DOWNLOAD_BUFFER_SIZE);
     if (file_buffer == NULL)
     {
-        EXIT_FAILURE;
+        FAILURE_EXIT;
     }
 
     const int chunk_count = file_size == 0 ? 0 : (file_size - 1) / DOWNLOAD_BUFFER_SIZE + 1;
