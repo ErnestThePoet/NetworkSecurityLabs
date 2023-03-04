@@ -17,10 +17,10 @@ int main(int argc, char *argv[])
     }
 
     int server_socket = 0;
+    size_t file_size = 0;
     FILE *local_file = NULL;
     if (client_arg.operation_mode == OPERATION_MODE_UPLOAD)
     {
-        size_t file_size = 0;
         operation_result = PrepareFileUpload(
             client_arg.local_file_path, &local_file, &file_size);
         CHECK_FAILURE_C_F("Upload File Preparation Error: %s\n");
@@ -33,6 +33,9 @@ int main(int argc, char *argv[])
         operation_result = RequestFileUpload(
             file_size, client_arg.server_file_path, server_socket);
         CHECK_FAILURE_C_F("File Upload Request Error: %s\n");
+
+        operation_result = UploadFile(local_file, file_size, server_socket);
+        CHECK_FAILURE_C_F("File Upload Error: %s\n");
     }
     else
     {
@@ -45,10 +48,12 @@ int main(int argc, char *argv[])
                                            &server_socket);
         CHECK_FAILURE_C_F("Connecting Error: %s\n");
 
-        size_t file_size = 0;
         operation_result = RequestFileDownload(
             client_arg.server_file_path, server_socket, &file_size);
         CHECK_FAILURE_C_F("File Download Request Error: %s\n");
+
+        operation_result = DownloadFile(local_file, file_size, server_socket);
+        CHECK_FAILURE_C_F("File Download Error: %s\n");
     }
 
     return SUCCESS;
