@@ -60,18 +60,20 @@ OperationResult RequestFileUpload(
         return result;
     }
 
-    size_t response_packet_data_size =
-        *((uint64_t *)(response_packet_header + 1)) - PACKET_HEADER_SIZE;
+    size_t response_packet_data_size = 0;
+    uint8_t packet_type = ExtractPacketHeader(
+        response_packet_header, NULL, &response_packet_data_size);
 
-    if (response_packet_header[0] == PACKET_TYPE_SERVER_DENIAL)
+    if (packet_type == PACKET_TYPE_SERVER_DENIAL)
     {
         return ReadServerDenial(response_packet_data_size, server_socket);
     }
-    else if (response_packet_header[0] != PACKET_TYPE_SERVER_UPLOAD_PERMITTED)
+    else if (packet_type != PACKET_TYPE_SERVER_UPLOAD_PERMITTED)
     {
+        
         sprintf(result.error_info,
                 "Invalid upload request response received with TYPE %d",
-                response_packet_header[0]);
+                packet_type);
         return result;
     }
 
@@ -107,18 +109,19 @@ OperationResult RequestFileDownload(
         return result;
     }
 
-    size_t response_packet_data_size =
-        *((uint64_t *)(response_packet_header + 1)) - PACKET_HEADER_SIZE;
+    size_t response_packet_data_size = 0;
+    uint8_t packet_type = ExtractPacketHeader(
+        response_packet_header, NULL, &response_packet_data_size);
 
-    if (response_packet_header[0] == PACKET_TYPE_SERVER_DENIAL)
+    if (packet_type == PACKET_TYPE_SERVER_DENIAL)
     {
         return ReadServerDenial(response_packet_data_size, server_socket);
     }
-    else if (response_packet_header[0] != PACKET_TYPE_SERVER_UPLOAD_PERMITTED)
+    else if (packet_type != PACKET_TYPE_SERVER_DOWNLOAD_PERMITTED)
     {
         sprintf(result.error_info,
                 "Invalid download request response received with TYPE %d",
-                response_packet_header[0]);
+                packet_type);
         return result;
     }
 

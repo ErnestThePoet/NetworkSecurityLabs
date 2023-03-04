@@ -87,6 +87,10 @@ char *MakeServerUploadSuccessfulPacket(size_t *packet_size_ret);
 char *MakeServerUploadFailedPacket(const char *reason,
                                    size_t *packet_size_ret);
 
+uint8_t ExtractPacketHeader(const char *header,
+                            size_t *packet_size_ret,
+                            size_t *packet_data_size_ret);
+
 void ReleasePacket(char *packet);
 
 #endif

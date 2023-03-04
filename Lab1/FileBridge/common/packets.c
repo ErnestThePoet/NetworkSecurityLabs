@@ -163,6 +163,23 @@ char *MakeServerUploadFailedPacket(const char *reason,
     return (char *)packet;
 }
 
+uint8_t ExtractPacketHeader(const char *header,
+                            size_t *packet_size_ret,
+                            size_t *packet_data_size_ret)
+{
+    if (packet_size_ret != NULL)
+    {
+        *packet_size_ret = *((uint64_t *)(header + 1));
+    }
+
+    if (packet_data_size_ret != NULL)
+    {
+        *packet_data_size_ret = *((uint64_t *)(header + 1)) - PACKET_HEADER_SIZE;
+    }
+    
+    return header[0];
+}
+
 void ReleasePacket(char *packet)
 {
     free(packet);
