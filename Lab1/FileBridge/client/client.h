@@ -4,11 +4,10 @@
 #include "parse_args.h"
 #include "file_operations.h"
 #include "connection.h"
-#include "trans_request.h"
-#include "trans_perform.h"
+#include "request_trans.h"
+#include "perform_trans.h"
 
-#define SUCCESS 0
-#define FAILURE 1
+#include "../common/file_bridge.h"
 
 #define CHECK_FAILURE(TEMPLATE)                            \
     do                                                     \

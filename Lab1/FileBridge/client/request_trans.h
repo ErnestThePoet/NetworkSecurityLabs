@@ -1,5 +1,5 @@
-#ifndef TRANS_REQUEST_H_
-#define TRANS_REQUEST_H_
+#ifndef REQUEST_TRANS_H_
+#define REQUEST_TRANS_H_
 
 #include <stdint.h>
 #include <stdio.h>

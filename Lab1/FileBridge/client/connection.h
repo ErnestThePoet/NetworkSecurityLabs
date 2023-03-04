@@ -7,9 +7,8 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 
+#include "../common/file_bridge.h"
 #include "../common/operation_result.h"
-
-typedef struct sockaddr_in sockaddr_in;
 
 OperationResult ConnectToServer(
     const char *ip4_address, const int port, int *server_socket_ret);
