@@ -28,11 +28,10 @@
         return NULL;                              \
     } while (false)
 
-#define FAILURE_RETURN_S_F_FREE(M, P)             \
+#define FAILURE_RETURN_S_F(M)                     \
     do                                            \
     {                                             \
         printf(HANDLE_REQUEST_ERROR_TEMPLATE, M); \
-        free(P);                                  \
         close(client_socket);                     \
         if (server_file != NULL)                  \
         {                                         \
@@ -50,11 +49,10 @@
         return NULL;                              \
     } while (false)
 
-#define FAILURE_DENY_RETURN_S_F_FREE(M, P)        \
+#define FAILURE_DENY_RETURN_S_F(M)                \
     do                                            \
     {                                             \
         printf(HANDLE_REQUEST_ERROR_TEMPLATE, M); \
-        free(P);                                  \
         SendServerDenial(client_socket, M);       \
         close(client_socket);                     \
         if (server_file != NULL)                  \
@@ -64,14 +62,22 @@
         return NULL;                              \
     } while (false)
 
-#define CHECK_FAILURE_S_F_FREE                           \
-    do                                                   \
-    {                                                    \
-        if (!result.is_successful)                       \
-        {                                                \
-            FAILURE_DENY_RETURN_S_F_FREE(                \
-                result.error_info, request_packet_data); \
-        }                                                \
+#define CHECK_FAILURE_RETURN_S_F                   \
+    do                                             \
+    {                                              \
+        if (!result.is_successful)                 \
+        {                                          \
+            FAILURE_RETURN_S_F(result.error_info); \
+        }                                          \
+    } while (false)
+
+#define CHECK_FAILURE_DENY_RETURN_S_F                   \
+    do                                                  \
+    {                                                   \
+        if (!result.is_successful)                      \
+        {                                               \
+            FAILURE_DENY_RETURN_S_F(result.error_info); \
+        }                                               \
     } while (false)
 
 void *HandleRequest(void *client_socket_ptr);
