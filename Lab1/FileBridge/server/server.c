@@ -23,6 +23,8 @@ int main(int argc, char *argv[])
         return FAILURE;
     }
 
+    printf("Server started, listening on port %d\n", port);
+
     RunServer(server_socket);
 
     return SUCCESS;
