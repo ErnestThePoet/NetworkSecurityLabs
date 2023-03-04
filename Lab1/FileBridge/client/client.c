@@ -55,6 +55,9 @@ int main(int argc, char *argv[])
             client_arg.server_file_path, server_socket, &file_size);
         CHECK_FAILURE_S_F("File Download Request Error: %s\n");
 
+        operation_result = CheckFreeDiskSpace(file_size);
+        CHECK_FAILURE_S_F("Disk Space Error: %s\n");
+
         operation_result = DownloadFile(local_file, file_size, server_socket);
         CHECK_FAILURE_S_F("File Download Error: %s\n");
 
