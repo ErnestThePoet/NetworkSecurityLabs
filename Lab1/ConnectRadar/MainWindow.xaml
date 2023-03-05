@@ -169,16 +169,10 @@
                 <Button x:Name="btnStart" 
                         DockPanel.Dock="Left"
                         Width="80px"
-                        Height="30px" Click="btnStart_Click">
+                        Height="30px" 
+                        Margin="0,0,10px,0"
+                        Click="btnStart_Click">
                     开始
-                </Button>
-                <Button x:Name="btnEnd"
-                        DockPanel.Dock="Left"
-                        IsEnabled="False"
-                        Width="80px"
-                        Height="30px"
-                        Margin="10px,0,10px,0" Click="btnEnd_Click">
-                    终止
                 </Button>
 
                 <ProgressBar x:Name="pbProgress"/>

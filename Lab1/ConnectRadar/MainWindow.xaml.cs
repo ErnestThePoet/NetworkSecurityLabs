@@ -125,6 +125,8 @@ namespace ConnectRadar
                 MessageBox.Show($"【错误】{message}", "错误");
                 return;
             }
+
+
         }
 
         private void btnEnd_Click(object sender, RoutedEventArgs e)
