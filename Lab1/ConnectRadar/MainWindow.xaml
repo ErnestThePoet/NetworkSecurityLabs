@@ -155,7 +155,7 @@
                             Width="30px">-</Button>
                     <TextBox x:Name="tbThreadCount"
                              Width="100px"
-                             MaxLength="5"
+                             MaxLength="4"
                              HorizontalContentAlignment="Center"
                              VerticalContentAlignment="Center">
                         100
