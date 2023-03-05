@@ -38,7 +38,7 @@
                                 MaxLength="3"
                                 HorizontalContentAlignment="Center"
                                 VerticalContentAlignment="Center" TextChanged="tbIpStart1_TextChanged">
-                        0
+                        127
                     </TextBox>
                     <Label>.</Label>
 
@@ -68,7 +68,7 @@
                                 MaxLength="3"
                                 HorizontalContentAlignment="Center"
                                 VerticalContentAlignment="Center" TextChanged="tbIpStart4_TextChanged">
-                        0
+                        1
                     </TextBox>
 
                     <Label Margin="20px,0,20px,0">-</Label>
@@ -79,7 +79,7 @@
                                 MaxLength="3"
                                 HorizontalContentAlignment="Center"
                                 VerticalContentAlignment="Center" TextChanged="tbIpEnd1_TextChanged">
-                        0
+                        127
                     </TextBox>
                     <Label>.</Label>
 
@@ -109,7 +109,7 @@
                                 MaxLength="3"
                                 HorizontalContentAlignment="Center"
                                 VerticalContentAlignment="Center" TextChanged="tbIpEnd4_TextChanged">
-                        0
+                        1
                     </TextBox>
                 </StackPanel>
 

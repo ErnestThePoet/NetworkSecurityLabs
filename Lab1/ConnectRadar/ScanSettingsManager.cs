@@ -30,6 +30,19 @@ namespace ConnectRadar
             }
         }
 
+        //public int GetIp4AddressComponent(bool isStart, int index, int component)
+        //{
+        //    unsafe
+        //    {
+        //        fixed (uint* addressStartPtr = &ip4AddressStart,
+        //            addressEndPtr = &ip4AddressEnd)
+        //        {
+        //            uint* addressPtr = isStart ? addressStartPtr : addressEndPtr;
+        //            return *((byte*)addressPtr + index);
+        //        }
+        //    }
+        //}
+
         public uint GetIp4AddressStart()
         {
             return ip4AddressStart;

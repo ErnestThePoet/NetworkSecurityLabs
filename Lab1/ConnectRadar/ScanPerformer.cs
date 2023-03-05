@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Buffers.Binary;
 using System.Net.Sockets;
 using System.Diagnostics.CodeAnalysis;
+using System.Windows;
 
 namespace ConnectRadar
 {
@@ -25,6 +26,14 @@ namespace ConnectRadar
         public event Action<double>? OnScanProgressUpdate;
 
         public event Action? OnScanCompleted;
+
+        private void RunOnUiThread(Action action)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                action();
+            });
+        }
 
         private void StartSingleScan(object? scanTargetsObj)
         {
@@ -53,16 +62,26 @@ namespace ConnectRadar
                     scanResult.isOpen = false;
                 }
 
-                OnScanUpdate?.Invoke(scanResult);
+                RunOnUiThread(() =>
+                {
+                    OnScanUpdate?.Invoke(scanResult);
+                });
 
                 Interlocked.Increment(ref finishedScanCount);
                 if (finishedScanCount == totalScanCount)
                 {
-                    OnScanCompleted?.Invoke();
+                    RunOnUiThread(() =>
+                    {
+                        OnScanCompleted?.Invoke();
+                    });
                 }
             }
 
-            OnScanProgressUpdate?.Invoke((double)finishedScanCount / totalScanCount);
+            RunOnUiThread(() =>
+            {
+                OnScanProgressUpdate?.Invoke(
+                    (double)finishedScanCount / totalScanCount);
+            });
         }
 
         public void StartScan(

@@ -56,6 +56,11 @@ namespace ConnectRadar
             }
         }
 
+        private void UpdateDatagrid()
+        {
+            dgScanResult.Items.Refresh();
+        }
+
         private void tbIpStart1_TextChanged(object sender, TextChangedEventArgs e)
         {
             OnTbIpComponentTextChanged(tbIpStart1, tbIpStart2, true, 3);
@@ -137,6 +142,7 @@ namespace ConnectRadar
             }
 
             scanResults.Clear();
+            UpdateDatagrid();
             pbProgress.Value = 0;
             btnStart.IsEnabled = false;
 
@@ -152,7 +158,11 @@ namespace ConnectRadar
         {
             lock (scanResults)
             {
-                scanResults.Add(scanResult);
+                lock (dgScanResult)
+                {
+                    scanResults.Add(scanResult);
+                    UpdateDatagrid();
+                }
             }
         }
 
