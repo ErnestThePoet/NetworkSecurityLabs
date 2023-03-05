@@ -37,7 +37,7 @@
                                 Height="20px"
                                 MaxLength="3"
                                 HorizontalContentAlignment="Center"
-                                VerticalContentAlignment="Center">
+                                VerticalContentAlignment="Center" TextChanged="tbIpStart1_TextChanged">
                         0
                     </TextBox>
                     <Label>.</Label>
@@ -47,7 +47,7 @@
                                 Height="20px"
                                 MaxLength="3"
                                 HorizontalContentAlignment="Center"
-                                VerticalContentAlignment="Center">
+                                VerticalContentAlignment="Center" TextChanged="tbIpStart2_TextChanged">
                         0
                     </TextBox>
                     <Label>.</Label>
@@ -57,7 +57,7 @@
                                 Height="20px"
                                 MaxLength="3"
                                 HorizontalContentAlignment="Center"
-                                VerticalContentAlignment="Center">
+                                VerticalContentAlignment="Center" TextChanged="tbIpStart3_TextChanged">
                         0
                     </TextBox>
                     <Label>.</Label>
@@ -67,7 +67,7 @@
                                 Height="20px"
                                 MaxLength="3"
                                 HorizontalContentAlignment="Center"
-                                VerticalContentAlignment="Center">
+                                VerticalContentAlignment="Center" TextChanged="tbIpStart4_TextChanged">
                         0
                     </TextBox>
 
@@ -78,7 +78,7 @@
                                 Height="20px"
                                 MaxLength="3"
                                 HorizontalContentAlignment="Center"
-                                VerticalContentAlignment="Center">
+                                VerticalContentAlignment="Center" TextChanged="tbIpEnd1_TextChanged">
                         0
                     </TextBox>
                     <Label>.</Label>
@@ -88,7 +88,7 @@
                                 Height="20px"
                                 MaxLength="3"
                                 HorizontalContentAlignment="Center"
-                                VerticalContentAlignment="Center">
+                                VerticalContentAlignment="Center" TextChanged="tbIpEnd2_TextChanged">
                         0
                     </TextBox>
                     <Label>.</Label>
@@ -98,7 +98,7 @@
                                 Height="20px"
                                 MaxLength="3"
                                 HorizontalContentAlignment="Center"
-                                VerticalContentAlignment="Center">
+                                VerticalContentAlignment="Center" TextChanged="tbIpEnd3_TextChanged">
                         0
                     </TextBox>
                     <Label>.</Label>
@@ -108,7 +108,7 @@
                                 Height="20px"
                                 MaxLength="3"
                                 HorizontalContentAlignment="Center"
-                                VerticalContentAlignment="Center">
+                                VerticalContentAlignment="Center" TextChanged="tbIpEnd4_TextChanged">
                         0
                     </TextBox>
                 </StackPanel>
@@ -126,7 +126,7 @@
                              Height="20px"
                              MaxLength="5"
                              HorizontalContentAlignment="Center"
-                             VerticalContentAlignment="Center">
+                             VerticalContentAlignment="Center" TextChanged="tbPortStart_TextChanged">
                         20
                     </TextBox>
 
@@ -137,7 +137,7 @@
                              Height="20px"
                              MaxLength="5"
                              HorizontalContentAlignment="Center"
-                             VerticalContentAlignment="Center">
+                             VerticalContentAlignment="Center" TextChanged="tbPortEnd_TextChanged">
                         20000
                     </TextBox>
                 </StackPanel>
@@ -152,16 +152,16 @@
                             Height="20px"
                             Orientation="Horizontal">
                     <Button x:Name="btnThreadDec"
-                            Width="30px">-</Button>
+                            Width="30px" Click="btnThreadDec_Click">-</Button>
                     <TextBox x:Name="tbThreadCount"
                              Width="100px"
                              MaxLength="4"
                              HorizontalContentAlignment="Center"
-                             VerticalContentAlignment="Center">
+                             VerticalContentAlignment="Center" TextChanged="tbThreadCount_TextChanged">
                         100
                     </TextBox>
                     <Button x:Name="btnThreadInc"
-                            Width="30px">+</Button>
+                            Width="30px" Click="btnThreadInc_Click">+</Button>
                 </StackPanel>
             </Grid>
 
@@ -169,7 +169,7 @@
                 <Button x:Name="btnStart" 
                         DockPanel.Dock="Left"
                         Width="80px"
-                        Height="30px">
+                        Height="30px" Click="btnStart_Click">
                     开始
                 </Button>
                 <Button x:Name="btnEnd"
@@ -177,7 +177,7 @@
                         IsEnabled="False"
                         Width="80px"
                         Height="30px"
-                        Margin="10px,0,10px,0">
+                        Margin="10px,0,10px,0" Click="btnEnd_Click">
                     终止
                 </Button>
 
