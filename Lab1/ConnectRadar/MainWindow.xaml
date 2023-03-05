@@ -10,8 +10,8 @@
         Width="700"
         MinHeight="450"
         MinWidth="700">
-    <StackPanel>
-        <StackPanel Grid.Row="0" Margin="20px">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Margin="20px">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150px"/>
@@ -183,5 +183,7 @@
                 <ProgressBar x:Name="pbProgress" Value="98"/>
             </DockPanel>
         </StackPanel>
-    </StackPanel>
+
+        <DataGrid x:Name="dgScanResult"/>
+    </DockPanel>
 </Window>
