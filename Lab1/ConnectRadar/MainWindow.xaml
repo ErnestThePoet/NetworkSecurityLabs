@@ -145,7 +145,7 @@
                 <Label Grid.Row="2" Grid.Column="0"
                        Margin="0,0,20px,0"
                        HorizontalContentAlignment="Right">
-                    使用线程数
+                    使用线程数上限
                 </Label>
 
                 <StackPanel Grid.Row="2" Grid.Column="1"

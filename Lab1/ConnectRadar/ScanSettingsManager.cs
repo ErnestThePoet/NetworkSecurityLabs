@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace ConnectRadar
 {
-    internal class PortScanManager
+    internal class ScanSettingsManager
     {
+        // Both are in Little Endian
         private uint ip4AddressStart;
         private uint ip4AddressEnd;
 
-        private int portStart;
-        private int portEnd;
+        public int portStart { get; set; }
+        public int portEnd { get; set; }
 
-        private int threadCount;
+        public int threadCount { get; set; }
 
         public void SetIp4AddressComponent(bool isStart, int index, int component)
         {
@@ -29,22 +30,17 @@ namespace ConnectRadar
             }
         }
 
-        public void SetPortStart(int portStart)
+        public uint GetIp4AddressStart()
         {
-            this.portStart = portStart;
+            return ip4AddressStart;
         }
 
-        public void SetPortEnd(int portEnd)
+        public uint GetIp4AddressEnd()
         {
-            this.portEnd = portEnd;
+            return ip4AddressEnd;
         }
 
-        public void SetThreadCount(int threadCount)
-        {
-            this.threadCount = threadCount;
-        }
-
-        public bool CheckScanParameters(out string message)
+        public bool CheckScanSettings(out string message)
         {
             if (ip4AddressStart > ip4AddressEnd)
             {

@@ -21,11 +21,13 @@ namespace ConnectRadar
     public partial class MainWindow : Window
     {
         ParseHelper parseHelper;
-        PortScanManager portScanManager;
+        ScanSettingsManager scanSettingsManager;
+        ScanPerformer scanPerformer;
         public MainWindow()
         {
             parseHelper = new ParseHelper();
-            portScanManager = new PortScanManager();
+            scanSettingsManager = new ScanSettingsManager();
+            scanPerformer = new ScanPerformer();
 
             InitializeComponent();
         }
@@ -35,7 +37,7 @@ namespace ConnectRadar
         {
             int parsedComponent = parseHelper.ParseIp4AddressComponent(current.Text);
             current.Text = parsedComponent.ToString();
-            portScanManager.SetIp4AddressComponent(isStart, currentIndex, parsedComponent);
+            scanSettingsManager.SetIp4AddressComponent(isStart, currentIndex, parsedComponent);
 
             if (next != null && current.Text.Length >= 3)
             {
@@ -88,21 +90,21 @@ namespace ConnectRadar
         {
             int parsedPort = parseHelper.ParsePort(tbPortStart.Text);
             tbPortStart.Text = parsedPort.ToString();
-            portScanManager.SetPortStart(parsedPort);
+            scanSettingsManager.portStart = parsedPort;
         }
 
         private void tbPortEnd_TextChanged(object sender, TextChangedEventArgs e)
         {
             int parsedPort = parseHelper.ParsePort(tbPortEnd.Text);
             tbPortEnd.Text = parsedPort.ToString();
-            portScanManager.SetPortEnd(parsedPort);
+            scanSettingsManager.portEnd = parsedPort;
         }
 
         private void tbThreadCount_TextChanged(object sender, TextChangedEventArgs e)
         {
             int parsedThreadCount = parseHelper.ParseThreadCount(tbThreadCount.Text);
             tbThreadCount.Text = parsedThreadCount.ToString();
-            portScanManager.SetThreadCount(parsedThreadCount);
+            scanSettingsManager.threadCount = parsedThreadCount;
         }
 
         private void btnThreadDec_Click(object sender, RoutedEventArgs e)
@@ -118,7 +120,7 @@ namespace ConnectRadar
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
             string message;
-            if(!portScanManager.CheckScanParameters(out message))
+            if (!scanSettingsManager.CheckScanSettings(out message))
             {
                 MessageBox.Show($"【错误】{message}", "错误");
                 return;
