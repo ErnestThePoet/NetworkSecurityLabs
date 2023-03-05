@@ -19,8 +19,12 @@ namespace ConnectRadar
         private int totalScanCount;
         private int finishedScanCount;
 
+        // Must be thread-safe
         public event Action<ScanResult>? OnScanUpdate;
+        // Must be thread-safe, progress value is [0,1]
         public event Action<double>? OnScanProgressUpdate;
+
+        public event Action? OnScanCompleted;
 
         private void StartSingleScan(object? scanTargetsObj)
         {
@@ -50,7 +54,12 @@ namespace ConnectRadar
                 }
 
                 OnScanUpdate?.Invoke(scanResult);
+
                 Interlocked.Increment(ref finishedScanCount);
+                if (finishedScanCount == totalScanCount)
+                {
+                    OnScanCompleted?.Invoke();
+                }
             }
 
             OnScanProgressUpdate?.Invoke((double)finishedScanCount / totalScanCount);

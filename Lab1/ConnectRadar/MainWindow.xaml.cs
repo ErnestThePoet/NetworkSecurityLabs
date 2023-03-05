@@ -23,13 +23,23 @@ namespace ConnectRadar
         ParseHelper parseHelper;
         ScanSettingsManager scanSettingsManager;
         ScanPerformer scanPerformer;
+
+        List<ScanResult> scanResults;
+
         public MainWindow()
         {
             parseHelper = new();
             scanSettingsManager = new();
             scanPerformer = new();
+            scanResults = new();
+
+            scanPerformer.OnScanUpdate += OnScanUpdate;
+            scanPerformer.OnScanProgressUpdate += OnScanProgressUpdate;
+            scanPerformer.OnScanCompleted += OnScanCompleted;
 
             InitializeComponent();
+
+            dgScanResult.ItemsSource = scanResults;
         }
 
         private void OnTbIpComponentTextChanged(
@@ -126,12 +136,38 @@ namespace ConnectRadar
                 return;
             }
 
+            scanResults.Clear();
+            pbProgress.Value = 0;
+            btnStart.IsEnabled = false;
 
+            scanPerformer.StartScan(
+                scanSettingsManager.GetIp4AddressStart(),
+                scanSettingsManager.GetIp4AddressEnd(),
+                scanSettingsManager.portStart,
+                scanSettingsManager.portEnd,
+                scanSettingsManager.threadCount);
         }
 
-        private void btnEnd_Click(object sender, RoutedEventArgs e)
+        private void OnScanUpdate(ScanResult scanResult)
         {
+            lock (scanResults)
+            {
+                scanResults.Add(scanResult);
+            }
+        }
 
+        private void OnScanProgressUpdate(double progress)
+        {
+            lock (pbProgress)
+            {
+                pbProgress.Value = progress * 100;
+            }
+        }
+
+        private void OnScanCompleted()
+        {
+            pbProgress.Value = 100;
+            btnStart.IsEnabled = true;
         }
     }
 }
