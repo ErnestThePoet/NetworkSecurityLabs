@@ -18,6 +18,9 @@ namespace ConnectRadar
         private const int THREAD_COUNT_MIN = 1;
         private const int THREAD_COUNT_MAX = 9999;
 
+        private const int CONNECT_TIMEOUT_MS_MIN = 500;
+        private const int CONNECT_TIMEOUT_MS_MAX = 20000;
+
         private int ParseRange(string value,int min,int max)
         {
             int parsedValue;
@@ -55,6 +58,13 @@ namespace ConnectRadar
         public int ParseThreadCount(string threadCount)
         {
             return ParseRange(threadCount, THREAD_COUNT_MIN, THREAD_COUNT_MAX);
+        }
+
+        public int ParseConnectTimeoutMs(string connectTimeoutMs)
+        {
+            return ParseRange(connectTimeoutMs, 
+                CONNECT_TIMEOUT_MS_MIN, 
+                CONNECT_TIMEOUT_MS_MAX);
         }
     }
 }

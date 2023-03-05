@@ -117,14 +117,12 @@ namespace ConnectRadar
             scanSettingsManager.threadCount = parsedThreadCount;
         }
 
-        private void btnThreadDec_Click(object sender, RoutedEventArgs e)
+        private void tbConnectTimeoutMs_TextChanged(object sender, TextChangedEventArgs e)
         {
-            tbThreadCount.Text = (int.Parse(tbThreadCount.Text) - 1).ToString();
-        }
-
-        private void btnThreadInc_Click(object sender, RoutedEventArgs e)
-        {
-            tbThreadCount.Text = (int.Parse(tbThreadCount.Text) + 1).ToString();
+            int parsedConnectTimeoutMs = 
+                parseHelper.ParseConnectTimeoutMs(tbConnectTimeoutMs.Text);
+            tbConnectTimeoutMs.Text = parsedConnectTimeoutMs.ToString();
+            scanSettingsManager.connectTimeoutMs = parsedConnectTimeoutMs;
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)

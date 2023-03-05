@@ -22,6 +22,7 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 
                 <Label Grid.Row="0" Grid.Column="0"
@@ -148,21 +149,31 @@
                     使用线程数上限
                 </Label>
 
-                <StackPanel Grid.Row="2" Grid.Column="1"
-                            Height="20px"
-                            Orientation="Horizontal">
-                    <Button x:Name="btnThreadDec"
-                            Width="30px" Click="btnThreadDec_Click">-</Button>
-                    <TextBox x:Name="tbThreadCount"
-                             Width="100px"
-                             MaxLength="4"
-                             HorizontalContentAlignment="Center"
-                             VerticalContentAlignment="Center" TextChanged="tbThreadCount_TextChanged">
-                        100
-                    </TextBox>
-                    <Button x:Name="btnThreadInc"
-                            Width="30px" Click="btnThreadInc_Click">+</Button>
-                </StackPanel>
+                <TextBox x:Name="tbThreadCount"
+                         Grid.Row="2" Grid.Column="1"
+                         Width="100px"
+                         MaxLength="4"
+                         HorizontalAlignment="Left"
+                         HorizontalContentAlignment="Center"
+                         VerticalContentAlignment="Center" TextChanged="tbThreadCount_TextChanged">
+                    100
+                </TextBox>
+
+                <Label Grid.Row="3" Grid.Column="0"
+                       Margin="0,0,20px,0"
+                       HorizontalContentAlignment="Right">
+                    连接最大超时(毫秒)
+                </Label>
+
+                <TextBox x:Name="tbConnectTimeoutMs"
+                         Grid.Row="3" Grid.Column="1"
+                         Width="100px"
+                         MaxLength="4"
+                         HorizontalAlignment="Left"
+                         HorizontalContentAlignment="Center"
+                         VerticalContentAlignment="Center" TextChanged="tbConnectTimeoutMs_TextChanged">
+                    5000
+                </TextBox>
             </Grid>
 
             <DockPanel Margin="0,20px,0,0">

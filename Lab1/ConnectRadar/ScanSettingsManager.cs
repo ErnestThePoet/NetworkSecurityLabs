@@ -17,6 +17,8 @@ namespace ConnectRadar
 
         public int threadCount { get; set; }
 
+        public int connectTimeoutMs { get; set; }
+
         public void SetIp4AddressComponent(bool isStart, int index, int component)
         {
             unsafe

@@ -19,6 +19,7 @@ namespace ConnectRadar
 
         private int totalScanCount;
         private int finishedScanCount;
+        private int connectTimeoutMs;
 
         // Must be thread-safe
         public event Action<ScanResult>? OnScanUpdate;
@@ -55,7 +56,12 @@ namespace ConnectRadar
 
                 try
                 {
-                    serverSocket.Connect(iPEndPoint);
+                    serverSocket.BeginConnect(iPEndPoint, null, null)
+                        .AsyncWaitHandle.WaitOne(connectTimeoutMs);
+                    if (!serverSocket.Connected)
+                    {
+                        throw new SocketException();
+                    }
                 }
                 catch (SocketException e)
                 {
@@ -89,7 +95,8 @@ namespace ConnectRadar
             uint ipv4AddressEnd,
             int portStart,
             int portEnd,
-            int threadCount)
+            int threadCount,
+            int connectTimeoutMs)
         {
             totalScanCount = (int)(ipv4AddressEnd - ipv4AddressStart + 1)
                 * (portEnd - portStart + 1);
@@ -97,6 +104,8 @@ namespace ConnectRadar
             {
                 threadCount = totalScanCount;
             }
+
+            this.connectTimeoutMs = connectTimeoutMs;
 
             finishedScanCount = 0;
 
