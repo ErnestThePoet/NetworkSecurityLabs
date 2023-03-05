@@ -180,7 +180,7 @@
                     终止
                 </Button>
 
-                <ProgressBar x:Name="pbProgress" Value="98"/>
+                <ProgressBar x:Name="pbProgress"/>
             </DockPanel>
         </StackPanel>
 
