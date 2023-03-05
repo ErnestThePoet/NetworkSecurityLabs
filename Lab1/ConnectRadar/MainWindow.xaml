@@ -179,6 +179,20 @@
             </DockPanel>
         </StackPanel>
 
-        <DataGrid x:Name="dgScanResult"/>
+        <DataGrid x:Name="dgScanResult"
+                  ItemsSource="{Binding scanResults}"
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="IPv4地址" 
+                                    Binding="{Binding ipv4Address}"
+                                    IsReadOnly="True"/>
+                <DataGridTextColumn Header="端口号" 
+                                    Binding="{Binding port}"
+                                    IsReadOnly="True"/>
+                <DataGridCheckBoxColumn Header="是否开启" 
+                                        Binding="{Binding isOpen}"
+                                        IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </DockPanel>
 </Window>

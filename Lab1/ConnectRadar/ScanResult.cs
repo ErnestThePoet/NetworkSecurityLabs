@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace ConnectRadar
 {
-    internal record struct ScanResult(string ipv4Address,int port,bool isOpen);
+    public record struct ScanResult(string ipv4Address,int port,bool isOpen);
 }

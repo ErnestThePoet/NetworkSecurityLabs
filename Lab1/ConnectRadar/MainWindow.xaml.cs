@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,11 +21,10 @@ namespace ConnectRadar
     /// </summary>
     public partial class MainWindow : Window
     {
-        ParseHelper parseHelper;
-        ScanSettingsManager scanSettingsManager;
-        ScanPerformer scanPerformer;
-
-        List<ScanResult> scanResults;
+        private ParseHelper parseHelper;
+        private ScanSettingsManager scanSettingsManager;
+        private ScanPerformer scanPerformer;
+        public ObservableCollection<ScanResult> scanResults { get; set; }
 
         public MainWindow()
         {
@@ -39,7 +39,7 @@ namespace ConnectRadar
 
             InitializeComponent();
 
-            dgScanResult.ItemsSource = scanResults;
+            DataContext = this;
         }
 
         private void OnTbIpComponentTextChanged(
@@ -54,11 +54,6 @@ namespace ConnectRadar
                 next.Focus();
                 next.SelectAll();
             }
-        }
-
-        private void UpdateDatagrid()
-        {
-            dgScanResult.Items.Refresh();
         }
 
         private void tbIpStart1_TextChanged(object sender, TextChangedEventArgs e)
@@ -142,7 +137,6 @@ namespace ConnectRadar
             }
 
             scanResults.Clear();
-            UpdateDatagrid();
             pbProgress.Value = 0;
             btnStart.IsEnabled = false;
 
@@ -158,11 +152,7 @@ namespace ConnectRadar
         {
             lock (scanResults)
             {
-                lock (dgScanResult)
-                {
-                    scanResults.Add(scanResult);
-                    UpdateDatagrid();
-                }
+                scanResults.Add(scanResult);
             }
         }
 
