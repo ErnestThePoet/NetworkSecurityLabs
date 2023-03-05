@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:ConnectRadar"
         mc:Ignorable="d"
         Title="ConnectRadar 端口扫描" 
-        Height="450" 
+        Height="550" 
         Width="700"
-        MinHeight="450"
+        MinHeight="550"
         MinWidth="700">
     <DockPanel>
         <StackPanel DockPanel.Dock="Top" Margin="20px">
