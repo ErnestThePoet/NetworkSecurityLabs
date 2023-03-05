@@ -143,7 +143,8 @@ namespace ConnectRadar
                 scanSettingsManager.GetIp4AddressEnd(),
                 scanSettingsManager.portStart,
                 scanSettingsManager.portEnd,
-                scanSettingsManager.threadCount);
+                scanSettingsManager.threadCount,
+                scanSettingsManager.connectTimeoutMs);
         }
 
         private void OnScanUpdate(ScanResult scanResult)

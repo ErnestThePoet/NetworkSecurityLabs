@@ -27,7 +27,7 @@ namespace ConnectRadar
 
             if (!int.TryParse(value, out parsedValue))
             {
-                return 0;
+                return min;
             }
 
             if (parsedValue < min)
