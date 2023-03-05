@@ -5,8 +5,183 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ConnectRadar"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="ConnectRadar 端口扫描" 
+        Height="450" 
+        Width="700"
+        MinHeight="450"
+        MinWidth="700">
+    <StackPanel>
+        <StackPanel Grid.Row="0" Margin="20px">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150px"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
-    </Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Row="0" Grid.Column="0"
+                       Margin="0,0,20px,0"
+                       HorizontalContentAlignment="Right">
+                    IPv4地址范围
+                </Label>
+                
+                <StackPanel Grid.Row="0" Grid.Column="1"
+                    Orientation="Horizontal">
+                    <TextBox x:Name="tbIpStart1" 
+                                Width="40px"
+                                Height="20px"
+                                MaxLength="3"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center">
+                        0
+                    </TextBox>
+                    <Label>.</Label>
+
+                    <TextBox x:Name="tbIpStart2" 
+                                Width="40px"
+                                Height="20px"
+                                MaxLength="3"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center">
+                        0
+                    </TextBox>
+                    <Label>.</Label>
+
+                    <TextBox x:Name="tbIpStart3" 
+                                Width="40px"
+                                Height="20px"
+                                MaxLength="3"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center">
+                        0
+                    </TextBox>
+                    <Label>.</Label>
+
+                    <TextBox x:Name="tbIpStart4" 
+                                Width="40px"
+                                Height="20px"
+                                MaxLength="3"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center">
+                        0
+                    </TextBox>
+
+                    <Label Margin="20px,0,20px,0">-</Label>
+
+                    <TextBox x:Name="tbIpEnd1" 
+                                Width="40px"
+                                Height="20px"
+                                MaxLength="3"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center">
+                        0
+                    </TextBox>
+                    <Label>.</Label>
+
+                    <TextBox x:Name="tbIpEnd2" 
+                                Width="40px"
+                                Height="20px"
+                                MaxLength="3"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center">
+                        0
+                    </TextBox>
+                    <Label>.</Label>
+
+                    <TextBox x:Name="tbIpEnd3" 
+                                Width="40px"
+                                Height="20px"
+                                MaxLength="3"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center">
+                        0
+                    </TextBox>
+                    <Label>.</Label>
+
+                    <TextBox x:Name="tbIpEnd4" 
+                                Width="40px"
+                                Height="20px"
+                                MaxLength="3"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center">
+                        0
+                    </TextBox>
+                </StackPanel>
+
+                <Label Grid.Row="1" Grid.Column="0"
+                       Margin="0,0,20px,0"
+                       HorizontalContentAlignment="Right">
+                    端口范围
+                </Label>
+
+                <StackPanel Grid.Row="1" Grid.Column="1"
+                    Orientation="Horizontal">
+                    <TextBox Name="tbPortStart"
+                             Width="100px"
+                             Height="20px"
+                             MaxLength="5"
+                             HorizontalContentAlignment="Center"
+                             VerticalContentAlignment="Center">
+                        20
+                    </TextBox>
+
+                    <Label Margin="20px,0,20px,0">-</Label>
+
+                    <TextBox Name="tbPortEnd"
+                             Width="100px"
+                             Height="20px"
+                             MaxLength="5"
+                             HorizontalContentAlignment="Center"
+                             VerticalContentAlignment="Center">
+                        20000
+                    </TextBox>
+                </StackPanel>
+
+                <Label Grid.Row="2" Grid.Column="0"
+                       Margin="0,0,20px,0"
+                       HorizontalContentAlignment="Right">
+                    使用线程数
+                </Label>
+
+                <StackPanel Grid.Row="2" Grid.Column="1"
+                            Height="20px"
+                            Orientation="Horizontal">
+                    <Button x:Name="btnThreadDec"
+                            Width="30px">-</Button>
+                    <TextBox x:Name="tbThreadCount"
+                             Width="100px"
+                             MaxLength="5"
+                             HorizontalContentAlignment="Center"
+                             VerticalContentAlignment="Center">
+                        100
+                    </TextBox>
+                    <Button x:Name="btnThreadInc"
+                            Width="30px">+</Button>
+                </StackPanel>
+            </Grid>
+
+            <DockPanel Margin="0,20px,0,0">
+                <Button x:Name="btnStart" 
+                        DockPanel.Dock="Left"
+                        Width="80px"
+                        Height="30px">
+                    开始
+                </Button>
+                <Button x:Name="btnEnd"
+                        DockPanel.Dock="Left"
+                        Width="80px"
+                        Height="30px"
+                        Margin="10px,0,10px,0">
+                    终止
+                </Button>
+
+                <ProgressBar x:Name="pbProgress" Value="98"/>
+            </DockPanel>
+        </StackPanel>
+    </StackPanel>
 </Window>
