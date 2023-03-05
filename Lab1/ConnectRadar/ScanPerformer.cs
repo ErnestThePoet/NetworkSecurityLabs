@@ -25,19 +25,19 @@ namespace ConnectRadar
         private void StartSingleScan(object? scanTargetsObj)
         {
             List<ScanTarget> scanTargets =
-                (scanTargetsObj as List<ScanTarget>) ?? new List<ScanTarget>();
+                (scanTargetsObj as List<ScanTarget>) ?? new();
 
             foreach (ScanTarget scanTarget in scanTargets)
             {
                 IPEndPoint iPEndPoint = new(
                     BinaryPrimitives.ReverseEndianness(scanTarget.ipv4Address),
                     scanTarget.port);
-                using Socket serverSocket = new Socket(
+                using Socket serverSocket = new(
                     iPEndPoint.AddressFamily,
                     SocketType.Stream,
                     ProtocolType.Tcp);
 
-                ScanResult scanResult = new ScanResult(
+                ScanResult scanResult = new(
                         iPEndPoint.Address.ToString(), scanTarget.port, true);
 
                 try
@@ -75,12 +75,12 @@ namespace ConnectRadar
             int remainingScanCount = totalScanCount;
             int remainingThreadCount = threadCount;
             int currentScanCountPerThread = remainingScanCount / remainingThreadCount;
-            List<ScanTarget> currentScanTargets = new List<ScanTarget>();
+            List<ScanTarget> currentScanTargets = new();
             for (uint i = ipv4AddressStart; i <= ipv4AddressEnd; i++)
             {
                 for (int j = portStart; j <= portEnd; j++)
                 {
-                    currentScanTargets.Add(new ScanTarget(i, j));
+                    currentScanTargets.Add(new(i, j));
                     remainingScanCount--;
 
                     if (currentScanTargets.Count >= currentScanCountPerThread)

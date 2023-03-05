@@ -25,9 +25,9 @@ namespace ConnectRadar
         ScanPerformer scanPerformer;
         public MainWindow()
         {
-            parseHelper = new ParseHelper();
-            scanSettingsManager = new ScanSettingsManager();
-            scanPerformer = new ScanPerformer();
+            parseHelper = new();
+            scanSettingsManager = new();
+            scanPerformer = new();
 
             InitializeComponent();
         }
