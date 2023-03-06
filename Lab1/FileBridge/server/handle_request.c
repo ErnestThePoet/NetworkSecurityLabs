@@ -85,7 +85,8 @@ static bool SendListDirResult(const int client_socket, const char *server_dir_pa
 {
     char command_buffer[150];
 
-    sprintf(command_buffer, "cd %s && ls -p", server_dir_path);
+    // 2>&1 redirects stderr to stdout and we can get the error output of cd
+    sprintf(command_buffer, "cd %s 2>&1 && ls -p", server_dir_path);
     FILE *ls_pipe = popen(command_buffer, "r");
 
     char list_dir_result_buffer[1024] = "";

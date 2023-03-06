@@ -42,6 +42,8 @@ int main(int argc, char *argv[])
         operation_result = UploadFile(local_file, file_size, server_socket);
         CHECK_FAILURE_S_F("File Upload Error: %s\n");
 
+        CloseFile(local_file);
+
         break;
 
     case OPERATION_MODE_DOWNLOAD:
@@ -66,6 +68,8 @@ int main(int argc, char *argv[])
         operation_result = DownloadFile(local_file, file_size, server_socket);
         CHECK_FAILURE_S_F("File Download Error: %s\n");
 
+        CloseFile(local_file);
+
         break;
 
     case OPERATION_MODE_LIST_DIR:
@@ -77,9 +81,10 @@ int main(int argc, char *argv[])
         operation_result = RequestListDir(
             client_arg.server_file_path, server_socket);
         CHECK_FAILURE_S_F("List Dir Request Error: %s\n");
+
+        break;
     }
 
-    CloseFile(local_file);
     CloseConnection(server_socket);
 
     return SUCCESS;

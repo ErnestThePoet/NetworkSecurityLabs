@@ -192,6 +192,7 @@ OperationResult RequestListDir(
 
     if (!ReadSocket(server_socket, response_packet_data, response_packet_data_size))
     {
+        free(response_packet_data);
         strcpy(result.error_info,
                "Failed to receive list dir request response data");
         return result;
