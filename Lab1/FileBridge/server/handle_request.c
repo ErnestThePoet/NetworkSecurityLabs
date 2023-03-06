@@ -152,7 +152,7 @@ void *HandleRequest(void *client_socket_ptr)
         size_t file_path_length = *((uint32_t *)request_packet_data);
         file_size = *((uint64_t *)(request_packet_data + 4 + file_path_length));
 
-        printf("[FILE UPLOAD REQUEST] %s\n", request_packet_data + 4);
+        printf("[FILE UPLOAD REQUEST] %s - %zd Byte(s)\n", request_packet_data + 4, file_size);
 
         result = PrepareFileUpload(request_packet_data + 4, &server_file);
         free(request_packet_data);
@@ -197,9 +197,10 @@ void *HandleRequest(void *client_socket_ptr)
             FAILURE_DENY_RETURN_S("Server failed to receive file download request packet data");
         }
 
-        printf("[FILE DOWNLOAD REQUEST] %s\n", request_packet_data + 4);
-
         result = PrepareFileDownload(request_packet_data + 4, &server_file, &file_size);
+
+        printf("[FILE DOWNLOAD REQUEST] %s - %zd Byte(s)\n", request_packet_data + 4, file_size);
+
         free(request_packet_data);
         CHECK_FAILURE_DENY_RETURN_S_F;
 

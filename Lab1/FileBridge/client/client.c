@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
             file_size, client_arg.server_file_path, server_socket);
         CHECK_FAILURE_S_F("File Upload Request Error: %s\n");
 
-        printf("Uploading %s - %zdB\n", client_arg.local_file_path, file_size);
+        printf("Uploading %s - %zd Byte(s)\n", client_arg.local_file_path, file_size);
 
         operation_result = UploadFile(local_file, file_size, server_socket);
         CHECK_FAILURE_S_F("File Upload Error: %s\n");
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
         operation_result = CheckFreeDiskSpace(file_size);
         CHECK_FAILURE_S_F("Disk Space Error: %s\n");
 
-        printf("Downloading %s - %zdB\n", client_arg.local_file_path, file_size);
+        printf("Downloading %s - %zd Byte(s)\n", client_arg.local_file_path, file_size);
 
         operation_result = DownloadFile(local_file, file_size, server_socket);
         CHECK_FAILURE_S_F("File Download Error: %s\n");
