@@ -81,6 +81,37 @@ static bool SendServerDownloadPermission(const int client_socket, const size_t f
     return true;
 }
 
+static bool SendListDirResult(const int client_socket, const char *server_dir_path)
+{
+    char command_buffer[150];
+
+    sprintf(command_buffer, "cd %s && ls -p", server_dir_path);
+    FILE *ls_pipe = popen(command_buffer, "r");
+
+    char list_dir_result_buffer[1024] = "";
+    char current_filename_buffer[150];
+    while (!feof(ls_pipe) && fgets(current_filename_buffer, sizeof(current_filename_buffer), ls_pipe))
+    {
+        strcat(list_dir_result_buffer, current_filename_buffer);
+    }
+
+    pclose(ls_pipe);
+
+    size_t packet_size = 0;
+    char *packet = MakeServerListDirResultPacket(list_dir_result_buffer, &packet_size);
+
+    size_t sent_size = send(client_socket, packet, packet_size, 0);
+
+    ReleasePacket(packet);
+
+    if (sent_size != packet_size)
+    {
+        return false;
+    }
+
+    return true;
+}
+
 void *HandleRequest(void *client_socket_ptr)
 {
     const int client_socket = *((int *)client_socket_ptr);
@@ -149,9 +180,8 @@ void *HandleRequest(void *client_socket_ptr)
         }
 
         fclose(server_file);
-        close(client_socket);
 
-        return NULL;
+        break;
 
     case PACKET_TYPE_CLIENT_DOWNLOAD_REQUEST:
         request_packet_data = (char *)malloc(request_packet_data_size);
@@ -181,13 +211,40 @@ void *HandleRequest(void *client_socket_ptr)
         CHECK_FAILURE_RETURN_S_F;
 
         fclose(server_file);
-        close(client_socket);
 
-        return NULL;
+        break;
+
+    case PACKET_TYPE_CLIENT_LIST_DIR_REQUEST:
+        request_packet_data = (char *)malloc(request_packet_data_size);
+        if (request_packet_data == NULL)
+        {
+            FAILURE_EXIT;
+        }
+
+        if (!ReadSocket(client_socket, request_packet_data, request_packet_data_size))
+        {
+            free(request_packet_data);
+            FAILURE_RETURN_S("Server failed to receive list dir request packet data");
+        }
+
+        printf("[LIST DIR REQUEST] %s\n", request_packet_data + 4);
+
+        if (!SendListDirResult(client_socket, request_packet_data + 4))
+        {
+            FAILURE_RETURN_S("Failed to send server list dir permission packet");
+        }
+
+        free(request_packet_data);
+
+        break;
 
     default:
         char message[50];
         sprintf(message, "Invalid packet received with TYPE %d", packet_type);
         FAILURE_RETURN_S(message);
     }
+
+    close(client_socket);
+
+    return NULL;
 }

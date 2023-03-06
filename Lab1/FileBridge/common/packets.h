@@ -66,8 +66,8 @@
  * Server List Dir Result
  * TYPE=105
  * DATA Field:
- * 4B         File list length in bytes
- * variable   File list string
+ * 4B         List dir result length in bytes
+ * variable   List dir result string
  *
  * *********************************************/
 
