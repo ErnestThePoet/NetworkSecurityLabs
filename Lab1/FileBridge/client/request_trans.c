@@ -198,7 +198,7 @@ OperationResult RequestListDir(
         return result;
     }
 
-    puts(response_packet_data + 4);
+    printf("%s", response_packet_data + 4);
 
     free(response_packet_data);
 
