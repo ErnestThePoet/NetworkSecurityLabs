@@ -84,19 +84,26 @@ static bool SendServerDownloadPermission(const int client_socket, const size_t f
 static bool SendListDirResult(const int client_socket, const char *server_dir_path)
 {
     char command_buffer[150];
+    char list_dir_result_buffer[1024] = "";
 
     // 2>&1 redirects stderr to stdout and we can get the error output of cd
     sprintf(command_buffer, "cd %s 2>&1 && ls -p", server_dir_path);
+    
     FILE *ls_pipe = popen(command_buffer, "r");
-
-    char list_dir_result_buffer[1024] = "";
-    char current_filename_buffer[150];
-    while (!feof(ls_pipe) && fgets(current_filename_buffer, sizeof(current_filename_buffer), ls_pipe))
+    if (ls_pipe == NULL)
     {
-        strcat(list_dir_result_buffer, current_filename_buffer);
+        strcpy(list_dir_result_buffer, "Server failed to call popen()\n");
     }
+    else
+    {
+        char current_filename_buffer[150];
+        while (!feof(ls_pipe) && fgets(current_filename_buffer, sizeof(current_filename_buffer), ls_pipe))
+        {
+            strcat(list_dir_result_buffer, current_filename_buffer);
+        }
 
-    pclose(ls_pipe);
+        pclose(ls_pipe);
+    }
 
     size_t packet_size = 0;
     char *packet = MakeServerListDirResultPacket(list_dir_result_buffer, &packet_size);
