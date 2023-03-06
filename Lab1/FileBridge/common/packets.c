@@ -54,6 +54,32 @@ char *MakeClientDownloadRequestPacket(const char *server_file_path,
     return (char *)packet;
 }
 
+char *MakeClientListDirRequestPacket(const char *server_dir_path,
+                                     size_t *packet_size_ret)
+{
+    const size_t server_dir_path_length = strlen(server_dir_path) + 1;
+
+    const size_t packet_size = PACKET_HEADER_SIZE + 4 + server_dir_path_length;
+
+    uint8_t *packet = (uint8_t *)malloc(packet_size);
+    if (packet == NULL)
+    {
+        FAILURE_EXIT;
+    }
+
+    *packet_size_ret = packet_size;
+
+    packet[0] = PACKET_TYPE_CLIENT_LIST_DIR_REQUEST;
+    *((uint64_t *)(packet + 1)) = packet_size;
+
+    *((uint32_t *)(packet + PACKET_HEADER_SIZE)) = server_dir_path_length;
+    memcpy(packet + PACKET_HEADER_SIZE + 4,
+           server_dir_path,
+           server_dir_path_length);
+
+    return (char *)packet;
+}
+
 char *MakeServerDenialPacket(const char *reason,
                              size_t *packet_size_ret)
 {
@@ -99,7 +125,7 @@ char *MakeServerUploadPermissionPacket(size_t *packet_size_ret)
 }
 
 char *MakeServerDownloadPermissionPacket(const size_t file_size,
-                                        size_t *packet_size_ret)
+                                         size_t *packet_size_ret)
 {
     const size_t packet_size = PACKET_HEADER_SIZE + 8;
 
@@ -138,7 +164,7 @@ char *MakeServerUploadSuccessPacket(size_t *packet_size_ret)
 }
 
 char *MakeServerUploadFailurePacket(const char *reason,
-                                   size_t *packet_size_ret)
+                                    size_t *packet_size_ret)
 {
     const size_t reason_length = strlen(reason) + 1;
 
@@ -159,6 +185,32 @@ char *MakeServerUploadFailurePacket(const char *reason,
     memcpy(packet + PACKET_HEADER_SIZE + 4,
            reason,
            reason_length);
+
+    return (char *)packet;
+}
+
+char *MakeServerListDirResultPacket(const char *list_dir_result,
+                                    size_t *packet_size_ret)
+{
+    const size_t list_dir_result_length = strlen(list_dir_result) + 1;
+
+    const size_t packet_size = PACKET_HEADER_SIZE + 4 + list_dir_result_length;
+
+    uint8_t *packet = (uint8_t *)malloc(packet_size);
+    if (packet == NULL)
+    {
+        FAILURE_EXIT;
+    }
+
+    *packet_size_ret = packet_size;
+
+    packet[0] = PACKET_TYPE_SERVER_LIST_DIR_RESULT;
+    *((uint64_t *)(packet + 1)) = packet_size;
+
+    *((uint32_t *)(packet + PACKET_HEADER_SIZE)) = list_dir_result_length;
+    memcpy(packet + PACKET_HEADER_SIZE + 4,
+           list_dir_result,
+           list_dir_result_length);
 
     return (char *)packet;
 }

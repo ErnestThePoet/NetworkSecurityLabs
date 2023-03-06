@@ -3,6 +3,7 @@
 
 #define OPERATION_MODE_UPLOAD 0
 #define OPERATION_MODE_DOWNLOAD 1
+#define OPERATION_MODE_LIST_DIR 2
 
 typedef struct
 {

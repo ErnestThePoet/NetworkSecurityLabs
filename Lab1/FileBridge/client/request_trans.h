@@ -20,5 +20,8 @@ OperationResult RequestFileDownload(
     const char *server_file_path,
     const int server_socket,
     size_t *file_size_ret);
+OperationResult RequestListDir(
+    const char *server_dir_path,
+    const int server_socket);
 
 #endif

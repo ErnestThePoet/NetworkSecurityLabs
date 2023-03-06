@@ -140,3 +140,67 @@ OperationResult RequestFileDownload(
     result.is_successful = true;
     return result;
 }
+
+OperationResult RequestListDir(
+    const char *server_dir_path,
+    const int server_socket)
+{
+    OperationResult result = {false};
+
+    size_t packet_size = 0;
+    char *packet = MakeClientListDirRequestPacket(server_dir_path, &packet_size);
+
+    size_t sent_size = send(server_socket, packet, packet_size, 0);
+
+    ReleasePacket(packet);
+
+    if (sent_size != packet_size)
+    {
+        strcpy(result.error_info, "Failed to send list dir request packet");
+        return result;
+    }
+
+    uint8_t response_packet_header[PACKET_HEADER_SIZE];
+
+    if (!ReadSocket(server_socket, response_packet_header, PACKET_HEADER_SIZE))
+    {
+        strcpy(result.error_info,
+               "Failed to receive header of list dir request response header");
+        return result;
+    }
+
+    size_t response_packet_data_size = 0;
+    uint8_t packet_type = ExtractPacketHeader(
+        response_packet_header, NULL, &response_packet_data_size);
+
+    switch (packet_type)
+    {
+    case PACKET_TYPE_SERVER_LIST_DIR_RESULT:
+        break;
+    default:
+        sprintf(result.error_info,
+                "Invalid list dir request response received with TYPE %d",
+                packet_type);
+        return result;
+    }
+
+    char *response_packet_data = (char *)malloc(response_packet_data_size);
+    if (response_packet_data == NULL)
+    {
+        FAILURE_EXIT;
+    }
+
+    if (!ReadSocket(server_socket, response_packet_data, response_packet_data_size))
+    {
+        strcpy(result.error_info,
+               "Failed to receive list dir request response data");
+        return result;
+    }
+
+    puts(response_packet_data + 4);
+
+    free(response_packet_data);
+
+    result.is_successful = true;
+    return result;
+}

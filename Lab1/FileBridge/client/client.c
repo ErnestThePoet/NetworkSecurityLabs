@@ -5,7 +5,8 @@ int main(int argc, char *argv[])
     const char *const kUsageHelp =
         "Usage:\n"
         "client -u <local file path> <server IPv4 address:server port:server file path>\n"
-        "client -d <server IPv4 address:server port:server file path> <local file path>";
+        "client -d <server IPv4 address:server port:server file path> <local file path>\n"
+        "client -l <server IPv4 address:server port:server directory path>";
 
     ClientArg client_arg;
     OperationResult operation_result = ParseArgs(argc, argv, &client_arg);
@@ -62,6 +63,16 @@ int main(int argc, char *argv[])
         CHECK_FAILURE_S_F("File Download Error: %s\n");
 
         break;
+
+    case OPERATION_MODE_LIST_DIR:
+        operation_result = ConnectToServer(client_arg.server_ip4_address,
+                                           client_arg.server_port,
+                                           &server_socket);
+        CHECK_FAILURE_S_F("Connecting Error: %s\n");
+
+        operation_result = RequestListDir(
+            client_arg.server_file_path, server_socket);
+        CHECK_FAILURE_S_F("List Dir Request Error: %s\n");
     }
 
     CloseFile(local_file);

@@ -5,18 +5,39 @@ OperationResult ParseArgs(
 {
     OperationResult result = {false};
 
-    if (argc != 4)
+    const char *kInvalidArgcErrorInfo = "Invalid number of input arguments";
+
+    if (argc < 3)
     {
-        strcpy(result.error_info, "Invalid number of input arguments");
+        strcpy(result.error_info, kInvalidArgcErrorInfo);
         return result;
     }
 
     if (!strcmp(argv[1], "-u"))
     {
+        if (argc != 4)
+        {
+            strcpy(result.error_info, kInvalidArgcErrorInfo);
+            return result;
+        }
         client_arg_ret->operation_mode = OPERATION_MODE_UPLOAD;
+    }
+    else if (!strcmp(argv[1], "-l"))
+    {
+        if (argc != 3)
+        {
+            strcpy(result.error_info, kInvalidArgcErrorInfo);
+            return result;
+        }
+        client_arg_ret->operation_mode = OPERATION_MODE_LIST_DIR;
     }
     else if (!strcmp(argv[1], "-d"))
     {
+        if (argc != 4)
+        {
+            strcpy(result.error_info, kInvalidArgcErrorInfo);
+            return result;
+        }
         client_arg_ret->operation_mode = OPERATION_MODE_DOWNLOAD;
     }
     else
@@ -25,11 +46,23 @@ OperationResult ParseArgs(
         return result;
     }
 
-    client_arg_ret->local_file_path =
-        client_arg_ret->operation_mode == OPERATION_MODE_UPLOAD ? argv[2] : argv[3];
+    char *server_arg = NULL;
 
-    char *server_arg =
-        client_arg_ret->operation_mode == OPERATION_MODE_UPLOAD ? argv[3] : argv[2];
+    switch (client_arg_ret->operation_mode)
+    {
+    case OPERATION_MODE_UPLOAD:
+        client_arg_ret->local_file_path = argv[2];
+        server_arg = argv[3];
+        break;
+    case OPERATION_MODE_DOWNLOAD:
+        client_arg_ret->local_file_path = argv[3];
+        server_arg = argv[2];
+        break;
+    case OPERATION_MODE_LIST_DIR:
+        client_arg_ret->local_file_path = NULL;
+        server_arg = argv[2];
+        break;
+    }
 
     const char *const kServerArgDelim = ":";
 

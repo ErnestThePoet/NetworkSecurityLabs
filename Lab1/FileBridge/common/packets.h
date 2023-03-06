@@ -32,6 +32,12 @@
  * 4B         Server file path length in bytes
  * variable   Server file path string
  *
+ * Client List Dir Request
+ * TYPE=3
+ * DATA Field:
+ * 4B         Server dir path length in bytes
+ * variable   Server dir path string
+ *
  * Server Denial
  * TYPE=100
  * DATA Field:
@@ -57,23 +63,35 @@
  * 4B         Reason length in bytes
  * variable   Reason string
  *
+ * Server List Dir Result
+ * TYPE=105
+ * DATA Field:
+ * 4B         File list length in bytes
+ * variable   File list string
+ *
  * *********************************************/
 
 #define PACKET_HEADER_SIZE 9
 
 #define PACKET_TYPE_CLIENT_UPLOAD_REQUEST 1
 #define PACKET_TYPE_CLIENT_DOWNLOAD_REQUEST 2
+#define PACKET_TYPE_CLIENT_LIST_DIR_REQUEST 3
+
 #define PACKET_TYPE_SERVER_DENIAL 100
 #define PACKET_TYPE_SERVER_UPLOAD_PERMISSION 101
 #define PACKET_TYPE_SERVER_DOWNLOAD_PERMISSION 102
 #define PACKET_TYPE_SERVER_UPLOAD_SUCCESS 103
 #define PACKET_TYPE_SERVER_UPLOAD_FAILURE 104
+#define PACKET_TYPE_SERVER_LIST_DIR_RESULT 105
 
 char *MakeClientUploadRequestPacket(const char *server_file_path,
                                     const size_t file_size,
                                     size_t *packet_size_ret);
 
 char *MakeClientDownloadRequestPacket(const char *server_file_path,
+                                      size_t *packet_size_ret);
+
+char *MakeClientListDirRequestPacket(const char *server_dir_path,
                                       size_t *packet_size_ret);
 
 char *MakeServerDenialPacket(const char *reason,
@@ -88,6 +106,9 @@ char *MakeServerUploadSuccessPacket(size_t *packet_size_ret);
 
 char *MakeServerUploadFailurePacket(const char *reason,
                                    size_t *packet_size_ret);
+
+char *MakeServerListDirResultPacket(const char *list_dir_result,
+                                    size_t *packet_size_ret);
 
 uint8_t ExtractPacketHeader(const char *header,
                             size_t *packet_size_ret,
