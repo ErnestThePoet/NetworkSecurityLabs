@@ -91,7 +91,7 @@ int PrintDeviceList(pcap_if_t **device_list_ret)
 
 int GetUserSelectedDeviceIndex(const int device_count)
 {
-    printf("Enter selected device index(0 to %d):", device_count - 1);
+    printf("Enter desired device index(0 to %d):", device_count - 1);
 
     const char *const kTryAgainPrompt = "Invalid input; try again:";
 

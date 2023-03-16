@@ -41,8 +41,8 @@ void PrintIp4Header(FILE *output_file, const Ip4Header *header)
 
         fprintf(output_file, "[%s] - [IPv4 Packet]\n  ", current_time_string);
 
-        fprintf(output_file, "Header Length: %d *4bytes\n  ", header->hlv >> 4);
-        fprintf(output_file, "Version Number: %d\n  ", header->hlv & 0x0F);
+        fprintf(output_file, "Header Length: %d *4bytes\n  ", header->hlv & 0x0F);
+        fprintf(output_file, "Version Number: %d\n  ", header->hlv >> 4);
         fprintf(output_file, "Type of Service: %d\n  ", header->tos);
         fprintf(output_file, "Total Length: %d bytes\n  ", ntohs(header->total_length));
         fprintf(output_file, "ID: %04x\n  ", ntohs(header->id));
