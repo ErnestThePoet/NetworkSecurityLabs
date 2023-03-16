@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     Initialize();
 }
 
-bool CheckArgs(const int argc, const char *const argv[])
+bool CheckArgs(const int argc, char *argv[])
 {
     if (argc != 1 && argc != 2)
     {

@@ -7,6 +7,6 @@
 #include "defs.h"
 #include "pcap_routines.h"
 
-bool CheckArgs(const int argc, const char *const argv[]);
+bool CheckArgs(const int argc, char *argv[]);
 
 #endif
