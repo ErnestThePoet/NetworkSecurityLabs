@@ -189,12 +189,47 @@ FILE *PrepareOutputFile(pcap_t *capture_handle, const char *filter)
 static void HandlePacket(
     uint8_t *user, const struct pcap_pkthdr *h, const uint8_t *bytes)
 {
-    printf("%d\n", h->len);
+    FILE *output_file = (FILE *)user;
+
+    EthernetHeader *ethernet_header = (EthernetHeader *)bytes;
+    uint16_t ethernet_payload_type = ntohs(ethernet_header->type);
+    if (ethernet_payload_type != ETHERNET_PAYLOAD_TYPE_IP4)
+    {
+        printf("Ethernet frame payload is not IPv4 (type=%#06x). Frame discarded\n",
+               ethernet_payload_type);
+        return;
+    }
+
+    Ip4Header *ip4_header = (Ip4Header *)(bytes + ETHERNET_HEADER_LENGTH);
+
+    if (ip4_header->protocol != IP4_PAYLOAD_TYPE_TCP && ip4_header->protocol != IP4_PAYLOAD_TYPE_UDP)
+    {
+        printf("IPv4 packet payload is neither TCP nor UDP (type=%#04x). Packet discarded\n",
+               ip4_header->protocol);
+        return;
+    }
+
+    uint8_t *transport_layer_header = ((uint8_t *)ip4_header) + ((ip4_header->hlv) & 0x0FU) * 4;
+
+    PrintEthernetHeader(output_file, ethernet_header);
+    PrintIp4Header(output_file, ip4_header);
+
+    switch (ip4_header->protocol)
+    {
+    case IP4_PAYLOAD_TYPE_TCP:
+        PrintTcpHeader(output_file, (TcpHeader *)transport_layer_header);
+        break;
+    case IP4_PAYLOAD_TYPE_UDP:
+        PrintUdpHeader(output_file, (UdpHeader *)transport_layer_header);
+        break;
+    }
 }
 
 void StartCaptureLoop(pcap_t *capture_handle, FILE *output_file)
 {
-    int error_code = pcap_loop(capture_handle, 0, HandlePacket, output_file);
+    puts("Capture loop started");
+
+    int error_code = pcap_loop(capture_handle, 0, HandlePacket, (uint8_t *)output_file);
 
     switch (error_code)
     {

@@ -8,8 +8,11 @@
 #include <string.h>
 #include <time.h>
 #include <sys/socket.h>
+#include <arpa/inet.h>
 #include <pcap/pcap.h>
 #include "defs.h"
+#include "protocol_headers.h"
+#include "print_headers.h"
 
 #define CHECK_ERROR          \
     do                       \

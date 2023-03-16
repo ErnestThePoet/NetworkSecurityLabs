@@ -3,6 +3,13 @@
 
 #include <stdint.h>
 
+#define ETHERNET_HEADER_LENGTH 14
+
+#define ETHERNET_PAYLOAD_TYPE_IP4 0x0800
+
+#define IP4_PAYLOAD_TYPE_TCP 0x06
+#define IP4_PAYLOAD_TYPE_UDP 0x11
+
 typedef struct
 {
     uint8_t dest_mac[6];
