@@ -12,7 +12,7 @@
 #define CHECK_ERROR                   \
     do                                \
     {                                 \
-        if (error_code == PCAP_ERROR) \
+        if (error_code) \
         {                             \
             puts(kErrorBuf);          \
             exit(FAILURE);            \
@@ -29,5 +29,6 @@ void Initialize();
 int PrintDeviceList(pcap_if_t **device_list_ret);
 int GetUserSelectedDeviceIndex(const int device_count);
 pcap_t *GetCaptureHandle(pcap_if_t *device_list, const int device_index);
+void SetFilter(pcap_t *capture_handle, const char *filter);
 
 #endif

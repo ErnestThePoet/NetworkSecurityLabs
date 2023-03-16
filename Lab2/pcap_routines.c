@@ -81,7 +81,7 @@ int PrintDeviceList(pcap_if_t **device_list_ret)
 
 int GetUserSelectedDeviceIndex(const int device_count)
 {
-    printf("Enter selected device index(0 to %zd):", device_count - 1);
+    printf("Enter selected device index(0 to %d):", device_count - 1);
 
     const char *const kTryAgainPrompt = "Invalid input; try again:";
 
@@ -111,13 +111,41 @@ pcap_t *GetCaptureHandle(pcap_if_t *device_list, const int device_index)
 
     pcap_t *capture_handle = pcap_open_live(
         curent_device_ptr->name, BUFSIZ, 0, -1, kErrorBuf);
+
+    pcap_freealldevs(device_list);
+
     if (capture_handle == NULL)
     {
         puts(kErrorBuf);
         exit(FAILURE);
     }
 
-    pcap_freealldevs(device_list);
-
     return capture_handle;
+}
+
+void SetFilter(pcap_t *capture_handle, const char *filter)
+{
+    struct bpf_program program;
+    if (pcap_compile(capture_handle, &program, filter, 1, PCAP_NETMASK_UNKNOWN))
+    {
+        pcap_perror(capture_handle, NULL);
+        pcap_close(capture_handle);
+        exit(FAILURE);
+    }
+
+    int error_code = pcap_setfilter(capture_handle, &program);
+    if (error_code == PCAP_ERROR_NOT_ACTIVATED)
+    {
+        pcap_close(capture_handle);
+        puts("pcap_setfilter() failed: capture handle that has been created but not activated");
+        exit(FAILURE);
+    }
+    else if (error_code == PCAP_ERROR)
+    {
+        pcap_perror(capture_handle, NULL);
+        pcap_close(capture_handle);
+        exit(FAILURE);
+    }
+
+    pcap_freecode(&program);
 }

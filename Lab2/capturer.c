@@ -16,6 +16,11 @@ int main(int argc, char *argv[])
     int selected_device_index = GetUserSelectedDeviceIndex(device_count);
     pcap_t *capture_handle = GetCaptureHandle(device_list, selected_device_index);
 
+    if (argc == 2)
+    {
+        SetFilter(capture_handle, argv[1]);
+    }
+
     return SUCCESS;
 }
 
