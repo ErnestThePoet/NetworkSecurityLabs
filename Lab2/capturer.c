@@ -21,6 +21,8 @@ int main(int argc, char *argv[])
         SetFilter(capture_handle, argv[1]);
     }
 
+    FILE *output_file = PrepareOutputFile(capture_handle, argc == 2 ? argv[1] : NULL);
+
     return SUCCESS;
 }
 

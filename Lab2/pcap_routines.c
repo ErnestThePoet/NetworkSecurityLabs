@@ -6,11 +6,17 @@ static void GetAddressString(
     switch (address->sa_family)
     {
     case AF_INET:
-        inet_ntop(AF_INET, &(((struct sockaddr_in *)address)->sin_addr), buffer, maxlen);
+        inet_ntop(AF_INET,
+                  &(((struct sockaddr_in *)address)->sin_addr),
+                  buffer,
+                  maxlen);
         break;
 
     case AF_INET6:
-        inet_ntop(AF_INET6, &(((struct sockaddr_in6 *)address)->sin6_addr), buffer, maxlen);
+        inet_ntop(AF_INET6,
+                  &(((struct sockaddr_in6 *)address)->sin6_addr),
+                  buffer,
+                  maxlen);
         break;
 
     default:
@@ -50,7 +56,9 @@ int PrintDeviceList(pcap_if_t **device_list_ret)
     int current_device_index = 0;
     while (current_device_ptr != NULL)
     {
-        printf("[%d] %s\n  Address(es):  ", current_device_index, current_device_ptr->description);
+        printf("[%d] %s\n  Address(es):  ",
+               current_device_index,
+               current_device_ptr->description);
 
         pcap_addr_t *current_address = current_device_ptr->addresses;
 
@@ -63,7 +71,9 @@ int PrintDeviceList(pcap_if_t **device_list_ret)
             char address_string[50];
             while (current_address != NULL)
             {
-                GetAddressString(address_string, 50, current_address->addr);
+                GetAddressString(address_string,
+                                 sizeof(address_string),
+                                 current_address->addr);
                 printf("%s   ", address_string);
                 current_address = current_address->next;
             }
@@ -148,4 +158,30 @@ void SetFilter(pcap_t *capture_handle, const char *filter)
     }
 
     pcap_freecode(&program);
+}
+
+FILE *PrepareOutputFile(pcap_t *capture_handle, const char *filter)
+{
+    char file_name[50];
+
+    time_t current_time = time(NULL);
+    struct tm *current_time_tuple = localtime(&current_time);
+    strftime(file_name,
+             sizeof(file_name),
+             "capture_%Y_%m_%d_%H_%M_%S.txt",
+             current_time_tuple);
+
+    FILE *output_file = fopen(file_name, "w");
+    if (output_file == NULL)
+    {
+        printf("Failed to open %s\n", file_name);
+        pcap_close(capture_handle);
+        exit(FAILURE);
+    }
+
+    fprintf(output_file,
+            "---Packet Capture Results---\nFilter: %s\n",
+            filter == NULL ? "<None>" : filter);
+
+    return output_file;
 }
