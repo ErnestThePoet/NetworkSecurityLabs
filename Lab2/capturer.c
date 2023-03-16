@@ -13,6 +13,8 @@ int main(int argc, char *argv[])
 
     pcap_if_t *device_list = NULL;
     int device_count = PrintDeviceList(&device_list);
+    int selected_device_index = GetUserSelectedDeviceIndex(device_count);
+    pcap_t *capture_handle = GetCaptureHandle(device_list, selected_device_index);
 
     return SUCCESS;
 }
