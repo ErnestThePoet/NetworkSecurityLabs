@@ -76,8 +76,8 @@ void PrintTcpHeader(FILE *output_file, const TcpHeader *header)
 
         fprintf(output_file, "Source Port: %d\n  ", ntohs(header->src_port));
         fprintf(output_file, "Destination Port: %d\n  ", ntohs(header->dest_port));
-        fprintf(output_file, "Seq Number: %d\n  ", ntohl(header->seq));
-        fprintf(output_file, "Ack Number: %d\n  ", ntohl(header->ack));
+        fprintf(output_file, "Seq Number: %u\n  ", ntohl(header->seq));
+        fprintf(output_file, "Ack Number: %u\n  ", ntohl(header->ack));
         fprintf(output_file, "Header Length: %d *4bytes\n  ", header->headlen >> 4);
         fprintf(output_file, "Flags: %#04x\n  ", header->flags);
         fprintf(output_file, "Window Size: %d\n  ", ntohs(header->window_size));
