@@ -3,6 +3,7 @@
         "socket.h": "c",
         "cstdlib": "c",
         "trans_request.h": "c",
-        "pthread.h": "c"
+        "pthread.h": "c",
+        "pcap-inttypes.h": "c"
     }
 }

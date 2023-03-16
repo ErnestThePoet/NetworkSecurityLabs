@@ -185,3 +185,37 @@ FILE *PrepareOutputFile(pcap_t *capture_handle, const char *filter)
 
     return output_file;
 }
+
+static void HandlePacket(
+    uint8_t *user, const struct pcap_pkthdr *h, const uint8_t *bytes)
+{
+    printf("%d\n", h->len);
+}
+
+void StartCaptureLoop(pcap_t *capture_handle, FILE *output_file)
+{
+    int error_code = pcap_loop(capture_handle, 0, HandlePacket, output_file);
+
+    switch (error_code)
+    {
+    case PCAP_ERROR_BREAK:
+        puts("Capture loop FAILED: "
+             "loop terminated due to a call to pcap_breakloop() before any packets were processed");
+        CleanUp(capture_handle, output_file);
+        exit(FAILURE);
+    case PCAP_ERROR_NOT_ACTIVATED:
+        puts("Capture loop failed: capture handle that has been created but not activated");
+        CleanUp(capture_handle, output_file);
+        exit(FAILURE);
+    case PCAP_ERROR:
+        pcap_perror(capture_handle, NULL);
+        CleanUp(capture_handle, output_file);
+        exit(FAILURE);
+    }
+}
+
+void CleanUp(pcap_t *capture_handle, FILE *output_file)
+{
+    pcap_close(capture_handle);
+    fclose(output_file);
+}

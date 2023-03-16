@@ -22,6 +22,8 @@ int main(int argc, char *argv[])
     }
 
     FILE *output_file = PrepareOutputFile(capture_handle, argc == 2 ? argv[1] : NULL);
+    StartCaptureLoop(capture_handle, output_file);
+    CleanUp(capture_handle, output_file);
 
     return SUCCESS;
 }
