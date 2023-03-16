@@ -1,17 +1,76 @@
 #include "print_headers.h"
 
-void PrintEthernetHeader(FILE *output_file, const EthernetHeader *header){
-    
+static void GetCurrentTimeString(char *buffer, const size_t size)
+{
+        time_t current_time = time(NULL);
+        struct tm *current_time_tuple = localtime(&current_time);
+        strftime(buffer,
+                 size,
+                 "%Y/%m/%d %H:%M:%S",
+                 current_time_tuple);
 }
 
-void PrintIp4Header(FILE *output_file, const Ip4Header *header){
+void PrintEthernetHeader(FILE *output_file, const EthernetHeader *header)
+{
+        char current_time_string[50];
+        GetCurrentTimeString(current_time_string, sizeof(current_time_string));
 
+        fprintf(output_file, "[%s] - [Ethernet Frame]\n  ", current_time_string);
+        fprintf(output_file, "Source MAC Address: %02x-%02x-%02x-%02x-%02x-%02x\n  ",
+                header->src_mac[0],
+                header->src_mac[1],
+                header->src_mac[2],
+                header->src_mac[3],
+                header->src_mac[4],
+                header->src_mac[5]);
+        fprintf(output_file, "Destination MAC Address: %02x-%02x-%02x-%02x-%02x-%02x\n  ",
+                header->dest_mac[0],
+                header->dest_mac[1],
+                header->dest_mac[2],
+                header->dest_mac[3],
+                header->dest_mac[4],
+                header->dest_mac[5]);
+        fprintf(output_file, "Payload Type: %#06x\n", header->type);
+        fputc('\n', output_file);
 }
 
-void PrintTcpHeader(FILE *output_file, const TcpHeader *header){
-    
+void PrintIp4Header(FILE *output_file, const Ip4Header *header)
+{
+        char current_time_string[50];
+        GetCurrentTimeString(current_time_string, sizeof(current_time_string));
+
+        fprintf(output_file, "[%s] - [IPv4 Packet]\n  ", current_time_string);
+
+        fprintf(output_file, "Header Length: %d *4bytes\n  ", header->hlv >> 4);
+        fprintf(output_file, "Version Number: %d\n  ", header->hlv & 0x0F);
+        fprintf(output_file, "Type of Service: %d\n  ", header->tos);
+        fprintf(output_file, "Total Length: %d bytes\n  ", ntohs(header->total_length));
+        fprintf(output_file, "ID: %04x\n  ", ntohs(header->id));
+        fprintf(output_file, "Flags: %d %d %d\n  ",
+                (header->foff & 0x8000U) >> 15,
+                (header->foff & 0x4000U) >> 14,
+                (header->foff & 0x2000U) >> 13);
+        fprintf(output_file, "Fragment Offset: %d *8bytes\n  ", header->foff & 0x1FFFU);
+        fprintf(output_file, "TTL: %d\n  ", header->ttl);
+        fprintf(output_file, "Protocol: %#04x\n  ", header->protocol);
+        fprintf(output_file, "Checksum: %x\n  ", ntohs(header->checksum));
+        fprintf(output_file, "Source IPv4 Address: %d.%d.%d.%d\n  ",
+                header->src_ip[0],
+                header->src_ip[1],
+                header->src_ip[2],
+                header->src_ip[3]);
+        fprintf(output_file, "Destination IPv4 Address: %d.%d.%d.%d\n  ",
+                header->dest_ip[0],
+                header->dest_ip[1],
+                header->dest_ip[2],
+                header->dest_ip[3]);
+        fputc('\n', output_file);
 }
 
-void PrintUdpHeader(FILE *output_file, const UdpHeader *header){
+void PrintTcpHeader(FILE *output_file, const TcpHeader *header)
+{
+}
 
+void PrintUdpHeader(FILE *output_file, const UdpHeader *header)
+{
 }

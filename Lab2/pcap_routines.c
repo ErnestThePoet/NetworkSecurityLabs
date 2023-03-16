@@ -209,19 +209,23 @@ static void HandlePacket(
         return;
     }
 
-    uint8_t *transport_layer_header = ((uint8_t *)ip4_header) + ((ip4_header->hlv) & 0x0FU) * 4;
-
     PrintEthernetHeader(output_file, ethernet_header);
     PrintIp4Header(output_file, ip4_header);
 
-    switch (ip4_header->protocol)
+    // DF=1 or Offset=0
+    if (ip4_header->foff & 0x4000U || !(ip4_header->foff & 0x1FFFU))
     {
-    case IP4_PAYLOAD_TYPE_TCP:
-        PrintTcpHeader(output_file, (TcpHeader *)transport_layer_header);
-        break;
-    case IP4_PAYLOAD_TYPE_UDP:
-        PrintUdpHeader(output_file, (UdpHeader *)transport_layer_header);
-        break;
+        uint8_t *transport_layer_header = ((uint8_t *)ip4_header) + ((ip4_header->hlv) & 0x0FU) * 4;
+
+        switch (ip4_header->protocol)
+        {
+        case IP4_PAYLOAD_TYPE_TCP:
+            PrintTcpHeader(output_file, (TcpHeader *)transport_layer_header);
+            break;
+        case IP4_PAYLOAD_TYPE_UDP:
+            PrintUdpHeader(output_file, (UdpHeader *)transport_layer_header);
+            break;
+        }
     }
 }
 
