@@ -8,6 +8,9 @@
         "ethernet.h": "c",
         "pcap.h": "c",
         "inet.h": "c",
-        "in.h": "c"
+        "in.h": "c",
+        "if.h": "c",
+        "ip.h": "c",
+        "tcp.h": "c"
     }
 }

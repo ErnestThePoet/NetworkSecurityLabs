@@ -30,7 +30,7 @@ void PrintEthernetHeader(FILE *output_file, const EthernetHeader *header)
                 header->dest_mac[3],
                 header->dest_mac[4],
                 header->dest_mac[5]);
-        fprintf(output_file, "Payload Type: %#06x\n", header->type);
+        fprintf(output_file, "Payload Type: %#06x\n", ntohs(header->type));
         fputc('\n', output_file);
 }
 
@@ -45,12 +45,13 @@ void PrintIp4Header(FILE *output_file, const Ip4Header *header)
         fprintf(output_file, "Version Number: %d\n  ", header->hlv >> 4);
         fprintf(output_file, "Type of Service: %d\n  ", header->tos);
         fprintf(output_file, "Total Length: %d bytes\n  ", ntohs(header->total_length));
-        fprintf(output_file, "ID: %04x\n  ", ntohs(header->id));
+        fprintf(output_file, "ID: %#06x\n  ", ntohs(header->id));
+        uint16_t foff = ntohs(header->foff);
         fprintf(output_file, "Flags: %d %d %d\n  ",
-                (header->foff & 0x8000U) >> 15,
-                (header->foff & 0x4000U) >> 14,
-                (header->foff & 0x2000U) >> 13);
-        fprintf(output_file, "Fragment Offset: %d *8bytes\n  ", header->foff & 0x1FFFU);
+                (foff & 0x8000U) >> 15,
+                (foff & 0x4000U) >> 14,
+                (foff & 0x2000U) >> 13);
+        fprintf(output_file, "Fragment Offset: %d *8bytes\n  ", foff & 0x1FFFU);
         fprintf(output_file, "TTL: %d\n  ", header->ttl);
         fprintf(output_file, "Protocol: %#04x\n  ", header->protocol);
         fprintf(output_file, "Checksum: %#06x\n  ", ntohs(header->checksum));

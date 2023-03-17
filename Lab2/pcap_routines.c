@@ -213,7 +213,8 @@ static void HandlePacket(
     PrintIp4Header(output_file, ip4_header);
 
     // DF=1 or Offset=0
-    if (ip4_header->foff & 0x4000U || !(ip4_header->foff & 0x1FFFU))
+    uint16_t foff = ntohs(ip4_header->foff);
+    if (foff & 0x4000U || (foff & 0x1FFFU) == 0)
     {
         uint8_t *transport_layer_header = ((uint8_t *)ip4_header) + ((ip4_header->hlv) & 0x0FU) * 4;
 
