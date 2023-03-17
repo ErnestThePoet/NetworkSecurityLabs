@@ -82,12 +82,12 @@ void PrintTcpHeader(FILE *output_file, const Ip4Header *ip4_header, const TcpHea
                 ip4_header->src_ip[1],
                 ip4_header->src_ip[2],
                 ip4_header->src_ip[3],
-                header->src_port,
+                ntohs(header->src_port),
                 ip4_header->dest_ip[0],
                 ip4_header->dest_ip[1],
                 ip4_header->dest_ip[2],
                 ip4_header->dest_ip[3],
-                header->dest_port);
+                ntohs(header->dest_port));
 
         // fprintf(output_file, "Source Port: %d\n  ", ntohs(header->src_port));
         // fprintf(output_file, "Destination Port: %d\n  ", ntohs(header->dest_port));
@@ -113,12 +113,12 @@ void PrintUdpHeader(FILE *output_file, const Ip4Header *ip4_header, const UdpHea
                 ip4_header->src_ip[1],
                 ip4_header->src_ip[2],
                 ip4_header->src_ip[3],
-                header->src_port,
+                ntohs(header->src_port),
                 ip4_header->dest_ip[0],
                 ip4_header->dest_ip[1],
                 ip4_header->dest_ip[2],
                 ip4_header->dest_ip[3],
-                header->dest_port);
+                ntohs(header->dest_port));
 
         // fprintf(output_file, "[%s] - [UDP Segment]\n  ", current_time_string);
 
