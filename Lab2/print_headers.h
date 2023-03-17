@@ -9,7 +9,12 @@
 static void GetCurrentTimeString(char *buffer, const size_t size);
 void PrintEthernetHeader(FILE *output_file, const EthernetHeader *header);
 void PrintIp4Header(FILE *output_file, const Ip4Header *header);
-void PrintTcpHeader(FILE *output_file, const Ip4Header *ip4_header, const TcpHeader *header);
-void PrintUdpHeader(FILE *output_file, const Ip4Header *ip4_header, const UdpHeader *header);
+void PrintTcpHeader(FILE *output_file, const TcpHeader *header);
+void PrintUdpHeader(FILE *output_file, const UdpHeader *header);
+
+void PrintTcpIpTuple(
+    FILE *output_file, const Ip4Header *ip4_header, const TcpHeader *tcp_header);
+void PrintUdpIpTuple(
+    FILE *output_file, const Ip4Header *ip4_header, const UdpHeader *udp_header);
 
 #endif

@@ -221,10 +221,12 @@ static void HandlePacket(
         switch (ip4_header->protocol)
         {
         case IPPROTO_TCP:
-            PrintTcpHeader(output_file, ip4_header, (TcpHeader *)transport_layer_header);
+            PrintTcpIpTuple(output_file, ip4_header, (TcpHeader *)transport_layer_header);
+            // PrintTcpHeader(output_file, (TcpHeader *)transport_layer_header);
             break;
         case IPPROTO_UDP:
-            PrintUdpHeader(output_file, ip4_header, (UdpHeader *)transport_layer_header);
+            PrintUdpIpTuple(output_file, ip4_header, (UdpHeader *)transport_layer_header);
+            // PrintUdpHeader(output_file, (UdpHeader *)transport_layer_header);
             break;
         }
     }

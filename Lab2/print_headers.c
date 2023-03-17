@@ -70,61 +70,76 @@ void PrintIp4Header(FILE *output_file, const Ip4Header *header)
         fputc('\n', output_file);
 }
 
-void PrintTcpHeader(FILE *output_file, const Ip4Header *ip4_header, const TcpHeader *header)
+void PrintTcpHeader(FILE *output_file, const TcpHeader *header)
 {
         char current_time_string[50];
         GetCurrentTimeString(current_time_string, sizeof(current_time_string));
 
-        fprintf(output_file,
-                "[%s] - [TCP] (%d.%d.%d.%d,%d) -> (%d.%d.%d.%d,%d)\n  ",
-                current_time_string,
-                ip4_header->src_ip[0],
-                ip4_header->src_ip[1],
-                ip4_header->src_ip[2],
-                ip4_header->src_ip[3],
-                ntohs(header->src_port),
-                ip4_header->dest_ip[0],
-                ip4_header->dest_ip[1],
-                ip4_header->dest_ip[2],
-                ip4_header->dest_ip[3],
-                ntohs(header->dest_port));
+        fprintf(output_file, "[%s] - [TCP Segment]\n  ", current_time_string);
 
-        // fprintf(output_file, "Source Port: %d\n  ", ntohs(header->src_port));
-        // fprintf(output_file, "Destination Port: %d\n  ", ntohs(header->dest_port));
-        // fprintf(output_file, "Seq Number: %u\n  ", ntohl(header->seq));
-        // fprintf(output_file, "Ack Number: %u\n  ", ntohl(header->ack));
-        // fprintf(output_file, "Header Length: %d *4bytes\n  ", header->headlen >> 4);
-        // fprintf(output_file, "Flags: %#04x\n  ", header->flags);
-        // fprintf(output_file, "Window Size: %d\n  ", ntohs(header->window_size));
-        // fprintf(output_file, "Checksum: %#06x\n  ", ntohs(header->checksum));
-        // fprintf(output_file, "Urgent Pointer: %#06x\n  ", ntohs(header->urgent_pointer));
+        fprintf(output_file, "Source Port: %d\n  ", ntohs(header->src_port));
+        fprintf(output_file, "Destination Port: %d\n  ", ntohs(header->dest_port));
+        fprintf(output_file, "Seq Number: %u\n  ", ntohl(header->seq));
+        fprintf(output_file, "Ack Number: %u\n  ", ntohl(header->ack));
+        fprintf(output_file, "Header Length: %d *4bytes\n  ", header->headlen >> 4);
+        fprintf(output_file, "Flags: %#04x\n  ", header->flags);
+        fprintf(output_file, "Window Size: %d\n  ", ntohs(header->window_size));
+        fprintf(output_file, "Checksum: %#06x\n  ", ntohs(header->checksum));
+        fprintf(output_file, "Urgent Pointer: %#06x\n  ", ntohs(header->urgent_pointer));
         fputc('\n', output_file);
 }
 
-void PrintUdpHeader(FILE *output_file, const Ip4Header *ip4_header, const UdpHeader *header)
+void PrintUdpHeader(FILE *output_file, const UdpHeader *header)
+{
+        char current_time_string[50];
+        GetCurrentTimeString(current_time_string, sizeof(current_time_string));
+
+        fprintf(output_file, "[%s] - [UDP Segment]\n  ", current_time_string);
+
+        fprintf(output_file, "Source Port: %d\n  ", ntohs(header->src_port));
+        fprintf(output_file, "Destination Port: %d\n  ", ntohs(header->dest_port));
+        fprintf(output_file, "Total Length: %d bytes\n  ", ntohs(header->total_length));
+        fprintf(output_file, "Checksum: %#06x\n  ", ntohs(header->checksum));
+        fputc('\n', output_file);
+}
+
+void PrintTcpIpTuple(
+    FILE *output_file, const Ip4Header *ip4_header, const TcpHeader *tcp_header)
 {
         char current_time_string[50];
         GetCurrentTimeString(current_time_string, sizeof(current_time_string));
 
         fprintf(output_file,
-                "[%s] - [UDP] (%d.%d.%d.%d,%d) -> (%d.%d.%d.%d,%d)\n  ",
+                "[%s] - [TCP] (%d.%d.%d.%d : %d) -> (%d.%d.%d.%d : %d)\n\n",
                 current_time_string,
                 ip4_header->src_ip[0],
                 ip4_header->src_ip[1],
                 ip4_header->src_ip[2],
                 ip4_header->src_ip[3],
-                ntohs(header->src_port),
+                ntohs(tcp_header->src_port),
                 ip4_header->dest_ip[0],
                 ip4_header->dest_ip[1],
                 ip4_header->dest_ip[2],
                 ip4_header->dest_ip[3],
-                ntohs(header->dest_port));
+                ntohs(tcp_header->dest_port));
+}
+void PrintUdpIpTuple(
+    FILE *output_file, const Ip4Header *ip4_header, const UdpHeader *udp_header)
+{
+        char current_time_string[50];
+        GetCurrentTimeString(current_time_string, sizeof(current_time_string));
 
-        // fprintf(output_file, "[%s] - [UDP Segment]\n  ", current_time_string);
-
-        // fprintf(output_file, "Source Port: %d\n  ", ntohs(header->src_port));
-        // fprintf(output_file, "Destination Port: %d\n  ", ntohs(header->dest_port));
-        // fprintf(output_file, "Total Length: %d bytes\n  ", ntohs(header->total_length));
-        // fprintf(output_file, "Checksum: %#06x\n  ", ntohs(header->checksum));
-        fputc('\n', output_file);
+        fprintf(output_file,
+                "[%s] - [UDP] (%d.%d.%d.%d : %d) -> (%d.%d.%d.%d : %d)\n\n",
+                current_time_string,
+                ip4_header->src_ip[0],
+                ip4_header->src_ip[1],
+                ip4_header->src_ip[2],
+                ip4_header->src_ip[3],
+                ntohs(udp_header->src_port),
+                ip4_header->dest_ip[0],
+                ip4_header->dest_ip[1],
+                ip4_header->dest_ip[2],
+                ip4_header->dest_ip[3],
+                ntohs(udp_header->dest_port));
 }
