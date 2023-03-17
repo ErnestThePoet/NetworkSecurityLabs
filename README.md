@@ -60,3 +60,6 @@ for(每个IP地址ip){
 设添加一条扫描结果是通过写入变量S实现的，则如果多个线程同时直接进行写入，就有可能发生访问竞争，导致某些线程写入的数据丢失。因此，在各线程修改S时，需要对S加锁（如互斥锁），确保对S的写入是线程安全的，即当前线程写入S时其他线程无法写入S。高级语言一般都提供了很简单的方式实现线程安全，可自行搜索例子。
 
 <image src="https://github.com/ErnestThePoet/NetworkSecurityLabs/blob/master/Lab1/connect-radar.png"/>
+
+# Lab2
+使用pcap实现的Linux简单抓包程序。
