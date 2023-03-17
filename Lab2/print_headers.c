@@ -41,6 +41,8 @@ void PrintIp4Header(FILE *output_file, const Ip4Header *header)
 
         fprintf(output_file, "[%s] - [IPv4 Packet]\n  ", current_time_string);
 
+        // it's worth noticing that inside a byte, the lowest-bit here
+        // is the highest-bit shown in header diagram.
         fprintf(output_file, "Header Length: %d *4bytes\n  ", header->hlv & 0x0F);
         fprintf(output_file, "Version Number: %d\n  ", header->hlv >> 4);
         fprintf(output_file, "Type of Service: %d\n  ", header->tos);
