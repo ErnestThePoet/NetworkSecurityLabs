@@ -193,16 +193,16 @@ static void HandlePacket(
 
     EthernetHeader *ethernet_header = (EthernetHeader *)bytes;
     uint16_t ethernet_payload_type = ntohs(ethernet_header->type);
-    if (ethernet_payload_type != ETHERNET_PAYLOAD_TYPE_IP4)
+    if (ethernet_payload_type != ETHERTYPE_IP)
     {
         printf("Ethernet frame payload is not IPv4 (type=%#06x). Frame discarded\n",
                ethernet_payload_type);
         return;
     }
 
-    Ip4Header *ip4_header = (Ip4Header *)(bytes + ETHERNET_HEADER_LENGTH);
+    Ip4Header *ip4_header = (Ip4Header *)(bytes + ETHER_HDR_LEN);
 
-    if (ip4_header->protocol != IP4_PAYLOAD_TYPE_TCP && ip4_header->protocol != IP4_PAYLOAD_TYPE_UDP)
+    if (ip4_header->protocol != IPPROTO_TCP && ip4_header->protocol != IPPROTO_UDP)
     {
         printf("IPv4 packet payload is neither TCP nor UDP (type=%#04x). Packet discarded\n",
                ip4_header->protocol);
@@ -219,10 +219,10 @@ static void HandlePacket(
 
         switch (ip4_header->protocol)
         {
-        case IP4_PAYLOAD_TYPE_TCP:
+        case IPPROTO_TCP:
             PrintTcpHeader(output_file, (TcpHeader *)transport_layer_header);
             break;
-        case IP4_PAYLOAD_TYPE_UDP:
+        case IPPROTO_UDP:
             PrintUdpHeader(output_file, (UdpHeader *)transport_layer_header);
             break;
         }

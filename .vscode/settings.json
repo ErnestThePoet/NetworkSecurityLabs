@@ -4,6 +4,10 @@
         "cstdlib": "c",
         "trans_request.h": "c",
         "pthread.h": "c",
-        "pcap-inttypes.h": "c"
+        "pcap-inttypes.h": "c",
+        "ethernet.h": "c",
+        "pcap.h": "c",
+        "inet.h": "c",
+        "in.h": "c"
     }
 }

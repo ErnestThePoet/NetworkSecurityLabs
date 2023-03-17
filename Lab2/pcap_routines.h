@@ -9,6 +9,7 @@
 #include <time.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <net/ethernet.h>
 #include <pcap/pcap.h>
 #include "defs.h"
 #include "protocol_headers.h"
