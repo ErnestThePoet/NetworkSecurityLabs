@@ -209,8 +209,8 @@ static void HandlePacket(
         return;
     }
 
-    PrintEthernetHeader(output_file, ethernet_header);
-    PrintIp4Header(output_file, ip4_header);
+    // PrintEthernetHeader(output_file, ethernet_header);
+    // PrintIp4Header(output_file, ip4_header);
 
     // DF=1 or Offset=0
     uint16_t foff = ntohs(ip4_header->foff);
@@ -221,10 +221,10 @@ static void HandlePacket(
         switch (ip4_header->protocol)
         {
         case IPPROTO_TCP:
-            PrintTcpHeader(output_file, (TcpHeader *)transport_layer_header);
+            PrintTcpHeader(output_file, ip4_header, (TcpHeader *)transport_layer_header);
             break;
         case IPPROTO_UDP:
-            PrintUdpHeader(output_file, (UdpHeader *)transport_layer_header);
+            PrintUdpHeader(output_file, ip4_header, (UdpHeader *)transport_layer_header);
             break;
         }
     }
