@@ -63,3 +63,21 @@ for(每个IP地址ip){
 
 # Lab2
 使用pcap实现的Linux简单抓包程序。
+
+# Lab3
+## Sender
+使用[libnet](https://github.com/libnet/libnet)实现的UDP/IP数据包组装与发送程序
+
+### libnet安装方法
+见其仓库的README.md文件
+
+### libnet使用示例参考资料：
+- http://network-development.blogspot.com/2014/04/libnet-library-part-2-injecting-tcp-and.html
+- https://www.cs.dartmouth.edu/~sergey/cs60/lab4/libnet-example-icmp.c
+- http://network-development.blogspot.com/2014/02/libnet-library-part-1-introduction-and.html
+
+### 运行程序报错`libnet.so.9: cannot open shared object file`的解决方法
+找到共享库`libnet.so.9`的安装位置（应该为`/usr/local/lib`），编辑`/etc/ld.so.conf`文件，在最下面加上共享库所在目录路径，这样就会将此目录添加到共享库查找路径中
+
+## Receiver
+使用套接字实现的UDP数据包接收程序
