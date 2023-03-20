@@ -3,7 +3,7 @@
 #include "../common/defs.h"
 #include "recv_udp.h"
 
-bool ParseArgs(const int argc, const char *argv[], int *port_ret)
+bool ParseArgs(int argc, char *argv[], int *port_ret)
 {
     if (argc != 3)
     {
