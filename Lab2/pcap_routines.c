@@ -183,6 +183,8 @@ FILE *PrepareOutputFile(pcap_t *capture_handle, const char *filter)
             "---Packet Capture Results---\nFilter: %s\n",
             filter == NULL ? "<None>" : filter);
 
+    fflush(output_file);
+
     return output_file;
 }
 
@@ -230,6 +232,8 @@ static void HandlePacket(
             break;
         }
     }
+
+    fflush(output_file);
 }
 
 void StartCaptureLoop(pcap_t *capture_handle, FILE *output_file)
