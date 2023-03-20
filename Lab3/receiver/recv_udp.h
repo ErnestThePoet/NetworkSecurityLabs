@@ -11,6 +11,6 @@
 #include <arpa/inet.h>
 #include "../common/defs.h"
 
-void recvUDP(const int server_port, const char *recv_ip4);
+void recvUDP(const int server_port);
 
 #endif

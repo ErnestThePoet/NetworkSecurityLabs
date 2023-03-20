@@ -5,7 +5,7 @@
 
 bool ParseArgs(int argc, char *argv[], int *port_ret)
 {
-    if (argc != 3)
+    if (argc != 2)
     {
         return false;
     }
@@ -25,7 +25,7 @@ bool ParseArgs(int argc, char *argv[], int *port_ret)
 
 int main(int argc, char *argv[])
 {
-    const char *const kUsagePrompt = "Usage: receiver <server-port> <recv-ip4>\n";
+    const char *const kUsagePrompt = "Usage: receiver <server-port>\n";
 
     int server_port = 0;
     if (!ParseArgs(argc, argv, &server_port))
@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
         return FAILURE;
     }
 
-    recvUDP(server_port, argv[2]);
+    recvUDP(server_port);
 
     return SUCCESS;
 }

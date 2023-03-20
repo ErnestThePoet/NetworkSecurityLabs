@@ -1,6 +1,6 @@
 #include "recv_udp.h"
 
-void recvUDP(const int server_port, const char *recv_ip4)
+void recvUDP(const int server_port)
 {
     const int server_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (server_socket == -1)
