@@ -7,9 +7,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <libnet.h>
-
-#define SUCCESS 0
-#define FAILURE 1
+#include "../common/defs.h"
 
 #define CLEAN_EXIT_FAILURE      \
     do                          \
