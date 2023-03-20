@@ -27,14 +27,14 @@ int main(int argc, char *argv[])
 {
     const char *const kUsagePrompt = "Usage: receiver <server-port> <recv-ip4>\n";
 
-    int dest_port = 0;
-    if (!ParseArgs(argc, argv, &dest_port))
+    int server_port = 0;
+    if (!ParseArgs(argc, argv, &server_port))
     {
         fputs(kUsagePrompt, stderr);
         return FAILURE;
     }
 
-    recvUDP();
+    recvUDP(server_port, argv[2]);
 
     return SUCCESS;
 }

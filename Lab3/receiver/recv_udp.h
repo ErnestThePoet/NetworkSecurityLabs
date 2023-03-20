@@ -6,8 +6,10 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
 #include "../common/defs.h"
 
-void recvUDP();
+void recvUDP(const int server_port, const char *recv_ip4);
 
 #endif
