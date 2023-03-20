@@ -20,6 +20,8 @@ void recvUDP(const int server_port, const char *recv_ip4)
         exit(FAILURE);
     }
 
+    printf("Receiver started on port: %d\n", server_port);
+
     char recv_buf[100];
     int client_sockaddr_length = sizeof(sockaddr_in);
     if (recvfrom(server_socket,
