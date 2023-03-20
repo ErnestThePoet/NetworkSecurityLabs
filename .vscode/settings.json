@@ -11,6 +11,8 @@
         "in.h": "c",
         "if.h": "c",
         "ip.h": "c",
-        "tcp.h": "c"
+        "tcp.h": "c",
+        "stdio.h": "c",
+        "stdlib.h": "c"
     }
 }
