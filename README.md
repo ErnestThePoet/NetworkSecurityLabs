@@ -62,14 +62,16 @@ for(每个IP地址ip){
 <image src="https://github.com/ErnestThePoet/NetworkSecurityLabs/blob/master/Lab1/connect-radar.png"/>
 
 # Lab2
-使用pcap实现的Linux简单抓包程序。
+使用pcap实现的Linux简单抓包程序。  
+
+开始实验之前，请务必了解什么是[字节序](https://en.wikipedia.org/wiki/Endianness)，并牢记***网络字节序是大端序***
 
 # Lab3
 ## Sender
-使用[libnet](https://github.com/libnet/libnet)实现的UDP/IP数据包组装与发送程序
+使用libnet实现的UDP/IP数据包组装与发送程序
 
 ### libnet安装方法
-见其仓库的README.md文件
+见其[仓库](https://github.com/libnet/libnet)的README.md文件
 
 ### libnet使用示例参考资料：
 - http://network-development.blogspot.com/2014/04/libnet-library-part-2-injecting-tcp-and.html
