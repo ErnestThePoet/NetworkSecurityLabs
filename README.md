@@ -90,7 +90,7 @@ for(每个IP地址ip){
 - http://network-development.blogspot.com/2014/02/libnet-library-part-1-introduction-and.html
 
 ### 运行程序报错`libnet.so.9: cannot open shared object file`的解决方法
-找到共享库`libnet.so.9`的安装位置（应该为`/usr/local/lib`），编辑`/etc/ld.so.conf`文件，在最下面加上共享库所在目录路径，这样就会将此目录添加到共享库查找路径中
+找到共享库`libnet.so.9`的安装位置（应该为`/usr/local/lib`），编辑`/etc/ld.so.conf`文件，在最下面加上共享库所在目录路径，这样就会将此目录添加到共享库查找路径中。然后执行一下`sudo ldconfig`即可。
 
 ## Receiver
 使用套接字实现的UDP数据包接收程序
