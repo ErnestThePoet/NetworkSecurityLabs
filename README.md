@@ -64,7 +64,18 @@ for(每个IP地址ip){
 # Lab2
 使用pcap实现的Linux简单抓包程序。  
 
-开始实验之前，请务必了解什么是[字节序](https://en.wikipedia.org/wiki/Endianness)，并牢记***网络字节序是大端序***
+### 避坑提醒
+开始实验之前，请务必深入理解什么是[字节序](https://en.wikipedia.org/wiki/Endianness)，并牢记***网络字节序是大端序***  
+掌握转换网络字节序和本机字节序的[系列函数](https://linux.die.net/man/3/ntohs)(`htons`, `htonl`, `ntohs`, `ntohl`)
+
+### 避坑自测题
+定义一个字节数组`uint8_t data[]={0x01,0x00};`
+- 假设`data`来自于捕获到的网络数据包，且是发送方发送的一个16位无符号整数，请问发送方实际想要发送的数是多少？  
+（答案：256）
+- 如果本机字节序是小端序，那么`*(uint16_t*)data`得到的值是多少？  
+（答案：1）
+- 如何正确还原发送方要发送的数？  
+（答案：`ntohs(*(uint16_t*)data)`）
 
 # Lab3
 ## Sender
