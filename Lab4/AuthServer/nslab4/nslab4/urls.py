@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from controller.auth_controller import AuthController
+from .controller.auth_controller import AuthController
 
 auth_controller = AuthController()
 

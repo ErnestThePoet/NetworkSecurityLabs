@@ -1,7 +1,7 @@
 import sqlite3
-from nslab4.nslab4.entity.user import User
+from ..entity.user import User
 
-AUTH_DB_PATH = "../database/auth.db"
+AUTH_DB_PATH = "./database/auth.db"
 USER_TABLE_NAME = "users"
 
 

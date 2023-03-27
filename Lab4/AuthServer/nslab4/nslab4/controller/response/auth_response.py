@@ -1,4 +1,4 @@
-from success_msg_response import make_success_msg_response
+from .success_msg_response import make_success_msg_response
 
 
 def make_auth_response(server_auth_code_encrypted_base64: str) -> dict:
