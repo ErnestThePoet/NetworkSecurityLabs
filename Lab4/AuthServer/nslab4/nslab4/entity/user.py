@@ -1,4 +1,4 @@
-class Account:
+class User:
     def __init__(self, account: str, hash1_base64: str, _id: int = None):
         self.id = _id
         self.account = account

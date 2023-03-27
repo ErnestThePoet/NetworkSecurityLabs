@@ -3,12 +3,12 @@ from Cryptodome.Cipher import AES
 from Cryptodome.Util.Padding import pad, unpad
 
 
-def aes_encrypt(key: bytes, iv: bytes, plaintext: bytes) -> bytes:
-    return AES.new(key, AES.MODE_CBC, iv).encrypt(pad(plaintext, AES.block_size))
+def aes256_encrypt(key: bytes, iv: bytes, plaintext: bytes) -> bytes:
+    return AES.new(key, AES.MODE_CBC, iv).encrypt(pad(plaintext, 256))
 
 
-def aes_decrypt(key: bytes, iv: bytes, cipher: bytes) -> bytes:
-    return unpad(AES.new(key, AES.MODE_CBC, iv).decrypt(cipher), AES.block_size)
+def aes256_decrypt(key: bytes, iv: bytes, cipher: bytes) -> bytes:
+    return unpad(AES.new(key, AES.MODE_CBC, iv).decrypt(cipher), 256)
 
 
 def sha256(message: bytes) -> bytes:

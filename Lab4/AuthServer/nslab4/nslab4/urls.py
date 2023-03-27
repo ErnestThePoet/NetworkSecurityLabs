@@ -15,7 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from controller.auth_controller import AuthController
+
+auth_controller = AuthController()
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('api/create_user/', auth_controller.create_user),
+    path('api/auth_user/', auth_controller.auth_user),
+    path('api/change_password/', auth_controller.change_password),
 ]

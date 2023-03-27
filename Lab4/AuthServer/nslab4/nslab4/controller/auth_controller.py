@@ -1,12 +1,31 @@
 import json
-from ..utils.crypto_helper import *
-from django.http import HttpResponse
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from ..service.auth_service import AuthService
 
 
-@csrf_exempt
-def create_account(request):
-    request_params = json.loads(request.body.decode("utf-8"))
+class AuthController:
+    def __init__(self):
+        self.auth_service = AuthService()
 
-    return HttpResponse(helper.encrypt_response_data({"success": True,
-                                                      "data": {"data": [{"authority": "\u7483\u6708", "ID": "12644", "username": "\u9e7f\u91ce\u82d1", "chargename": "\u51dd\u5149", "chargephone": "15505589252", "expiretime": "2024-11-01"}]}}))
+    @csrf_exempt
+    def create_user(self, request):
+        return JsonResponse(self.auth_service.create_user(
+                request.POST["account"], request.POST["hash1Base64"]))
+
+    @csrf_exempt
+    def auth_user(self, request):
+        return JsonResponse(self.auth_service.auth_user(
+            request.PUT["account"],
+            request.PUT["hash2Base64"],
+            request.PUT["clientAuthCodeBase64"]
+        ))
+
+    @csrf_exempt
+    def change_password(self, request):
+        return JsonResponse(self.auth_service.change_password(
+            request.PUT["account"],
+            request.PUT["hash2Base64"],
+            request.PUT["clientAuthCodeBase64"],
+            request.PUT["newHash1Base64"]
+        ))
