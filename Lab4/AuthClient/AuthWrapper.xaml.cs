@@ -16,23 +16,28 @@ using System.Windows.Shapes;
 namespace AuthClient
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AuthWrapper.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AuthWrapper : UserControl
     {
-        public MainWindow()
+        public AuthWrapper()
         {
             InitializeComponent();
         }
 
-        private void TitleBar_CloseClick(object sender, EventArgs e)
+        private void btnSubmitAuth_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+
         }
 
-        private void TitleBar_TitlebarDrag(object sender, EventArgs e)
+        private void btnChangePassword_Click(object sender, RoutedEventArgs e)
         {
-            this.DragMove();
+
+        }
+
+        private void btnSaveServerAuthCode_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

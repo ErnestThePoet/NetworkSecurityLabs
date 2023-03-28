@@ -8,7 +8,9 @@
         Title="认证客户端" 
         Height="338" 
         Width="600" 
-        ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" WindowStyle="None"
+        ResizeMode="CanMinimize" 
+        WindowStartupLocation="CenterScreen" 
+        WindowStyle="None"
         >
     <Window.Background>
         <ImageBrush ImageSource="uires/bkg.png"/>
@@ -20,13 +22,25 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Background="Black" Opacity="0.2"/>
-        <DockPanel x:Name="dpTitleBar" Grid.Row="0" Background="Transparent" MouseMove="dpTitleBar_MouseMove">
-            <Label Content="认证客户端" Foreground="White" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="5,0,0,0"/>
-            <DockPanel x:Name="dpCloseWrapper" HorizontalAlignment="Right" VerticalAlignment="Top" Width="40" Height="30" Style="{StaticResource styCloseButton}" MouseUp="dpCloseWrapper_MouseUp">
-                <Image Source="uires/close.png" Width="20" Height="20" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </DockPanel>
-        </DockPanel>
+        <local:TitleBar Title="认证客户端" 
+                        CloseClick="TitleBar_CloseClick"
+                        TitlebarDrag="TitleBar_TitlebarDrag"/>
 
+        <Label x:Name="lblGoBack"
+               Grid.Row="1"
+               Margin="5,5,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Style="{StaticResource styLblGoBack}">&lt;返回</Label>
+        
+        <local:AuthWrapper x:Name="ucAuthWrapper" 
+                           Grid.Row="1" 
+                           Visibility="Collapsed"/>
+        <local:SignUpWrapper x:Name="ucSignUpWrapper" 
+                             Grid.Row="1" 
+                             Visibility="Collapsed"/>
+        <local:ChangePasswordWrapper x:Name="ucChangePasswordWrapper" 
+                                     Grid.Row="1" 
+                                     Visibility="Visible"/>
     </Grid>
 </Window>

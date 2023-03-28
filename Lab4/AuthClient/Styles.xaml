@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Style x:Key="styCloseButton" TargetType="DockPanel">
+    <Style x:Key="styDpCloseWrapper" TargetType="DockPanel">
         <Setter Property="Background" Value="Transparent"/>
 
         <Style.Triggers>
@@ -8,5 +8,99 @@
                 <Setter Property="Background" Value="#ff4568"/>
             </Trigger>
         </Style.Triggers>
+    </Style>
+
+    <Style x:Key="styLblField" TargetType="Label">
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Height" Value="35"/>
+    </Style>
+
+    <Style x:Key="styTbField" TargetType="TextBox">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Width" Value="150"/>
+        <Setter Property="Margin" Value="0,2.5,0,2.5"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+
+    <Style x:Key="styPbField" TargetType="PasswordBox">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Width" Value="150"/>
+        <Setter Property="Margin" Value="0,2.5,0,2.5"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+
+    <Style x:Key="styBtnOrange" TargetType="Button">
+        <Setter Property="Background" Value="#33d1b899"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+
+                    <Border Name="border" BorderThickness="1" 
+                            BorderBrush="#FF2E2E2E" 
+                            Background="{TemplateBinding Background}">
+
+                        <ContentPresenter 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" />
+
+                    </Border>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#55d1b899"/>
+            </Trigger>
+
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#77d1b899"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="styBtnRed" TargetType="Button">
+        <Setter Property="Background" Value="#33ff004e"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+
+                    <Border Name="border" BorderThickness="1" 
+                            BorderBrush="#FF2E2E2E" 
+                            Background="{TemplateBinding Background}">
+
+                        <ContentPresenter 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" />
+
+                    </Border>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#55ff004e"/>
+            </Trigger>
+
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#77ff004e"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="styLblGoBack" TargetType="Label">
+        <Setter Property="Foreground" Value="SaddleBrown"/>
+        <Setter Property="Cursor" Value="Hand"/>
     </Style>
 </ResourceDictionary>

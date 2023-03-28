@@ -16,23 +16,13 @@ using System.Windows.Shapes;
 namespace AuthClient
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for SignUpWrapper.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class SignUpWrapper : UserControl
     {
-        public MainWindow()
+        public SignUpWrapper()
         {
             InitializeComponent();
-        }
-
-        private void TitleBar_CloseClick(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void TitleBar_TitlebarDrag(object sender, EventArgs e)
-        {
-            this.DragMove();
         }
     }
 }

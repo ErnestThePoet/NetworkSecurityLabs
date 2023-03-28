@@ -16,23 +16,13 @@ using System.Windows.Shapes;
 namespace AuthClient
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ChangePasswordWrapper.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ChangePasswordWrapper : UserControl
     {
-        public MainWindow()
+        public ChangePasswordWrapper()
         {
             InitializeComponent();
-        }
-
-        private void TitleBar_CloseClick(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void TitleBar_TitlebarDrag(object sender, EventArgs e)
-        {
-            this.DragMove();
         }
     }
 }
