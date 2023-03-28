@@ -41,6 +41,15 @@ class UserRepository:
                 account_list[0][2]
             )
 
+    def exists_by_account(self, account: str) -> bool:
+        self._exec_sql(
+            f"SELECT EXISTS(SELECT 1 FROM {USER_TABLE_NAME} WHERE account='{account}')")
+        account_list = self.cursor.fetchall()
+        if len(account_list) == 0:
+            return False
+        else:
+            return account_list[0][0] != 0
+
     def update(self, user: User) -> None:
         self._exec_sql(f"UPDATE {USER_TABLE_NAME} SET "
                        f"account='{user.account}', hash1Base64='{user.hash1_base64}' "

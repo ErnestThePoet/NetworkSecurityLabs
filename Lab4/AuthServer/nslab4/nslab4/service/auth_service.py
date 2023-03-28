@@ -24,6 +24,13 @@ class AuthService:
             return make_success_msg_response(param_check_result["msg"])
 
         try:
+            if self.user_repository.exists_by_account(account):
+                return make_success_msg_response("账号已存在")
+        except Exception as e:
+            traceback.print_exception(e)
+            return make_success_msg_response("查询数据库失败")
+
+        try:
             self.user_repository.insert(User(account, hash1_base64))
         except Exception as e:
             traceback.print_exception(e)
