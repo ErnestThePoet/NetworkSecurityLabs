@@ -20,19 +20,29 @@ namespace AuthClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        private UiState uiState;
         public MainWindow()
         {
             InitializeComponent();
+
+            uiState = new UiState();
+
+            gridRoot.DataContext = uiState;
         }
 
         private void TitleBar_CloseClick(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void TitleBar_TitlebarDrag(object sender, EventArgs e)
         {
-            this.DragMove();
+            DragMove();
+        }
+
+        private void lblGoBack_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            uiState.SetCurrentPage(AuthClientPage.auth);
         }
     }
 }

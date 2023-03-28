@@ -56,7 +56,7 @@
                         DockPanel.Dock="Bottom"
                         Width="100"
                         Height="35"
-                        Style="{StaticResource styBtnOrange}" Click="btnChangePassword_Click">
+                        Style="{StaticResource styBtnOrange}" Click="btnSignUp_Click">
                     注册
                 </Button>
 

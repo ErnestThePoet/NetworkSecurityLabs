@@ -39,5 +39,10 @@ namespace AuthClient
         {
 
         }
+
+        private void btnSignUp_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

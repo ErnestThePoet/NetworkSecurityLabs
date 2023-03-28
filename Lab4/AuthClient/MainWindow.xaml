@@ -16,7 +16,7 @@
         <ImageBrush ImageSource="uires/bkg.png"/>
     </Window.Background>
     
-    <Grid>
+    <Grid x:Name="gridRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition/>
@@ -31,16 +31,18 @@
                Margin="5,5,0,0"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
-               Style="{StaticResource styLblGoBack}">&lt;返回</Label>
+               Style="{StaticResource styLblGoBack}" 
+               Visibility="{Binding LblGoBackVisibility,Mode=OneWay}"
+               MouseUp="lblGoBack_MouseUp">&lt;返回</Label>
         
         <local:AuthWrapper x:Name="ucAuthWrapper" 
                            Grid.Row="1" 
-                           Visibility="Collapsed"/>
+                           Visibility="{Binding AuthWrapperVisibility,Mode=OneWay}"/>
         <local:SignUpWrapper x:Name="ucSignUpWrapper" 
                              Grid.Row="1" 
-                             Visibility="Collapsed"/>
+                             Visibility="{Binding SignUpWrapperVisibility,Mode=OneWay}"/>
         <local:ChangePasswordWrapper x:Name="ucChangePasswordWrapper" 
                                      Grid.Row="1" 
-                                     Visibility="Visible"/>
+                                     Visibility="{Binding ChangePasswordWrapperVisibility,Mode=OneWay}"/>
     </Grid>
 </Window>
