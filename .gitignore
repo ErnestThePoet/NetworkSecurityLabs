@@ -17,6 +17,8 @@
 
 /Lab2/capture_*.txt
 
+*.db
+
 /convert
 
 # User-specific files (MonoDevelop/Xamarin Studio)
