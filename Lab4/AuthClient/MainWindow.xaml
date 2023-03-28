@@ -5,8 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AuthClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="认证客户端" 
+        Height="338" 
+        Width="600" 
+        ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" WindowStyle="None"
+        >
+    <Window.Background>
+        <ImageBrush ImageSource="uires/bkg.png"/>
+    </Window.Background>
+    
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Background="Black" Opacity="0.2"/>
+        <DockPanel x:Name="dpTitleBar" Grid.Row="0" Background="Transparent" MouseMove="dpTitleBar_MouseMove">
+            <Label Content="认证客户端" Foreground="White" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="5,0,0,0"/>
+            <DockPanel x:Name="dpCloseWrapper" HorizontalAlignment="Right" VerticalAlignment="Top" Width="40" Height="30" Style="{StaticResource styCloseButton}" MouseUp="dpCloseWrapper_MouseUp">
+                <Image Source="uires/close.png" Width="20" Height="20" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </DockPanel>
+        </DockPanel>
 
     </Grid>
 </Window>

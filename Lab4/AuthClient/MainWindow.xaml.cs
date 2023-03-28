@@ -24,5 +24,21 @@ namespace AuthClient
         {
             InitializeComponent();
         }
+
+        private void dpTitleBar_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
+        }
+
+        private void dpCloseWrapper_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.Close();
+            }
+        }
     }
 }
