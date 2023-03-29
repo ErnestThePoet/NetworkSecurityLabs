@@ -43,17 +43,18 @@ namespace AuthClient
         public static readonly DependencyProperty signUpMessageProperty =
             DependencyProperty.Register("SignUpMessage", typeof(string), typeof(SignUpWrapper));
 
+        public ResultType SignUpResult
+        {
+            get { return (ResultType)GetValue(signupResultProperty); }
+            set { SetValue(signupResultProperty, value); }
+        }
+
         public string SignUpMessage
         {
             get { return (string)GetValue(signUpMessageProperty); }
             set { SetValue(signUpMessageProperty, value); }
         }
 
-        public ResultType SignUpResult
-        {
-            get { return (ResultType)GetValue(signupResultProperty); }
-            set { SetValue(signupResultProperty, value); }
-        }
 
         public SignUpWrapper()
         {
@@ -71,8 +72,10 @@ namespace AuthClient
         private void btnSignUp_Click(object sender, RoutedEventArgs e)
         {
             SignUpClick?.Invoke(
-                this, new SignUpClickEventArgs(
-                    tbAccount.Text, pbPassword.Password, pbPasswordConfirm.Password));
+                this, 
+                new(tbAccount.Text, 
+                    pbPassword.Password, 
+                    pbPasswordConfirm.Password));
         }
     }
 }

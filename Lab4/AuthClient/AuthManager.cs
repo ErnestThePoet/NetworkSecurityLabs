@@ -21,7 +21,7 @@ namespace AuthClient
         record class AuthUserRequest(
             string account, string hash2Base64,
             string clientAuthCodeBase64);
-        record class ChandePasswordRequest(
+        record class ChangePasswordRequest(
             string account, string hash2Base64,
             string clientAuthCodeBase64, string newHash1Base64);
 
@@ -102,6 +102,13 @@ namespace AuthClient
             }
 
             return (true, "");
+        }
+
+        private byte[] GetClientAuthCode()
+        {
+            byte[] clientAuthCode = new byte[CLIENT_AUTH_CODE_LENGTH];
+            new Random().NextBytes(clientAuthCode);
+            return clientAuthCode;
         }
 
         // returned Item2 is error message
@@ -206,8 +213,7 @@ namespace AuthClient
                     ResultType.Failure, checkErrorMessage);
             }
 
-            byte[] clientAuthCode = new byte[CLIENT_AUTH_CODE_LENGTH];
-            new Random().NextBytes(clientAuthCode);
+            byte[] clientAuthCode=GetClientAuthCode();
             string clientAuthCodeBase64 = Base64EncodeToString(clientAuthCode);
 
             byte[] hash1 = CalculateHash1(account, password);
@@ -281,6 +287,50 @@ namespace AuthClient
                     ResultType.Success, "认证成功");
         }
 
+        public async Task<(ResultType, string)> ChangePasswordAsync(
+            string passwordOld, string passwordNew, string passwordNewConfirm)
+        {
+            var (isValid, checkErrorMessage) = CheckAccount(Account);
+            if (!isValid)
+            {
+                return (ResultType.Failure, checkErrorMessage);
+            }
+
+            (isValid, checkErrorMessage) = CheckPassword(passwordNew);
+            if (!isValid)
+            {
+                return (ResultType.Failure, checkErrorMessage);
+            }
+
+            if (passwordNew != passwordNewConfirm)
+            {
+                return (ResultType.Failure, "两次密码输入不一致");
+            }
+
+            byte[] hash1 = CalculateHash1(Account, passwordOld);
+            byte[] newHash1 = CalculateHash1(Account, passwordNew);
+            byte[] clientAuthCode = GetClientAuthCode();
+            byte[] hash2 = CalculateHash2(hash1, clientAuthCode);
+
+            var (isSuccess, errorMessage, responseData) =
+                await PutAsync<ChangePasswordRequest, SuccessMsgResponse>(
+                    Apis.CHANGE_PASSWORD, new ChangePasswordRequest(
+                        Account,
+                        Base64EncodeToString(hash2),
+                        Base64EncodeToString(clientAuthCode),
+                        Base64EncodeToString(newHash1)));
+
+            if (!isSuccess)
+            {
+                return (ResultType.Failure, errorMessage);
+            }
+            else if (!responseData!.success)
+            {
+                return (ResultType.Failure, responseData!.msg);
+            }
+
+            return (ResultType.Success, "口令修改成功");
+        }
 
         public void SaveServerAuthCode(string path)
         {

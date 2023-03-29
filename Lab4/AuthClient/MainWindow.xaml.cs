@@ -93,6 +93,9 @@ namespace AuthClient
             }
             else
             {
+                uiManager.ClearChangePasswordPage();
+                ucChangePasswordWrapper.ClearFields();
+
                 uiManager.CurrentPage = AuthClientPage.ChangePassword;
             }
         }
@@ -115,6 +118,15 @@ namespace AuthClient
 
             uiManager.SignUpResult = result;
             uiManager.SignUpMessage = message;
+        }
+
+        private async void ucChangePasswordWrapper_ChangePasswordClick(object sender, ChangePasswordWrapper.ChangePasswordClickEventArgs e)
+        {
+            var (result, message) = await authManager.ChangePasswordAsync(
+                e.PasswordOld, e.PasswordNew, e.PasswordNewConfirm);
+
+            uiManager.ChangePasswordResult = result;
+            uiManager.ChangePasswordMessage = message;
         }
     }
 }

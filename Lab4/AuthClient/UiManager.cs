@@ -67,6 +67,12 @@ namespace AuthClient
             SignUpMessage=string.Empty;
         }
 
+        public void ClearChangePasswordPage()
+        {
+            changePasswordResult=ResultType.None;
+            changePasswordMessage=string.Empty;
+        }
+
         public AuthClientPage CurrentPage
         {
             get { return currentPage; }

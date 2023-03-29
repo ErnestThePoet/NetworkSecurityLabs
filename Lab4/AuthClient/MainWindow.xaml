@@ -54,6 +54,9 @@
                              SignUpMessage="{Binding SignUpMessage}"/>
         <local:ChangePasswordWrapper x:Name="ucChangePasswordWrapper" 
                                      Grid.Row="1" 
-                                     Visibility="{Binding CurrentPage, Converter={StaticResource changePasswordWrapperVisibilityConverter}}"/>
+                                     Visibility="{Binding CurrentPage, Converter={StaticResource changePasswordWrapperVisibilityConverter}}"
+                                     ChangePasswordResult="{Binding ChangePasswordResult}"
+                                     ChangePasswordMessage="{Binding ChangePasswordMessage}"
+                                     ChangePasswordClick="ucChangePasswordWrapper_ChangePasswordClick"/>
     </Grid>
 </Window>
