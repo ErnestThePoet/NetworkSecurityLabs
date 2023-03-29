@@ -7,7 +7,7 @@ USER_TABLE_NAME = "users"
 
 class UserRepository:
     def __init__(self):
-        self.connection = sqlite3.connect(AUTH_DB_PATH)
+        self.connection = sqlite3.connect(AUTH_DB_PATH, check_same_thread=False)
         self.cursor = self.connection.cursor()
         self._initialize_table()
 

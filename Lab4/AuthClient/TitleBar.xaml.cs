@@ -28,11 +28,11 @@ namespace AuthClient
 
         public string Title
         {
-            get { return (string)GetValue(TitleProperty); }
-            set { SetValue(TitleProperty, value); }
+            get { return (string)GetValue(titleProperty); }
+            set { SetValue(titleProperty, value); }
         }
 
-        public static readonly DependencyProperty TitleProperty =
+        public static readonly DependencyProperty titleProperty =
             DependencyProperty.Register(
                 "Title", typeof(string), typeof(TitleBar), new PropertyMetadata());
 

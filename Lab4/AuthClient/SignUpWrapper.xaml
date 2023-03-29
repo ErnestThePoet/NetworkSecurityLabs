@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:AuthClient"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel HorizontalAlignment="Center"
+    <StackPanel x:Name="spRoot"
+            HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Orientation="Vertical">
         <StackPanel Orientation="Horizontal">
@@ -26,15 +27,14 @@
         </StackPanel>
 
         <Label x:Name="lblSignUpResult"
-                Foreground="Green"
+                Foreground="{Binding Result, Converter={StaticResource failureNoneResultBrushConverter}}"
                 HorizontalContentAlignment="Center"
-                Visibility="Hidden">
-            注册成功
-        </Label>
+                Visibility="{Binding Result, Converter={StaticResource failureNoneResultVisibilityConverter}}"
+               Content="{Binding Message}"/>
 
         <Button x:Name="btnSignUp"
                 Style="{StaticResource styBtnOrange}"
                 Width="150"
-                Height="30">注册</Button>
+                Height="30" Click="btnSignUp_Click">注册</Button>
     </StackPanel>
 </UserControl>

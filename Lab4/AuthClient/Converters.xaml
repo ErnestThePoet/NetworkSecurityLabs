@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:AuthClient">
+    <local:LblGoBackVisibilityConverter x:Key="lblGoBackVisibilityConverter"/>
+    <local:AuthWrapperVisibilityConverter x:Key="authWrapperVisibilityConverter"/>
+    <local:SignUpWrapperVisibilityConverter x:Key="signUpWrapperVisibilityConverter"/>
+    <local:ChangePasswordWrapperVisibilityConverter x:Key="changePasswordWrapperVisibilityConverter"/>
+
+    <local:FailureNoneResultBrushConverter x:Key="failureNoneResultBrushConverter"/>
+    <local:FailureNoneResultVisibilityConverter x:Key="failureNoneResultVisibilityConverter"/>
+    <local:ResultBrushConverter x:Key="resultBrushConverter"/>
+    <local:ResultVisibilityConverter x:Key="resultVisibilityConverter"/>
+</ResourceDictionary>

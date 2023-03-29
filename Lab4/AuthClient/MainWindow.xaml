@@ -32,17 +32,24 @@
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
                Style="{StaticResource styLblGoBack}" 
-               Visibility="{Binding LblGoBackVisibility,Mode=OneWay}"
+               Visibility="{Binding CurrentPage, Converter={StaticResource lblGoBackVisibilityConverter}}"
                MouseUp="lblGoBack_MouseUp">&lt;返回</Label>
         
         <local:AuthWrapper x:Name="ucAuthWrapper" 
                            Grid.Row="1" 
-                           Visibility="{Binding AuthWrapperVisibility,Mode=OneWay}"/>
+                           Visibility="{Binding CurrentPage, Converter={StaticResource authWrapperVisibilityConverter}}"
+                           SubmitAuthClick="ucAuthWrapper_SubmitAuthClick"
+                           SignUpClick="ucAuthWrapper_SignUpClick"
+                           ChangePasswordClick="ucAuthWrapper_ChangePasswordClick"
+                           SaveServerAuthCodeClick="ucAuthWrapper_SaveServerAuthCodeClick"/>
         <local:SignUpWrapper x:Name="ucSignUpWrapper" 
                              Grid.Row="1" 
-                             Visibility="{Binding SignUpWrapperVisibility,Mode=OneWay}"/>
+                             Visibility="{Binding CurrentPage, Converter={StaticResource signUpWrapperVisibilityConverter}}"
+                             SignUpClick="ucSignUpWrapper_SignUpClick"
+                             Result="{Binding SignUpResult}"
+                             Message="{Binding SignUpMessage}"/>
         <local:ChangePasswordWrapper x:Name="ucChangePasswordWrapper" 
                                      Grid.Row="1" 
-                                     Visibility="{Binding ChangePasswordWrapperVisibility,Mode=OneWay}"/>
+                                     Visibility="{Binding CurrentPage, Converter={StaticResource changePasswordWrapperVisibilityConverter}}"/>
     </Grid>
 </Window>
