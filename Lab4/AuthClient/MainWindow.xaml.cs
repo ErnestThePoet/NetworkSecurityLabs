@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static AuthClient.AuthWrapper;
 using static AuthClient.SignUpWrapper;
 
 namespace AuthClient
@@ -48,9 +49,27 @@ namespace AuthClient
             uiManager.CurrentPage = AuthClientPage.Auth;
         }
 
-        private void ucAuthWrapper_SubmitAuthClick(object sender, EventArgs e)
+        private async void ucAuthWrapper_SubmitAuthClick(object sender, SubmitAuthClickEventArgs e)
         {
+            var (clientAuthCodeResult, clientAuthCodeBase64,
+                result, message) = await authManager.SubmitAuthAsync(
+                e.Account, e.Password);
 
+            uiManager.ClientAuthCodeResult = clientAuthCodeResult;
+
+            if (clientAuthCodeResult == ResultType.Success)
+            {
+                uiManager.ClientAuthCodeBase64 = clientAuthCodeBase64!;
+            }
+
+            if (result == ResultType.Success)
+            {
+                uiManager.ServerAuthCodeBase64 = Convert.ToBase64String(
+                    authManager.ServerAuthCode);
+            }
+
+            uiManager.AuthResult = result;
+            uiManager.AuthMessage = message;
         }
 
         private void ucAuthWrapper_SignUpClick(object sender, EventArgs e)
@@ -60,7 +79,18 @@ namespace AuthClient
 
         private void ucAuthWrapper_ChangePasswordClick(object sender, EventArgs e)
         {
-
+            if (!authManager.IsAuthorized)
+            {
+                MessageBox.Show(
+                    "请先认证",
+                    "错误",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+            else
+            {
+                uiManager.CurrentPage = AuthClientPage.ChangePassword;
+            }
         }
 
         private void ucAuthWrapper_SaveServerAuthCodeClick(object sender, EventArgs e)
@@ -72,7 +102,7 @@ namespace AuthClient
         {
             uiManager.SignUpResult = ResultType.None;
 
-            var (result, message) = await authManager.CreateUser(
+            var (result, message) = await authManager.CreateUserAsync(
                 e.Account, e.Password, e.PasswordConfirm);
 
             uiManager.SignUpResult = result;

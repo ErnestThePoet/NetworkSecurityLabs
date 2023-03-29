@@ -26,8 +26,7 @@
                         CloseClick="TitleBar_CloseClick"
                         TitlebarDrag="TitleBar_TitlebarDrag"/>
 
-        <Label x:Name="lblGoBack"
-               Grid.Row="1"
+        <Label Grid.Row="1"
                Margin="5,5,0,0"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
@@ -41,7 +40,12 @@
                            SubmitAuthClick="ucAuthWrapper_SubmitAuthClick"
                            SignUpClick="ucAuthWrapper_SignUpClick"
                            ChangePasswordClick="ucAuthWrapper_ChangePasswordClick"
-                           SaveServerAuthCodeClick="ucAuthWrapper_SaveServerAuthCodeClick"/>
+                           SaveServerAuthCodeClick="ucAuthWrapper_SaveServerAuthCodeClick"
+                           ClientAuthCodeResult="{Binding ClientAuthCodeResult}"
+                           ClientAuthCodeBase64="{Binding ClientAuthCodeBase64}"
+                           AuthResult="{Binding AuthResult}"
+                           AuthMessage="{Binding AuthMessage}"
+                           ServerAuthCodeBase64="{Binding ServerAuthCodeBase64}"/>
         <local:SignUpWrapper x:Name="ucSignUpWrapper" 
                              Grid.Row="1" 
                              Visibility="{Binding CurrentPage, Converter={StaticResource signUpWrapperVisibilityConverter}}"

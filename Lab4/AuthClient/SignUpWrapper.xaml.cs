@@ -27,7 +27,7 @@ namespace AuthClient
             public string PasswordConfirm { get; set; }
 
             public SignUpClickEventArgs(
-                string account, string password,string passwordConfirm)
+                string account, string password, string passwordConfirm)
             {
                 Account = account;
                 Password = password;
@@ -37,14 +37,11 @@ namespace AuthClient
 
         public event EventHandler<SignUpClickEventArgs>? SignUpClick;
 
-        public ResultType SignUpResult
-        {
-            get { return (ResultType)GetValue(signupResultProperty); }
-            set { SetValue(signupResultProperty, value); }
-        }
-
         public static readonly DependencyProperty signupResultProperty =
             DependencyProperty.Register("SignUpResult", typeof(ResultType), typeof(SignUpWrapper));
+
+        public static readonly DependencyProperty signUpMessageProperty =
+            DependencyProperty.Register("SignUpMessage", typeof(string), typeof(SignUpWrapper));
 
         public string SignUpMessage
         {
@@ -52,8 +49,11 @@ namespace AuthClient
             set { SetValue(signUpMessageProperty, value); }
         }
 
-        public static readonly DependencyProperty signUpMessageProperty =
-            DependencyProperty.Register("SignUpMessage", typeof(string), typeof(SignUpWrapper));
+        public ResultType SignUpResult
+        {
+            get { return (ResultType)GetValue(signupResultProperty); }
+            set { SetValue(signupResultProperty, value); }
+        }
 
         public SignUpWrapper()
         {
@@ -65,7 +65,7 @@ namespace AuthClient
         {
             SignUpClick?.Invoke(
                 this, new SignUpClickEventArgs(
-                    tbAccount.Text,pbPassword.Password,pbPasswordConfirm.Password));
+                    tbAccount.Text, pbPassword.Password, pbPasswordConfirm.Password));
         }
     }
 }

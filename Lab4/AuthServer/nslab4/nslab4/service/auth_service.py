@@ -31,7 +31,7 @@ class AuthService:
             return make_success_msg_response("查询数据库失败")
 
         try:
-            self.user_repository.insert(User(account, hash1_base64))
+            self.user_repository.insert(User(None, account, hash1_base64))
         except Exception as e:
             traceback.print_exception(e)
             return make_success_msg_response("插入数据库失败")
@@ -65,8 +65,10 @@ class AuthService:
             return make_success_msg_response("认证失败")
 
         hash1: bytes = base64_dec_str(user.hash1_base64)
-        server_auth_code: bytes = random.randbytes(64)
-        server_auth_code_encrypted: bytes = aes256_encrypt(hash1, hash1, server_auth_code)
+        server_auth_code: bytes = random.randbytes(32)
+        server_auth_code_encrypted: bytes = aes256_encrypt(hash1, hash1[:16], server_auth_code)
+
+        print(f"SERVER_AUTH_CODE: {base64_enc_str(server_auth_code)}")
 
         return make_auth_response(base64_enc_str(server_auth_code_encrypted))
 
@@ -80,7 +82,7 @@ class AuthService:
             return make_success_msg_response("认证失败")
 
         user = self.user_repository.get_by_account(account)
-        user.hash1_base64=new_hash1_base64
+        user.hash1_base64 = new_hash1_base64
 
         try:
             self.user_repository.update(user)

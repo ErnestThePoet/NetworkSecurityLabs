@@ -20,10 +20,67 @@ namespace AuthClient
     /// </summary>
     public partial class AuthWrapper : UserControl
     {
-        public event EventHandler? SubmitAuthClick;
+        public class SubmitAuthClickEventArgs : EventArgs
+        {
+            public string Account { get; set; }
+            public string Password { get; set; }
+
+            public SubmitAuthClickEventArgs(string account, string password)
+            {
+                Account = account;
+                Password = password;
+            }
+        }
+
+        public event EventHandler<SubmitAuthClickEventArgs>? SubmitAuthClick;
         public event EventHandler? ChangePasswordClick;
         public event EventHandler? SaveServerAuthCodeClick;
         public event EventHandler? SignUpClick;
+
+        public static readonly DependencyProperty clientAuthCodeResultProperty =
+            DependencyProperty.Register("ClientAuthCodeResult", typeof(ResultType), typeof(AuthWrapper));
+
+        public static readonly DependencyProperty clientAuthCodeBase64Property =
+            DependencyProperty.Register("ClientAuthCodeBase64", typeof(string), typeof(AuthWrapper));
+
+        public static readonly DependencyProperty authResultProperty =
+            DependencyProperty.Register("AuthResult", typeof(ResultType), typeof(AuthWrapper));
+
+        public static readonly DependencyProperty authMessageProperty =
+            DependencyProperty.Register("AuthMessage", typeof(string), typeof(AuthWrapper));
+
+        public static readonly DependencyProperty serverAuthCodeBase64Property =
+            DependencyProperty.Register("ServerAuthCodeBase64", typeof(string), typeof(AuthWrapper));
+
+        public ResultType ClientAuthCodeResult
+        {
+            get { return (ResultType)GetValue(clientAuthCodeResultProperty); }
+            set { SetValue(clientAuthCodeResultProperty, value); }
+        }
+
+        public string ClientAuthCodeBase64
+        {
+            get { return (string)GetValue(clientAuthCodeBase64Property); }
+            set { SetValue(clientAuthCodeBase64Property, value); }
+        }
+
+        public ResultType AuthResult
+        {
+            get { return (ResultType)GetValue(authResultProperty); }
+            set { SetValue(authResultProperty, value); }
+        }
+
+        public string AuthMessage
+        {
+            get { return (string)GetValue(authMessageProperty); }
+            set { SetValue(authMessageProperty, value); }
+        }
+
+        public string ServerAuthCodeBase64
+        {
+            get { return (string)GetValue(serverAuthCodeBase64Property); }
+            set { SetValue(serverAuthCodeBase64Property, value); }
+        }
 
         public AuthWrapper()
         {
@@ -32,7 +89,9 @@ namespace AuthClient
 
         private void btnSubmitAuth_Click(object sender, RoutedEventArgs e)
         {
-            SubmitAuthClick?.Invoke(this, e);
+            SubmitAuthClick?.Invoke(
+                this, 
+                new (tbAccount.Text,pbPassword.Password));
         }
 
         private void btnChangePassword_Click(object sender, RoutedEventArgs e)

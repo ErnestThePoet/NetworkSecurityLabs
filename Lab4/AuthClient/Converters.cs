@@ -76,6 +76,65 @@ namespace AuthClient
         }
     }
 
+    [ValueConversion(typeof(ResultType), typeof(Brush))]
+    public class ClientAuthCodeBrushConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (ResultType)value == ResultType.Initial
+                ? new SolidColorBrush(Colors.Gray)
+                : new SolidColorBrush(Colors.Blue);
+        }
+
+        // Meaningless
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return ResultType.Initial;
+        }
+    }
+
+    [ValueConversion(typeof(ResultType), typeof(Brush))]
+    public class AuthMessageBrushConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            switch ((ResultType)value)
+            {
+                case ResultType.Initial:
+                    return new SolidColorBrush(Colors.Gray);
+                case ResultType.Failure:
+                    return new SolidColorBrush(Colors.Red);
+                case ResultType.Success:
+                    return new SolidColorBrush(Colors.Green);
+                default:
+                    return new SolidColorBrush(Colors.Black);
+            }
+        }
+
+        // Meaningless
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return ResultType.Initial;
+        }
+    }
+
+    [ValueConversion(typeof(ResultType), typeof(Visibility))]
+    public class ServerAuthCodeVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (ResultType)value == ResultType.Success
+                ? Visibility.Visible
+                : Visibility.Hidden;
+        }
+
+        // Meaningless
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return ResultType.Initial;
+        }
+    }
+
     [ValueConversion(typeof(ResultType), typeof(Visibility))]
     public class FailureNoneResultVisibilityConverter : IValueConverter
     {

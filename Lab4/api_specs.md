@@ -25,7 +25,7 @@
 {
 	success:boolean;
 	msg:string;
-    clientAuthCodeEncryptedBase64?:string;
+    serverAuthCodeEncryptedBase64?:string;
 }
 
 #### 修改密码接口

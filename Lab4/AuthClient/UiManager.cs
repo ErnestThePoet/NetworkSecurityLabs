@@ -30,9 +30,12 @@ namespace AuthClient
 
         private AuthClientPage currentPage;
 
+        private ResultType clientAuthCodeResult;
         private ResultType authResult;
         private ResultType signUpResult;
         private ResultType changePasswordResult;
+        private string clientAuthCodeBase64;
+        private string serverAuthCodeBase64;
         private string authMessage;
         private string signUpMessage;
         private string changePasswordMessage;
@@ -41,13 +44,16 @@ namespace AuthClient
         {
             currentPage = AuthClientPage.Auth;
 
+            clientAuthCodeResult = ResultType.Initial;
             authResult = ResultType.Initial;
             signUpResult = ResultType.None;
             changePasswordResult = ResultType.None;
 
+            clientAuthCodeBase64 = "未生成";
+            serverAuthCodeBase64 = string.Empty;
             authMessage = "未认证";
-            signUpMessage = "";
-            changePasswordMessage = "";
+            signUpMessage = string.Empty;
+            changePasswordMessage = string.Empty;
         }
 
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
@@ -61,6 +67,16 @@ namespace AuthClient
             set
             {
                 currentPage = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public ResultType ClientAuthCodeResult
+        {
+            get { return clientAuthCodeResult; }
+            set
+            {
+                clientAuthCodeResult = value;
                 RaisePropertyChanged();
             }
         }
@@ -91,6 +107,26 @@ namespace AuthClient
             set
             {
                 changePasswordResult = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public string ClientAuthCodeBase64
+        {
+            get { return clientAuthCodeBase64; }
+            set
+            {
+                clientAuthCodeBase64 = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public string ServerAuthCodeBase64
+        {
+            get { return serverAuthCodeBase64; }
+            set
+            {
+                serverAuthCodeBase64 = value;
                 RaisePropertyChanged();
             }
         }

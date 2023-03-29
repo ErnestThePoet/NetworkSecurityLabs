@@ -6,6 +6,10 @@
     <local:SignUpWrapperVisibilityConverter x:Key="signUpWrapperVisibilityConverter"/>
     <local:ChangePasswordWrapperVisibilityConverter x:Key="changePasswordWrapperVisibilityConverter"/>
 
+    <local:ClientAuthCodeBrushConverter x:Key="clientAuthCodeBrushConverter"/>
+    <local:AuthMessageBrushConverter x:Key="authMessageBrushConverter"/>
+    <local:ServerAuthCodeVisibilityConverter x:Key="serverAuthCodeVisibilityConverter"/>
+
     <local:FailureNoneResultBrushConverter x:Key="failureNoneResultBrushConverter"/>
     <local:FailureNoneResultVisibilityConverter x:Key="failureNoneResultVisibilityConverter"/>
     <local:ResultBrushConverter x:Key="resultBrushConverter"/>

@@ -24,15 +24,12 @@
                          Style="{StaticResource styTbField}"/>
                 <PasswordBox x:Name="pbPassword"
                          Style="{StaticResource styPbField}"/>
-                <Label x:Name="lblClientAuthCode"
-                       FontSize="16"
-                       FontWeight="Bold"
-                       Foreground="Gray"
+                <TextBox Style="{StaticResource styTbField}"
+                       Foreground="{Binding ClientAuthCodeResult,Converter={StaticResource clientAuthCodeBrushConverter}}"
                        Height="50"
-                       HorizontalContentAlignment="Center"
-                       VerticalContentAlignment="Center">
-                    未生成
-                </Label>
+                       IsReadOnly="True"
+                       TextWrapping="Wrap" 
+                       Text="{Binding ClientAuthCodeBase64}" />
             </StackPanel>
 
             <DockPanel Margin="50,0,0,0">
@@ -64,33 +61,27 @@
             </DockPanel>
         </StackPanel>
 
-        <StackPanel Height="60" 
-                    Margin="0,20,0,0">
-            <Label x:Name="lblErrorMessage"
-                   Visibility="Collapsed"
-                   Foreground="Red"
-                   HorizontalAlignment="Center"/>
-
-            <StackPanel x:Name="spAuthResultWrapper"
-                        HorizontalAlignment="Center">
-                <Label x:Name="lblAuthResult"
-                        Foreground="Green"
-                        FontSize="15"
-                        FontWeight="Bold"
-                        HorizontalAlignment="Center">认证成功</Label>
-                <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Center">
-                    <Label VerticalContentAlignment="Center">服务端认证码：</Label>
-                    <Label x:Name="lblServerAuthCode"
-                            FontSize="16"
-                            FontWeight="Bold"
-                            Foreground="Firebrick"
-                            Margin="10,0,20,0"
-                            VerticalContentAlignment="Center">XXXXXX</Label>
-                    <Button x:Name="btnSaveServerAuthCode"
-                            Width="60"
-                            Style="{StaticResource styBtnOrange}" Click="btnSaveServerAuthCode_Click">保存..</Button>
-                </StackPanel>
+        <StackPanel Margin="0,20,0,0"
+                    HorizontalAlignment="Center">
+            <Label Foreground="{Binding AuthResult, Converter={StaticResource authMessageBrushConverter}}"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    HorizontalAlignment="Center"
+                   Content="{Binding AuthMessage}"/>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Visibility="{Binding AuthResult,Converter={StaticResource serverAuthCodeVisibilityConverter}}">
+                <Label VerticalContentAlignment="Center">服务端认证码：</Label>
+                <TextBox Style="{StaticResource styTbField}"
+                       Foreground="Firebrick"
+                       Height="50"
+                       Margin="10,0,20,0"
+                       IsReadOnly="True"
+                       TextWrapping="Wrap" 
+                       Text="{Binding ServerAuthCodeBase64}" />
+                <Button x:Name="btnSaveServerAuthCode"
+                        Width="60"
+                        Style="{StaticResource styBtnOrange}" Click="btnSaveServerAuthCode_Click">保存..</Button>
             </StackPanel>
         </StackPanel>
     </StackPanel>

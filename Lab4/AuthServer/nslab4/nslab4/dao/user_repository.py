@@ -25,9 +25,9 @@ class UserRepository:
                        "account VARCHAR(50), "
                        "hash1Base64 VARCHAR(50))")
 
-    def insert(self, account: User) -> None:
+    def insert(self, user: User) -> None:
         self._exec_sql(f"INSERT INTO {USER_TABLE_NAME} (account, hash1Base64) VALUES "
-                       f"('{account.account}','{account.hash1_base64}')")
+                       f"('{user.account}','{user.hash1_base64}')")
 
     def get_by_account(self, account: str) -> User | None:
         self._exec_sql(f"SELECT * FROM {USER_TABLE_NAME} WHERE account='{account}'")

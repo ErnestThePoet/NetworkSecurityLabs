@@ -33,8 +33,7 @@ namespace AuthClient
         }
 
         public static readonly DependencyProperty titleProperty =
-            DependencyProperty.Register(
-                "Title", typeof(string), typeof(TitleBar), new PropertyMetadata());
+            DependencyProperty.Register("Title", typeof(string), typeof(TitleBar));
 
         public event EventHandler? CloseClick;
         public event EventHandler? TitlebarDrag;
