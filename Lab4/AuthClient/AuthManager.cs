@@ -280,5 +280,14 @@ namespace AuthClient
             return (ResultType.Success, clientAuthCodeBase64,
                     ResultType.Success, "认证成功");
         }
+
+
+        public void SaveServerAuthCode(string path)
+        {
+            using (StreamWriter streamWriter = new(path, false, Encoding.UTF8))
+            {
+                streamWriter.Write(Base64EncodeToString(ServerAuthCode));
+            }
+        }
     }
 }

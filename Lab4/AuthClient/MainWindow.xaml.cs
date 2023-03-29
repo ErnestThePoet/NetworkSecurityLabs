@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -95,7 +96,13 @@ namespace AuthClient
 
         private void ucAuthWrapper_SaveServerAuthCodeClick(object sender, EventArgs e)
         {
-
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = "server_auth_code.txt";
+            saveFileDialog.Filter = "Text (*.txt) | *.txt";
+            if (saveFileDialog.ShowDialog()??false)
+            {
+                authManager.SaveServerAuthCode(saveFileDialog.FileName);
+            }
         }
 
         private async void ucSignUpWrapper_SignUpClick(object sender, SignUpClickEventArgs e)
