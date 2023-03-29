@@ -10,8 +10,6 @@
     <local:AuthMessageBrushConverter x:Key="authMessageBrushConverter"/>
     <local:ServerAuthCodeVisibilityConverter x:Key="serverAuthCodeVisibilityConverter"/>
 
-    <local:FailureNoneResultBrushConverter x:Key="failureNoneResultBrushConverter"/>
-    <local:FailureNoneResultVisibilityConverter x:Key="failureNoneResultVisibilityConverter"/>
     <local:ResultBrushConverter x:Key="resultBrushConverter"/>
     <local:ResultVisibilityConverter x:Key="resultVisibilityConverter"/>
 </ResourceDictionary>

@@ -9,7 +9,8 @@
     <StackPanel HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Orientation="Vertical">
-        <StackPanel Orientation="Horizontal">
+        <StackPanel HorizontalAlignment="Center"
+            Orientation="Horizontal">
             <StackPanel Margin="0,0,5,0">
                 <Label Style="{StaticResource styLblField}">账号</Label>
                 <Label Style="{StaticResource styLblField}">口令</Label>
@@ -75,6 +76,7 @@
                 <TextBox Style="{StaticResource styTbField}"
                        Foreground="Firebrick"
                        Height="50"
+                       Width="300"
                        Margin="10,0,20,0"
                        IsReadOnly="True"
                        TextWrapping="Wrap" 

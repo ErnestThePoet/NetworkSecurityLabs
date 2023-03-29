@@ -136,42 +136,6 @@ namespace AuthClient
     }
 
     [ValueConversion(typeof(ResultType), typeof(Visibility))]
-    public class FailureNoneResultVisibilityConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return (ResultType)value == ResultType.Failure
-                ? Visibility.Visible
-                : Visibility.Hidden;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return (Visibility)value == Visibility.Visible
-                ? ResultType.Failure
-                : ResultType.None;
-        }
-    }
-
-    [ValueConversion(typeof(ResultType), typeof(Brush))]
-    public class FailureNoneResultBrushConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return (ResultType)value == ResultType.Failure
-                ? new SolidColorBrush(Colors.Red)
-                : new SolidColorBrush(Colors.Green);
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return ((SolidColorBrush)value).Color == Colors.Red
-                ? ResultType.Failure
-                : ResultType.None;
-        }
-    }
-
-    [ValueConversion(typeof(ResultType), typeof(Visibility))]
     public class ResultVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

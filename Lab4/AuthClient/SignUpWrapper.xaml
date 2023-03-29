@@ -26,9 +26,9 @@
             </StackPanel>
         </StackPanel>
 
-        <Label Foreground="{Binding Result, Converter={StaticResource failureNoneResultBrushConverter}}"
+        <Label Foreground="{Binding SignUpResult, Converter={StaticResource resultBrushConverter}}"
                 HorizontalContentAlignment="Center"
-                Visibility="{Binding SignUpResult, Converter={StaticResource failureNoneResultVisibilityConverter}}"
+                Visibility="{Binding SignUpResult, Converter={StaticResource resultVisibilityConverter}}"
                Content="{Binding SignUpMessage}"/>
 
         <Button x:Name="btnSignUp"

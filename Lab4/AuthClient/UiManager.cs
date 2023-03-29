@@ -61,6 +61,12 @@ namespace AuthClient
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public void ClearSignUpPage()
+        {
+            SignUpResult=ResultType.None;
+            SignUpMessage=string.Empty;
+        }
+
         public AuthClientPage CurrentPage
         {
             get { return currentPage; }

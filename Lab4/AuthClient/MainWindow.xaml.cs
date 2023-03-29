@@ -75,6 +75,9 @@ namespace AuthClient
 
         private void ucAuthWrapper_SignUpClick(object sender, EventArgs e)
         {
+            uiManager.ClearSignUpPage();
+            ucSignUpWrapper.ClearFields();
+
             uiManager.CurrentPage = AuthClientPage.SignUp;
         }
 
@@ -107,8 +110,6 @@ namespace AuthClient
 
         private async void ucSignUpWrapper_SignUpClick(object sender, SignUpClickEventArgs e)
         {
-            uiManager.SignUpResult = ResultType.None;
-
             var (result, message) = await authManager.CreateUserAsync(
                 e.Account, e.Password, e.PasswordConfirm);
 

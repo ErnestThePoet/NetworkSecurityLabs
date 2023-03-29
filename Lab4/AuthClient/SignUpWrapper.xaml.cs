@@ -61,6 +61,13 @@ namespace AuthClient
             spRoot.DataContext = this;
         }
 
+        public void ClearFields()
+        {
+            tbAccount.Clear();
+            pbPassword.Clear();
+            pbPasswordConfirm.Clear();
+        }
+
         private void btnSignUp_Click(object sender, RoutedEventArgs e)
         {
             SignUpClick?.Invoke(
