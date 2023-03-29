@@ -29,8 +29,8 @@
         <Label x:Name="lblSignUpResult"
                 Foreground="{Binding Result, Converter={StaticResource failureNoneResultBrushConverter}}"
                 HorizontalContentAlignment="Center"
-                Visibility="{Binding Result, Converter={StaticResource failureNoneResultVisibilityConverter}}"
-               Content="{Binding Message}"/>
+                Visibility="{Binding SignUpResult, Converter={StaticResource failureNoneResultVisibilityConverter}}"
+               Content="{Binding SignUpMessage}"/>
 
         <Button x:Name="btnSignUp"
                 Style="{StaticResource styBtnOrange}"

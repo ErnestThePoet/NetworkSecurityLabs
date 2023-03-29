@@ -37,23 +37,23 @@ namespace AuthClient
 
         public event EventHandler<SignUpClickEventArgs>? SignUpClick;
 
-        public ResultType Result
+        public ResultType SignUpResult
         {
-            get { return (ResultType)GetValue(resultProperty); }
-            set { SetValue(resultProperty, value); }
+            get { return (ResultType)GetValue(signupResultProperty); }
+            set { SetValue(signupResultProperty, value); }
         }
 
-        public static readonly DependencyProperty resultProperty =
-            DependencyProperty.Register("Result", typeof(ResultType), typeof(SignUpWrapper));
+        public static readonly DependencyProperty signupResultProperty =
+            DependencyProperty.Register("SignUpResult", typeof(ResultType), typeof(SignUpWrapper));
 
-        public string Message
+        public string SignUpMessage
         {
-            get { return (string)GetValue(messageProperty); }
-            set { SetValue(messageProperty, value); }
+            get { return (string)GetValue(signUpMessageProperty); }
+            set { SetValue(signUpMessageProperty, value); }
         }
 
-        public static readonly DependencyProperty messageProperty =
-            DependencyProperty.Register("Message", typeof(string), typeof(SignUpWrapper));
+        public static readonly DependencyProperty signUpMessageProperty =
+            DependencyProperty.Register("SignUpMessage", typeof(string), typeof(SignUpWrapper));
 
         public SignUpWrapper()
         {
