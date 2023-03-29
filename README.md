@@ -94,3 +94,12 @@ for(每个IP地址ip){
 
 ## Receiver
 使用套接字实现的UDP数据包接收程序
+
+# Lab3
+## AuthClient
+使用WPF编写的认证系统客户端，包含注册、认证、修改口令功能
+
+<image src="https://github.com/ErnestThePoet/NetworkSecurityLabs/blob/master/Lab4/auth-client-screenshot.png"/>
+
+## AuthServer
+使用Django+sqlite编写的认证系统服务端
